@@ -1,0 +1,117 @@
+@font-face {
+    font-family: "DejaVuSerif";
+    font-weight: 400;
+    font-style: normal;
+    src: url("/fonts/DejavuSerif/DejaVuSerif.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Merriweather";
+    font-weight: 300;
+    font-style: normal;
+    src: url("/fonts/Merriweather/Merriweather-Light.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Merriweather";
+    font-weight: 400;
+    font-style: normal;
+    src: url("/fonts/Merriweather/Merriweather-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Merriweather";
+    font-weight: 700;
+    font-style: normal;
+    src: url("/fonts/Merriweather/Merriweather-Bold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "SourceSans3";
+    font-weight: 400;
+    src: url("/fonts/SourceSans3/SourceSans3-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "SourceSans3";
+    font-weight: 400;
+    font-style: italic;
+    src: url("/fonts/SourceSans3/SourceSans3-Italic.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "SourceSans3";
+    font-weight: 500;
+    font-style: normal;
+    src: url("/fonts/SourceSans3/SourceSans3-Medium.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "SourceSans3";
+    font-weight: 600;
+    font-style: normal;
+    src: url("/fonts/SourceSans3/SourceSans3-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "SourceSans3";
+    font-weight: 700;
+    font-style: normal;
+    src: url("/fonts/SourceSans3/SourceSans3-Bold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "RobotoMono";
+    font-weight: 400;
+    font-style: normal;
+    src: url("/fonts/RobotoMono/RobotoMono-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "RobotoMono";
+    font-weight: 500;
+    font-style: normal;
+    src: url("/fonts/RobotoMono/RobotoMono-Medium.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "RobotoMono";
+    font-weight: 600;
+    font-style: normal;
+    src: url("/fonts/RobotoMono/RobotoMono-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "RobotoMono";
+    font-weight: 700;
+    font-style: normal;
+    src: url("/fonts/RobotoMono/RobotoMono-Bold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "AROneSans";
+    font-weight: 400;
+    font-style: normal;
+    src: url("/fonts/AROneSans/AROneSans-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "AROneSans";
+    font-weight: 500;
+    font-style: normal;
+    src: url("/fonts/AROneSans/AROneSans-Medium.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "AROneSans";
+    font-weight: 600;
+    font-style: normal;
+    src: url("/fonts/AROneSans/AROneSans-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "AROneSans";
+    font-weight: 700;
+    font-style: normal;
+    src: url("/fonts/AROneSans/AROneSans-Bold.ttf") format("truetype");
+}

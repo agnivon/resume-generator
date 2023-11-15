@@ -1,0 +1,83 @@
+import Drawer, { DrawerProps } from "@/components/global/Drawer";
+import { SAMPLE_RESUME_1 } from "@/constants/sample.resumes";
+import { ResumeTemplate, TemplateSize } from "@/constants/template.constants";
+import { ResumePreviewSettings } from "@/types/form.types";
+import { classNames } from "@/utils";
+import { CheckCircleIcon } from "@heroicons/react/24/solid";
+import { useFormikContext } from "formik";
+import ResumeCard from "../grid/ResumeCard";
+
+const RESUME_TEMPLATES = [
+  ResumeTemplate.STANDARD,
+  ResumeTemplate.BOLD,
+  ResumeTemplate.MODERN,
+];
+
+const TemplateCard = ({ template }: { template: ResumeTemplate }) => {
+  const formik = useFormikContext<{ previewSettings: ResumePreviewSettings }>();
+  const selectedTemplate = formik.values.previewSettings.template;
+  const isTemplateSelected = template === selectedTemplate;
+  return (
+    <>
+      <div
+        key={template}
+        className={classNames(
+          "flex flex-col justify-center items-center gap-y-2 group cursor-pointer"
+        )}
+        onClick={() =>
+          formik.setFieldValue("previewSettings.template", template)
+        }
+      >
+        <div
+          className={classNames(
+            "w-full rounded-lg py-1 text-center",
+            isTemplateSelected
+              ? "bg-blue-600 group-hover:bg-blue-700 text-white"
+              : "text-gray-500 dark:text-gray-300 font-semibold bg-gray-100 dark:bg-gray-600 group-hover:bg-gray-200 dark:group-hover:bg-gray-700 "
+          )}
+        >
+          <span className="inline-flex items-center gap-x-2 uppercase">
+            {template}
+            {isTemplateSelected && (
+              <CheckCircleIcon className="inline h-4 w-4" />
+            )}
+          </span>
+        </div>
+        <div>
+          <ResumeCard
+            resume={SAMPLE_RESUME_1}
+            template={template}
+            pageSize={TemplateSize.A4}
+            thumbnailScale={0.5}
+            sizeClass={"a6"}
+            showFooter={false}
+            font={formik.values.previewSettings.font}
+            fontSize={formik.values.previewSettings.fontSize}
+            usePreviewSettings={false}
+          />
+        </div>
+      </div>
+    </>
+  );
+};
+
+type ResumeTemplateDrawerProps = DrawerProps;
+
+export default function ResumeTemplateDrawer(props: ResumeTemplateDrawerProps) {
+  return (
+    <Drawer
+      position="right"
+      customClasses="!w-[30rem] hide-scrollbar"
+      {...props}
+    >
+      <div className="mb-4 text-xl font-semibold text-gray-500 dark:text-gray-400">
+        Choose a template
+      </div>
+      <div className="flex flex-col items-center justify-center gap-y-8">
+        {RESUME_TEMPLATES.map((template) => {
+          return <TemplateCard template={template} key={template} />;
+        })}
+      </div>
+    </Drawer>
+  );
+}

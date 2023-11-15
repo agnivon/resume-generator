@@ -1,0 +1,157 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Resume {
+  id              String                 @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String
+  name            String
+  createdOn       Int
+  summary         String
+  contact         Contact?
+  experiences     Experience[]
+  projects        Project[]
+  education       Education[]
+  certifications  Certification[]
+  courses         Course[]
+  skills          Skill[]
+  previewSettings ResumePreviewSettings?
+
+  @@map("resumes")
+}
+
+model Contact {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  fullName    String
+  email       String
+  phone       String
+  linkedinUrl String
+  personalUrl String
+  country     String
+  state       String
+  city        String
+  Resume      Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  resumeId    String @unique @db.ObjectId
+
+  @@map("contacts")
+}
+
+model Experience {
+  id               String  @id @default(auto()) @map("_id") @db.ObjectId
+  role             String
+  companyName      String
+  startDate        String
+  endDate          String
+  companyLocation  String
+  description      String
+  currentlyWorking Boolean
+  Resume           Resume  @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  resumeId         String  @db.ObjectId
+  hidden           Boolean @default(false)
+  displayOrder     Int     @default(0)
+
+  @@map("experiences")
+}
+
+model Project {
+  id               String  @id @default(auto()) @map("_id") @db.ObjectId
+  title            String
+  organization     String
+  startDate        String
+  endDate          String
+  url              String
+  description      String
+  currentlyWorking Boolean
+  Resume           Resume  @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  resumeId         String  @db.ObjectId
+  hidden           Boolean @default(false)
+  displayOrder     Int     @default(0)
+
+  @@map("projects")
+}
+
+model Education {
+  id             String  @id @default(auto()) @map("_id") @db.ObjectId
+  major          String
+  institution    String
+  location       String
+  year           String
+  minor          String
+  gpa            String
+  additionalInfo String
+  Resume         Resume  @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  resumeId       String  @db.ObjectId
+  hidden         Boolean @default(false)
+  displayOrder   Int     @default(0)
+
+  @@map("education")
+}
+
+model Certification {
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  institution  String
+  year         String
+  relevance    String
+  Resume       Resume  @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  resumeId     String  @db.ObjectId
+  hidden       Boolean @default(false)
+  displayOrder Int     @default(0)
+
+  @@map("certifications")
+}
+
+model Course {
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  institution  String
+  year         String
+  skills       String
+  applications String
+  Resume       Resume  @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  resumeId     String  @db.ObjectId
+  hidden       Boolean @default(false)
+  displayOrder Int     @default(0)
+
+  @@map("courses")
+}
+
+model Skill {
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  skill        String
+  Resume       Resume  @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  resumeId     String  @db.ObjectId
+  hidden       Boolean @default(false)
+  displayOrder Int     @default(0)
+
+  @@map("skills")
+}
+
+model ResumePreviewSettings {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  Resume     Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  resumeId   String @unique @db.ObjectId
+  template   String
+  font       String
+  paperSize  String
+  fontSize   Float
+  lineHeight Float
+
+  @@map("preview-settings")
+}
+
+model UserMembership {
+  id      String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId  String  @unique
+  premium Boolean @default(false)
+
+  @@map("user-memberships")
+}

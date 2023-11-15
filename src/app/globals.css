@@ -2,26 +2,181 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@layer base {
+
+  body {
+    width: 100%;
+  }
+
+  .resume-template a {
+    @apply hover:underline hover:text-blue-600
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    @apply cursor-pointer;
+  }
+
+  input[type="month"]::-webkit-calendar-picker-indicator {
+    @apply cursor-pointer;
+  }
+
+  .resume-template ul {
+    list-style-type: disc;
+  }
+
+  .resume-template ul li {
+    margin-left: 1rem;
+  }
+
+  /* .resume-template ul li {
+    display: flex;
+  }
+
+  .resume-template ul li::before {
+    content: "";
+    width: 3px;
+    height: 3px;
+    border: 2px solid black !important;
+    border-radius: 50%;
+    margin: 0.5rem 0.5rem 0 0;
+  } */
+
+  @media print {
+
+    body {
+      min-width: fit-content !important;
+    }
+
+    .print-hidden {
+      display: none !important;
+    }
+
+    .print-padding-none {
+      padding: 0 !important;
+    }
+
+    .resume-template {
+      box-shadow: none !important;
+      padding: none !important;
+      padding: 0 !important;
+      print-color-adjust: exact;
+    }
+
+    .print-initial {
+      display: initial !important;
+      overflow: initial !important;
+      height: initial !important;
+      width: initial !important;
+    }
+
+    .print-break-avoid {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .print-bg-color-reset {
+      background-color: initial;
+    }
+  }
+
+}
+
+.letter {
+  width: 22cm !important;
+  height: 28cm !important;
+}
+
+.letter-overflow {
+  width: 22cm !important;
+  min-height: 28cm !important;
+}
+
+.a4 {
+  width: 21cm;
+  height: 29.7cm;
+}
+
+.a4-overflow {
+  width: 21cm;
+  min-height: 29.7cm;
+}
+
+.a6 {
+  width: 105mm;
+  height: 148mm
+}
+
+.a6-overflow {
+  width: 105mm;
+  min-height: 148mm
+}
+
+.a7 {
+  width: 74mm;
+  height: 105mm;
+}
+
+.a7-overflow {
+  width: 74;
+  min-height: 105mm;
+}
+
+.a8 {
+  width: 52mm;
+  height: 74mm;
+}
+
+.a8-overflow {
+  width: 52mm;
+  min-height: 74mm;
+}
+
+.a9 {
+  width: 37mm;
+  height: 52mm;
+}
+
+.a9-overflow {
+  width: 37mm;
+  min-height: 52mm;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 100px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+  cursor: pointer;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #e4e4e4;
+  border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(156 163 175);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: rgb(107 114 128);
+}
+
+@media (prefers-color-scheme: light) {
+
+  /* Styles for light mode */
+
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  /* Styles for dark mode */
+ 
 }

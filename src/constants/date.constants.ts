@@ -1,0 +1,2 @@
+export const START_END_DATE_FORMAT = "Do MMMM YYYY";
+export const START_END_DATE_TEMPLATE_FORMAT = "MMMM YYYY";
