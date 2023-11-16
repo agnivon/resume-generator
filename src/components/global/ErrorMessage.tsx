@@ -1,5 +1,4 @@
 import { classNames } from "@/utils";
-import Spinner, { SpinnerColor } from "./Spinner";
 import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 
 type ErrorMessageProps = {

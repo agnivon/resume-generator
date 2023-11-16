@@ -1,18 +1,32 @@
+import { Routes } from "@/constants/routes.constants";
+import { classNames } from "@/utils";
 import Image from "next/image";
+import Link from "next/link";
 
-export default function BrandLogo() {
+type BrandLogoProps = {
+  iconDimensions?: number | `${number}`;
+  textClasses?: string;
+};
+
+export default function BrandLogo(props: BrandLogoProps) {
+  const { iconDimensions = 28, textClasses = "text-lg" } = props;
   return (
-    <a href="https://flowbite.com/" className="flex items-center pl-2.5 mb-5">
+    <Link href={Routes.HOME} className="flex items-center pl-2.5 mb-5">
       <Image
         src="https://flowbite.com/docs/images/logo.svg"
         className="mr-3"
         alt="Flowbite Logo"
-        height={"28"}
-        width={"28"}
+        height={iconDimensions}
+        width={iconDimensions}
       />
-      <span className="self-center text-lg font-semibold whitespace-nowrap dark:text-white">
+      <span
+        className={classNames(
+          "self-center font-semibold whitespace-nowrap dark:text-white",
+          textClasses
+        )}
+      >
         Resume Generator
       </span>
-    </a>
+    </Link>
   );
 }
