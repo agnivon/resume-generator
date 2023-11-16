@@ -4,6 +4,7 @@ import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import clientPromise from "./mongoClient";
 import { Prisma, PrismaClient } from "@prisma/client";
+import { Routes } from "@/constants/routes.constants";
 
 const authOptions: NextAuthOptions = {
   adapter: MongoDBAdapter(clientPromise),
@@ -28,8 +29,8 @@ const authOptions: NextAuthOptions = {
   ],
   callbacks: {},
   pages: {
-    signIn: "/auth/signin",
-    signOut: "/auth/signout",
+    signIn: Routes.SIGNIN,
+    signOut: Routes.SIGNOUT,
   },
 };
 const handler = NextAuth(authOptions);
