@@ -17,18 +17,24 @@ export default function ResumeGrid(props: ResumeGridProps) {
 
   return (
     <>
-      <div className="grid xl:grid-cols-4 2xl:grid-cols-5 gap-8 xl:gap-12">
-        <NewResumeCard />
-        {resumes.map((resume) => {
-          return (
-            <ResumeCard
-              resume={resume}
-              key={resume.id}
-              onClick={() => handleResumeCardClicked(resume.id)}
-            />
-          );
-        })}
-      </div>
+      {resumes.length > 0 ? (
+        <div className="grid xl:grid-cols-5 gap-8 xl:gap-12">
+          <NewResumeCard />
+          {resumes.map((resume) => {
+            return (
+              <ResumeCard
+                resume={resume}
+                key={resume.id}
+                onClick={() => handleResumeCardClicked(resume.id)}
+              />
+            );
+          })}
+        </div>
+      ) : (
+        <div className="w-full h-full flex justify-center items-center">
+          <NewResumeCard />
+        </div>
+      )}
     </>
   );
 }

@@ -73,7 +73,7 @@ function PageComponent() {
           onConfirm={handleDeleteResume}
         />
         <div className="w-full flex-grow">
-          <div className="flex justify-center p-10">
+          <div className="h-full flex flex-col p-10">
             <ResumeGrid resumes={resumes as CompleteResume[]} />
           </div>
         </div>
