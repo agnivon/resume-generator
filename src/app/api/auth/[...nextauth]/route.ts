@@ -1,10 +1,9 @@
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import NextAuth, { NextAuthOptions } from "next-auth";
 
-import GoogleProvider from "next-auth/providers/google";
-import clientPromise from "./mongoClient";
-import { Prisma, PrismaClient } from "@prisma/client";
 import { Routes } from "@/constants/routes.constants";
+import GoogleProvider from "next-auth/providers/google";
+import clientPromise from "../../../../clients/mongoClient";
 
 const authOptions: NextAuthOptions = {
   adapter: MongoDBAdapter(clientPromise),
