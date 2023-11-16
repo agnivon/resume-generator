@@ -27,6 +27,10 @@ const authOptions: NextAuthOptions = {
     // ...add more providers here
   ],
   callbacks: {},
+  pages: {
+    signIn: "/auth/signin",
+    signOut: "/auth/signout",
+  },
 };
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };

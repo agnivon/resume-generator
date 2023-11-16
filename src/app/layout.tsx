@@ -1,9 +1,9 @@
 import BaseLayout from "@/components/layouts/BaseLayout";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./fonts.css";
-import "./globals.css";
-import "./nprogress.css";
+import "./styles/fonts.css";
+import "./styles/globals.css";
+import "./styles/nprogress.css";
 import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
