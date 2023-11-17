@@ -3,12 +3,12 @@ import { ResumeFormTab } from "@/constants/state.constants";
 import { INITIAL_PREVIEW_SETTINGS } from "@/constants/template.constants";
 import { useResumePageContext } from "@/context/ResumePageContextProvider";
 import useUpsertCompleteResume from "@/hooks/resume/data/useUpsertCompleteResume";
-import { ResumeFormValues, ResumePreviewSettings } from "@/types/form.types";
+import { ResumeFormValues } from "@/types/form.types";
 import { CompleteResume } from "@/types/resume.types";
+import { ResumePreviewSettings } from "@/types/template.types";
 import { formikLogger } from "@/utils/form.utils";
 import {
-  CompleteResumeFormSchema,
-  getResumeFormSchema,
+  getResumeFormSchema
 } from "@/validation/schema/form/resume.form.schema";
 import { Formik, FormikHelpers } from "formik";
 import React from "react";

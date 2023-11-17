@@ -2,24 +2,23 @@ import Card from "@/components/global/Card";
 import Dropdown from "@/components/global/Dropdown";
 import { useHomePageContext } from "@/context/HomePageContextProvider";
 import useIsGlobalQueryRunning from "@/hooks/query/useIsGlobalQueryRunning";
-import { useAppSelector } from "@/hooks/redux/useAppSelector";
 import useInsertCompleteResume from "@/hooks/resume/data/useInsertCompleteResume";
 import { HomePageActions } from "@/reducers/HomePageReducer";
 import { classNames } from "@/utils";
 import { getResumeFromCompleteResume } from "@/utils/resume.utils";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
+import { ResumePreviewSettings } from "@prisma/client";
 import { MouseEventHandler } from "react";
 import { useAlert } from "react-alert";
 import {
   ResumeTemplate,
   TemplateFont,
 } from "../../../../constants/template.constants";
-import { selectPreviewSettingByResumeId } from "../../../../redux/slices/resumeSlice";
 import Template, { ResumeTemplateProps } from "../template/ResumeTemplate";
 
 type ResumeCardProps = ResumeTemplateProps & {
+  previewSetting?: ResumePreviewSettings;
   showFooter?: boolean;
-  usePreviewSettings?: boolean;
   sizeClass?: string;
   onClick?: MouseEventHandler<HTMLDivElement> | undefined;
   onEdit?: () => void;
@@ -78,7 +77,7 @@ const ResumeCardFooter = (props: ResumeCardProps) => {
             onChange={handleOnChange}
             disabled={globalRunning}
             items={RESUME_ACTIONS_DROPDOWN_ITEMS}
-            customClassNames="-left-28"
+            customMenuClassNames="-left-28"
             ButtonComponent={(props) => (
               <button onClick={props.onClick} className="hover:animate-pulse">
                 <EllipsisVerticalIcon className="h-6 w-6 text-gray-600 dark:text-white" />
@@ -94,22 +93,19 @@ const ResumeCardFooter = (props: ResumeCardProps) => {
 export default function ResumeCard(props: ResumeCardProps) {
   const {
     showFooter = true,
-    usePreviewSettings = true,
+    previewSetting,
     sizeClass = "a8",
     onClick,
     ...templateProps
   } = props;
 
-  const previewSetting = useAppSelector(
-    selectPreviewSettingByResumeId(props.resume.id)
-  );
-
-  const previewSettingProps = usePreviewSettings
+  const previewSettingProps = previewSetting
     ? {
         template: previewSetting?.template as ResumeTemplate | undefined,
         font: previewSetting?.font as TemplateFont | undefined,
         fontSize: previewSetting?.fontSize,
         lineHeight: previewSetting?.lineHeight,
+        accentColor: previewSetting?.accentColor,
       }
     : {};
 

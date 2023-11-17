@@ -2,7 +2,7 @@ import {
   resumePageInitialState,
   resumePageReducer,
 } from "@/reducers/ResumePageReducer";
-import { ResumePreviewSettings } from "@/types/form.types";
+import { ResumePreviewSettings } from "@/types/template.types";
 import { CompleteResume } from "@/types/resume.types";
 import { ResumePageState } from "@/types/state.types";
 import React from "react";

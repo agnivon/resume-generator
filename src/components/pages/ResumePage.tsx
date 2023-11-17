@@ -10,7 +10,7 @@ import ErrorMessage from "../global/ErrorMessage";
 import LoadingMessage from "../global/LoadingMessage";
 import RenderIf from "../global/RenderIf";
 import useGetPreviewSettingsByResumeId from "@/hooks/resume/data/useGetPreviewSettingsByResumeId";
-import { ResumePreviewSettings } from "@/types/form.types";
+import { ResumePreviewSettings } from "@/types/template.types";
 import { exclude } from "@/utils/object.utils";
 type ResumePageProps = {
   resumeId: string;

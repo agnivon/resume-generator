@@ -11,12 +11,13 @@ import React from "react";
 export type ResumeTemplateProps = {
   resume: CompleteResume;
   template?: ResumeTemplate;
-  pageSize?: TemplateSize;
+  paperSize?: TemplateSize;
   thumbnail?: boolean;
   thumbnailScale?: number;
   font?: TemplateFont;
   fontSize?: number;
   lineHeight?: number;
+  accentColor?:string;
   showDivider?: boolean;
 };
 

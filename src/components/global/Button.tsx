@@ -1,5 +1,9 @@
 import { classNames } from "@/utils";
-import React, { ButtonHTMLAttributes, ComponentProps, MouseEventHandler } from "react";
+import React, {
+  ButtonHTMLAttributes,
+  ComponentProps,
+  MouseEventHandler,
+} from "react";
 import Spinner, { SpinnerColor, SpinnerSize } from "./Spinner";
 
 export enum ButtonColor {
@@ -86,7 +90,7 @@ const COLOR_CLASSES: { [index: string]: { [index: string]: string } } = {
 };
 
 const DISABLED_COLOR_CLASSES =
-  "text-white bg-gray-400 hover:bg-gray-400 dark:bg-gray-400 hover:dark:bg-gray-400";
+  "disabled:text-gray-700 disabled:bg-gray-300 disabled:hover:bg-gray-300 disabled:dark:bg-gray-400 disabled:hover:dark:bg-gray-400";
 
 const Button = (props: ButtonProps) => {
   const {
@@ -114,7 +118,7 @@ const Button = (props: ButtonProps) => {
         COLOR_CLASSES[variant][color],
         SIZE_CLASSES[size],
         pilledClasses,
-        disabled || processing ? DISABLED_COLOR_CLASSES : "",
+        DISABLED_COLOR_CLASSES,
         customClassNames
       )}
       disabled={disabled || processing}

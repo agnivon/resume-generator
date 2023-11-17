@@ -170,7 +170,7 @@ export default function ExperienceForm() {
                     <FormikSwitch
                       name={`${selectedExpName}.currentlyWorking`}
                       label="Currently working here"
-                      containerClassNames="mt-1"
+                      containerClassNames="mt-1 shrink-0"
                     />
                   </div>
                 </div>

@@ -41,13 +41,18 @@ export const getFontClass = (font: TemplateFont) => {
 };
 
 export const getFontStyle = (
-  fontSize: number,
-  lineHeight: number,
-  size: keyof (typeof FONT_SIZE_MULTIPLIER | typeof LINE_HEIGHT_MULTIPLIER)
+  fontSize: number = 1,
+  lineHeight: number = 1,
+  size: keyof (
+    | typeof FONT_SIZE_MULTIPLIER
+    | typeof LINE_HEIGHT_MULTIPLIER
+  ) = "base",
+  color?: string
 ) => {
   return {
     fontSize: `${fontSize * FONT_SIZE_MULTIPLIER[size]}rem`,
     lineHeight: `${lineHeight * LINE_HEIGHT_MULTIPLIER[size]}rem`,
+    color,
   };
 };
 

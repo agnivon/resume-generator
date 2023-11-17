@@ -1,6 +1,6 @@
 import { useModalContext } from "@/context/ModalContextProvider";
 import { classNames } from "@/utils";
-import { XMarkIcon } from "@heroicons/react/24/solid";
+import { XMarkIcon } from "@heroicons/react/20/solid";
 
 type ModalHeaderProps = {
   children?: React.ReactNode;

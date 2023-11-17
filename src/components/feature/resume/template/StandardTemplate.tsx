@@ -30,7 +30,7 @@ import { ResumeTemplateProps } from "./ResumeTemplate";
 const Divider = () => <hr className="my-2" />;
 
 const ContactInformation = ({ contact }: { contact: Contact | null }) => {
-  const { fontSize = 1, lineHeight = 1 } = useResumeTemplateContext();
+  const { fontSize, lineHeight } = useResumeTemplateContext();
   if (!contact) return <></>;
   return (
     <div>
@@ -462,13 +462,13 @@ const StandardTemplate = React.forwardRef(
   (props: ResumeTemplateProps, ref: React.Ref<HTMLDivElement> | undefined) => {
     const {
       resume,
-      pageSize = TemplateSize.LETTER,
+      paperSize = TemplateSize.LETTER,
       thumbnailScale = 0.233,
       font = TemplateFont.MERRIWEATHER,
       thumbnail,
     } = props;
 
-    const sizeClass = getSizeClass(pageSize, thumbnail);
+    const sizeClass = getSizeClass(paperSize, thumbnail);
 
     const fontClass = getFontClass(font);
 

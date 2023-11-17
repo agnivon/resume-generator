@@ -30,7 +30,7 @@ import Markdown from "react-markdown";
 import { ResumeTemplateProps } from "./ResumeTemplate";
 
 const ContactInformation = ({ contact }: { contact: Contact | null }) => {
-  const { fontSize = 1, lineHeight = 1 } = useResumeTemplateContext();
+  const { fontSize, lineHeight } = useResumeTemplateContext();
   if (!contact) return <></>;
   return (
     <div className="w-fit min-w-[75%]">
@@ -88,7 +88,7 @@ const ContactInformation = ({ contact }: { contact: Contact | null }) => {
 };
 
 const Summary = ({ summary }: { summary: CompleteResume["summary"] }) => {
-  const { fontSize = 1, lineHeight = 1 } = useResumeTemplateContext();
+  const { fontSize, lineHeight } = useResumeTemplateContext();
 
   return (
     <div>
@@ -110,7 +110,7 @@ const Summary = ({ summary }: { summary: CompleteResume["summary"] }) => {
 };
 
 const Experience = ({ experiences }: { experiences: Experience[] }) => {
-  const { fontSize = 1, lineHeight = 1 } = useResumeTemplateContext();
+  const { fontSize, lineHeight } = useResumeTemplateContext();
 
   return (
     <div>
@@ -160,7 +160,7 @@ const Experience = ({ experiences }: { experiences: Experience[] }) => {
 };
 
 const Project = ({ projects }: { projects: Project[] }) => {
-  const { fontSize = 1, lineHeight = 1 } = useResumeTemplateContext();
+  const { fontSize, lineHeight } = useResumeTemplateContext();
 
   return (
     <div>
@@ -210,7 +210,7 @@ const Project = ({ projects }: { projects: Project[] }) => {
 };
 
 const Education = ({ education }: { education: Education[] }) => {
-  const { fontSize = 1, lineHeight = 1 } = useResumeTemplateContext();
+  const { fontSize, lineHeight } = useResumeTemplateContext();
 
   return (
     <div>
@@ -267,7 +267,7 @@ const Certification = ({
 }: {
   certifications: Certification[];
 }) => {
-  const { fontSize = 1, lineHeight = 1 } = useResumeTemplateContext();
+  const { fontSize, lineHeight } = useResumeTemplateContext();
 
   return (
     <div>
@@ -313,7 +313,7 @@ const Certification = ({
 };
 
 const Course = ({ courses }: { courses: Course[] }) => {
-  const { fontSize = 1, lineHeight = 1 } = useResumeTemplateContext();
+  const { fontSize, lineHeight } = useResumeTemplateContext();
 
   return (
     <div>
@@ -360,7 +360,7 @@ const Course = ({ courses }: { courses: Course[] }) => {
 };
 
 const Skills = ({ skills }: { skills: Skill[] }) => {
-  const { fontSize = 1, lineHeight = 1 } = useResumeTemplateContext();
+  const { fontSize, lineHeight } = useResumeTemplateContext();
 
   return (
     <div>
@@ -394,13 +394,14 @@ const BoldTemplate = React.forwardRef(
   (props: ResumeTemplateProps, ref: React.Ref<HTMLDivElement> | undefined) => {
     const {
       resume,
-      pageSize = TemplateSize.LETTER,
+      paperSize = TemplateSize.LETTER,
       thumbnailScale = 0.233,
       font = TemplateFont.MERRIWEATHER,
       thumbnail,
+      accentColor = "#000000",
     } = props;
 
-    const sizeClass = getSizeClass(pageSize, thumbnail);
+    const sizeClass = getSizeClass(paperSize, thumbnail);
 
     const fontClass = getFontClass(font);
 
@@ -421,7 +422,12 @@ const BoldTemplate = React.forwardRef(
             scale: thumbnail ? thumbnailScale : undefined,
           }}
         >
-          <div className="h-2 bg-blue-500 w-full mb-3">&nbsp;</div>
+          <div
+            className="h-2 w-full mb-3"
+            style={{ backgroundColor: accentColor }}
+          >
+            &nbsp;
+          </div>
           <ContactInformation contact={resume.contact} />
           <Summary summary={resume.summary} />
           <Experience experiences={resume.experiences} />

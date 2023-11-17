@@ -2,7 +2,7 @@
 
 import MotionDiv from "@/components/global/motion/MotionDiv";
 import { useResumePageContext } from "@/context/ResumePageContextProvider";
-import { ResumePreviewSettings } from "@/types/form.types";
+import { ResumePreviewSettings } from "@/types/template.types";
 import { useFormikContext } from "formik";
 import { useRef } from "react";
 import ResumeTemplate from "../template/ResumeTemplate";
@@ -26,11 +26,7 @@ export default function ResumePreview() {
             <div className="grow">
               <ResumeTemplate
                 resume={value.resume}
-                template={formik.values.previewSettings.template}
-                font={formik.values.previewSettings.font}
-                fontSize={formik.values.previewSettings.fontSize}
-                lineHeight={formik.values.previewSettings.lineHeight}
-                pageSize={formik.values.previewSettings.paperSize}
+                {...formik.values.previewSettings}
                 ref={resumeTemplateRef}
               />
             </div>

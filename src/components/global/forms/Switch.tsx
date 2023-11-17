@@ -15,7 +15,7 @@ export type SwitchProps = {
 };
 
 const BASE_CLASSES =
-  "w-11 h-6 rounded-full peer peer-focus:ring-4 peer-checked:after:translate-x-full  after:content-[''] after:absolute after:top-0.5 after:left-[2px]  after:border after:rounded-full after:h-5 after:w-5 after:transition-all";
+  "w-11 h-6 shrink-0 rounded-full peer peer-focus:ring-4 peer-checked:after:translate-x-full  after:content-[''] after:absolute after:top-0.5 after:left-[2px]  after:border after:rounded-full after:h-5 after:w-5 after:transition-all";
 
 const COLOR_CLASSES =
   "bg-gray-200 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:border-white after:bg-white after:border-gray-300 dark:border-gray-600 peer-checked:bg-blue-600";

@@ -6,10 +6,11 @@ import React from "react";
 import { useDetectClickOutside } from "react-detect-click-outside";
 import Button, { ButtonProps, ButtonSize } from "./Button";
 import MotionDiv from "./motion/MotionDiv";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 type DropdownItemValue = string | number | null;
 
-type DropdownItem = {
+export type DropdownItem = {
   key?: React.Key;
   value: DropdownItemValue;
   disabled?: boolean;
@@ -25,11 +26,12 @@ type DropdownProps<T extends DropdownItem> = {
   contentRenderer?: (item: T) => React.ReactNode;
   ButtonComponent?: (props: ButtonProps) => React.JSX.Element;
   dropdownButtonProps?: ButtonProps;
-  customClassNames?: string;
+  customMenuClassNames?: string;
+  customMenuButtonClassNames?: string;
   showDownArrow?: boolean;
 };
 
-const DownArrow = () => (
+/* const DownArrow = () => (
   <svg
     className="w-2.5 h-2.5 ml-2.5"
     aria-hidden="true"
@@ -45,7 +47,7 @@ const DownArrow = () => (
       d="m1 1 4 4 4-4"
     />
   </svg>
-);
+); */
 
 export default function Dropdown<T extends DropdownItem>(
   props: DropdownProps<T>
@@ -58,7 +60,8 @@ export default function Dropdown<T extends DropdownItem>(
     onChange = () => undefined,
     ButtonComponent = Button,
     dropdownButtonProps,
-    customClassNames,
+    customMenuClassNames,
+    customMenuButtonClassNames,
     showDownArrow = true,
   } = props;
 
@@ -90,7 +93,7 @@ export default function Dropdown<T extends DropdownItem>(
         label={
           <>
             {selectedValueRenderer(selectedItem)}
-            {showDownArrow && <DownArrow />}
+            {showDownArrow && <ChevronDownIcon className="w-5 h-5 ml-2.5" />}
           </>
         }
         onClick={() => setShow((show) => !show)}
@@ -104,7 +107,7 @@ export default function Dropdown<T extends DropdownItem>(
               className={classNames(
                 "absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700",
                 positionClass,
-                customClassNames
+                customMenuClassNames
               )}
               transition={{ duration: 0.1 }}
             >
@@ -125,7 +128,10 @@ export default function Dropdown<T extends DropdownItem>(
                     return (
                       <li key={key} className="cursor-pointer">
                         <button
-                          className="w-full text-left block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white disabled:text-gray-400 dark:disabled:text-gray-500"
+                          className={classNames(
+                            "w-full text-left block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white disabled:text-gray-400 dark:disabled:text-gray-500",
+                            customMenuButtonClassNames
+                          )}
                           onClick={() => {
                             onChange(value);
                             setShow(false);

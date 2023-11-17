@@ -10,3 +10,7 @@ export type HomePageState = {
 export type ResumePageState = {
   currentTab: ResumeFormTab;
 };
+
+export type SidebarState = {
+  expand: boolean;
+};

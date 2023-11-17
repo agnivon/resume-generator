@@ -3,6 +3,7 @@ import { CompleteResume } from "@/types/resume.types";
 import { useRouter } from "next/navigation";
 import NewResumeCard from "./NewResumeCard";
 import ResumeCard from "./ResumeCard";
+import { useAppSelector } from "@/hooks/redux/useAppSelector";
 
 type ResumeGridProps = {
   resumes: CompleteResume[];
@@ -11,6 +12,9 @@ type ResumeGridProps = {
 export default function ResumeGrid(props: ResumeGridProps) {
   const { resumes } = props;
   const router = useRouter();
+  const previewSettingEntities = useAppSelector(
+    (state) => state.resume.previewSettings.entities
+  );
   const handleResumeCardClicked = (resumeId: string) => {
     router.push(Routes.RESUME_WITH_ID(resumeId));
   };
@@ -24,6 +28,7 @@ export default function ResumeGrid(props: ResumeGridProps) {
             return (
               <ResumeCard
                 resume={resume}
+                previewSetting={previewSettingEntities[resume.id]}
                 key={resume.id}
                 onClick={() => handleResumeCardClicked(resume.id)}
               />

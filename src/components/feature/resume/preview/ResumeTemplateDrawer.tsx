@@ -1,7 +1,11 @@
 import Drawer, { DrawerProps } from "@/components/global/Drawer";
 import { SAMPLE_RESUME_1 } from "@/constants/sample.resumes";
-import { ResumeTemplate, TemplateSize } from "@/constants/template.constants";
-import { ResumePreviewSettings } from "@/types/form.types";
+import {
+  ResumeTemplate,
+  TemplateAccentColors,
+  TemplateSize,
+} from "@/constants/template.constants";
+import { ResumePreviewSettings } from "@/types/template.types";
 import { classNames } from "@/utils";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { useFormikContext } from "formik";
@@ -47,13 +51,13 @@ const TemplateCard = ({ template }: { template: ResumeTemplate }) => {
           <ResumeCard
             resume={SAMPLE_RESUME_1}
             template={template}
-            pageSize={TemplateSize.A4}
+            paperSize={TemplateSize.A4}
             thumbnailScale={0.5}
             sizeClass={"a6"}
             showFooter={false}
             font={formik.values.previewSettings.font}
             fontSize={formik.values.previewSettings.fontSize}
-            usePreviewSettings={false}
+            accentColor={TemplateAccentColors[template][0].color}
           />
         </div>
       </div>
