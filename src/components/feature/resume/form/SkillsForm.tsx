@@ -99,8 +99,8 @@ export default function SkillsForm() {
         onDragEnd={handleSequenceChange}
       />
       <MotionDiv>
-        <div className="flex gap-x-8 items-start">
-          <div className="w-1/4">
+        <div className="flex flex-col md:flex-row gap-8 items-start">
+          <div className="w-full md:w-1/4">
             <div className="text-lg mb-2 font-bold">Your Skills</div>
             <ListGroup items={listItems} />
             <Button
@@ -111,7 +111,7 @@ export default function SkillsForm() {
               customClassNames="mt-4 w-full"
             />
           </div>
-          <div className="w-3/4 grid grid-cols-2 items-start gap-x-8 gap-y-2">
+          <div className="w-full md:w-3/4 grid grid-cols-2 items-start gap-x-8 gap-y-2">
             <RenderIf isTrue={!doSkillsExist}>
               <div className="col-span-2 text-center dark:text-white text-gray-600">
                 {`To add a skill click on "Add new skill" on the left panel`}

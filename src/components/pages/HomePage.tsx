@@ -2,7 +2,7 @@
 
 import HomePageContextProvider, {
   useHomePageContext,
-} from "@/context/HomePageContextProvider";
+} from "@/context/page/HomePageContextProvider";
 import useDeleteCompleteResume from "@/hooks/resume/data/useDeleteCompleteResume";
 import useGetCompleteResumes from "@/hooks/resume/data/useGetCompleteResumes";
 import useGetPreviewSettings from "@/hooks/resume/data/useGetPreviewSettings";

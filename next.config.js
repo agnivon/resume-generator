@@ -7,6 +7,14 @@ const nextConfig = {
         serverActions: true,
         useDeploymentIdServerActions: true,
     },
+    images: {
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "**",
+            },
+        ],
+    },
 }
 
 module.exports = nextConfig

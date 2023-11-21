@@ -11,7 +11,7 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 type DropdownItemValue = string | number | null;
 
 export type DropdownItem = {
-  key?: React.Key;
+  key?: string | number;
   value: DropdownItemValue;
   disabled?: boolean;
 };
@@ -91,10 +91,10 @@ export default function Dropdown<T extends DropdownItem>(
       <ButtonComponent
         type="button"
         label={
-          <>
+          <div className="flex justify-between w-full">
             {selectedValueRenderer(selectedItem)}
             {showDownArrow && <ChevronDownIcon className="w-5 h-5 ml-2.5" />}
-          </>
+          </div>
         }
         onClick={() => setShow((show) => !show)}
         size={ButtonSize.SMALL}
@@ -102,10 +102,10 @@ export default function Dropdown<T extends DropdownItem>(
       />
       <AnimatePresence>
         {show && (
-          <div className="relative">
+          <div className="relative w-full">
             <MotionDiv
               className={classNames(
-                "absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700",
+                "absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow min-w-[11rem] w-full dark:bg-gray-700",
                 positionClass,
                 customMenuClassNames
               )}

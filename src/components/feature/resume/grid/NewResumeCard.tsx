@@ -1,5 +1,5 @@
 import Card from "@/components/global/Card";
-import { useHomePageContext } from "@/context/HomePageContextProvider";
+import { useHomePageContext } from "@/context/page/HomePageContextProvider";
 import { HomePageActions } from "@/reducers/HomePageReducer";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 
@@ -12,7 +12,7 @@ export default function NewResumeCard() {
 
   return (
     <div className="a8">
-      <div className="border-2 border-transparent hover:border-gray-300 border-dashed rounded-lg hover:dark:border-gray-700 p-1.5 cursor-pointer group h-full">
+      <div className="border border-transparent cursor-pointer group h-full space-y-4">
         <Card
           customClassNames="h-full flex flex-col justify-end shadow-none group-hover:shadow relative !p-0"
           onClick={handleNewResumeCardClicked}

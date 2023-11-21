@@ -17,7 +17,15 @@ const RESUME_TEMPLATES = [
   ResumeTemplate.MODERN,
 ];
 
-const TemplateCard = ({ template }: { template: ResumeTemplate }) => {
+export const TemplateCard = ({
+  template,
+  sizeClass = "a6",
+  thumbnailScale = 0.5,
+}: {
+  template: ResumeTemplate;
+  sizeClass?: string;
+  thumbnailScale?: number;
+}) => {
   const formik = useFormikContext<{ previewSettings: ResumePreviewSettings }>();
   const selectedTemplate = formik.values.previewSettings.template;
   const isTemplateSelected = template === selectedTemplate;
@@ -52,8 +60,8 @@ const TemplateCard = ({ template }: { template: ResumeTemplate }) => {
             resume={SAMPLE_RESUME_1}
             template={template}
             paperSize={TemplateSize.A4}
-            thumbnailScale={0.5}
-            sizeClass={"a6"}
+            thumbnailScale={thumbnailScale}
+            sizeClass={sizeClass}
             showFooter={false}
             font={formik.values.previewSettings.font}
             fontSize={formik.values.previewSettings.fontSize}

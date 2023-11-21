@@ -30,13 +30,13 @@ import { ResumeTemplateProps } from "./ResumeTemplate";
 const Divider = () => <hr className="my-2" />;
 
 const ContactInformation = ({ contact }: { contact: Contact | null }) => {
-  const { fontSize, lineHeight } = useResumeTemplateContext();
+  const { fontSize, lineHeight, accentColor } = useResumeTemplateContext();
   if (!contact) return <></>;
   return (
     <div>
       <div
         className="text-center mb-1 font-bold"
-        style={getFontStyle(fontSize, lineHeight, "2xl")}
+        style={getFontStyle(fontSize, lineHeight, "2xl", accentColor)}
       >
         {contact.fullName}
       </div>

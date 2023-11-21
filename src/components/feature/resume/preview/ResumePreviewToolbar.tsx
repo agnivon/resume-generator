@@ -1,12 +1,13 @@
 import Button, { ButtonColor, ButtonSize } from "@/components/global/Button";
 import Card from "@/components/global/Card";
-import Dropdown, { DropdownItem } from "@/components/global/Dropdown";
+import Dropdown from "@/components/global/Dropdown";
 import MotionDiv from "@/components/global/motion/MotionDiv";
 import {
-  TemplateAccentColors,
-  TemplateFont,
-  TemplateSize,
-} from "@/constants/template.constants";
+  FONT_SELECT_OPTIONS,
+  PAPER_SIZE_DROPDOWN_OPTIONS,
+} from "@/constants/form.constants";
+import { AccentColorList } from "@/constants/template.constants";
+import { useResumePageContext } from "@/context/page/ResumePageContextProvider";
 import useUpsertPreviewSettings from "@/hooks/resume/data/useUpsertPreviewSettings";
 import { ResumePreviewSettings } from "@/types/template.types";
 import { TypeKeys } from "@/types/utility.types";
@@ -20,22 +21,8 @@ import {
 import { ArrowDownTrayIcon } from "@heroicons/react/24/solid";
 import { useFormikContext } from "formik";
 import React from "react";
-import ResumeTemplateDrawer from "./ResumeTemplateDrawer";
-import { useResumePageContext } from "@/context/ResumePageContextProvider";
 import { useAlert } from "react-alert";
-
-const FONT_SELECT_OPTIONS = [
-  { key: "Merriweather", value: TemplateFont.MERRIWEATHER },
-  { key: "Source Sans 3", value: TemplateFont.SOURCE_SANS },
-  { key: "Deja Vu Serif", value: TemplateFont.DEJA_VU_SERIF },
-  { key: "Roboto Mono", value: TemplateFont.ROBOTO_MONO },
-  { key: "AR One Sans", value: TemplateFont.AR_ONE_SANS },
-];
-
-const PAPER_SIZE_DROPDOWN_OPTIONS = [
-  { key: "Letter", value: TemplateSize.LETTER },
-  { key: "A4", value: TemplateSize.A4 },
-];
+import ResumeTemplateDrawer from "./ResumeTemplateDrawer";
 
 const NumericValueWidget = ({
   name,
@@ -97,12 +84,10 @@ export default function ResumePreviewToolbar() {
 
   const template = formik.values.previewSettings.template;
 
-  const accentColorDropdownOptions = TemplateAccentColors[template].map(
-    (color) => ({
-      key: color.name,
-      value: color.color,
-    })
-  );
+  const accentColorDropdownOptions = AccentColorList.map((color) => ({
+    key: color.name,
+    value: color.color,
+  }));
 
   const printResumePdf = () => {
     window.print();

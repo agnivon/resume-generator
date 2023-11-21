@@ -32,7 +32,7 @@ const AlertTemplate =
     const { theme } = useThemeContext();
 
     return (
-      <div style={style} className={classNames(theme, "print-hidden")}>
+      <div style={style} className={classNames(theme, "print:hidden")}>
         <div
           className={classNames(
             "flex p-4 mb-4 text-sm rounded-lg border",

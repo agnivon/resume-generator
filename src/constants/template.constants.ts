@@ -34,6 +34,8 @@ const AccentColors: Record<string, AccentColor> = {
   },
 };
 
+export const AccentColorList = Object.values(AccentColors);
+
 export const TemplateAccentColors = {
   [ResumeTemplate.STANDARD]: [AccentColors["gray"]],
   [ResumeTemplate.BOLD]: [AccentColors["blue"], AccentColors["gray"]],

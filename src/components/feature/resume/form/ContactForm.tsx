@@ -43,7 +43,7 @@ export default function ContactForm() {
 
   return (
     <MotionDiv>
-      <div className="grid grid-cols-2 items-start gap-x-8 gap-y-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 items-start gap-x-8 gap-y-2">
         <div className="col-span-1">
           <FormikInput
             label="Full Name *"

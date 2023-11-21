@@ -11,13 +11,15 @@ export default function Error({
   reset: () => void;
 }) {
   return (
-    <div className="h-screen w-screen flex flex-col justify-center items-center gap-y-2">
-      <ErrorMessage message={error.message} />
-      <Button
-        label="Try again"
-        color={ButtonColor.ALT}
-        onClick={() => reset()}
-      />
+    <div className="h-screen w-full flex justify-center items-center">
+      <div className="flex flex-col justify-center items-center gap-y-6">
+        <ErrorMessage message={error.message} orientation="full" />
+        <Button
+          label="Try again"
+          color={ButtonColor.ALT}
+          onClick={() => reset()}
+        />
+      </div>
     </div>
   );
 }

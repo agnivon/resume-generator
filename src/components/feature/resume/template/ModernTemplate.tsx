@@ -264,10 +264,10 @@ const Education = ({ education }: { education: Education[] }) => {
                     {[
                       edu.minor ? `Minor in ${edu.minor}` : ``,
                       edu.year,
-                      edu.gpa,
+                      edu.gpa ? `${edu.gpa} GPA` : ``,
                     ]
                       .filter(Boolean)
-                      .join(` , `)}
+                      .join(`, `)}
                   </div>
                   <div
                     className="my-1"
@@ -315,7 +315,7 @@ const Certification = ({
                     className="font-semibold mt-1"
                     style={getFontStyle(fontSize, lineHeight, "sm")}
                   >
-                    <span className="" style={{ accentColor }}>
+                    <span className="" style={{ color: accentColor }}>
                       {cert.name}
                     </span>
                     &nbsp;|&nbsp;

@@ -5,6 +5,7 @@ import React from "react";
 import RenderIf from "../global/RenderIf";
 import Sidebar from "../feature/sidebar/Sidebar";
 import { isAuthenticated } from "@/utils/session.utils";
+import Navbar from "../feature/navbar/Navbar";
 
 export default async function AuthLayout({
   children,
@@ -20,10 +21,13 @@ export default async function AuthLayout({
   }
   return (
     <RenderIf isTrue={authenticated}>
-      <Sidebar />
-      <main className="min-h-screen w-full flex flex-col print-initial overflow-y-auto">
-        {children}
-      </main>
+      <Navbar />
+      <div className="flex">
+        <Sidebar />
+        <main className="min-h-screen w-full flex flex-col print-initial overflow-y-auto">
+          {children}
+        </main>
+      </div>
     </RenderIf>
   );
 }

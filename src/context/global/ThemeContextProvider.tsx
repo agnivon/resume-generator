@@ -1,9 +1,9 @@
 "use client";
 
+import useGetTheme from "@/hooks/ui/useGetTheme";
 import { Theme } from "@/types";
 import { SetState } from "@/types/utility.types";
-import React from "react";
-import { useContext } from "react";
+import React, { useContext } from "react";
 
 type ThemeContextValue = {
   theme: Theme;
@@ -16,17 +16,7 @@ const ThemeContext = React.createContext<ThemeContextValue>({
 });
 
 const ThemeContextProvider = ({ children }: { children?: React.ReactNode }) => {
-  const [theme, setTheme] = React.useState<Theme>("light");
-
-  React.useLayoutEffect(() => {
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-
-    if (prefersDark) {
-      setTheme("dark");
-    }
-  }, []);
+  const [theme, setTheme] = useGetTheme();
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>

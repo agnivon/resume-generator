@@ -107,10 +107,12 @@ export default function useFormListManager<
   const getListItemContent = (content: React.ReactNode, idx: number) => {
     return (
       <div className="flex justify-between items-center w-full">
-        <div className="flex flex-col w-full text-left">{content}</div>
-        <div className="ml-1">
+        <div className="flex flex-col w-full text-left overflow-hidden">
+          {content}
+        </div>
+        <div className="ml-1 shrink-0">
           <TrashIcon
-            className="text-red-500 h-5 w-5"
+            className="text-red-500 h-5 w-5 shrink-0"
             onClick={(e) => {
               e.stopPropagation();
               setDeleteIdx(idx);
@@ -124,8 +126,8 @@ export default function useFormListManager<
   const getDraggableListItemContent = (content: React.ReactNode) => {
     return (
       <div className="flex justify-between w-full items-center">
-        <div className="text-left">{content}</div>
-        <div className="ml-1">
+        <div className="text-left line-clamp-3 overflow-hidden">{content}</div>
+        <div className="ml-1 shrink-0">
           <Bars3Icon className="text-gray-500 dark:text-white h-5 w-5 shrink-0" />
         </div>
       </div>

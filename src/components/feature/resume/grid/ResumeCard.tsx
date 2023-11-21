@@ -1,6 +1,6 @@
 import Card from "@/components/global/Card";
 import Dropdown from "@/components/global/Dropdown";
-import { useHomePageContext } from "@/context/HomePageContextProvider";
+import { useHomePageContext } from "@/context/page/HomePageContextProvider";
 import useIsGlobalQueryRunning from "@/hooks/query/useIsGlobalQueryRunning";
 import useInsertCompleteResume from "@/hooks/resume/data/useInsertCompleteResume";
 import { HomePageActions } from "@/reducers/HomePageReducer";
@@ -127,7 +127,7 @@ export default function ResumeCard(props: ResumeCardProps) {
               {...previewSettingProps}
               {...templateProps}
             />
-            <div className="absolute w-full h-full bottom-0 left-0 right-0 top-0 bg-gray-700 opacity-0 group-hover:opacity-[0.15] dark:group-hover:opacity-[0.2]"></div>
+            <div className="absolute w-full h-full bottom-0 left-0 right-0 top-0 bg-gray-700 transition-opacity opacity-0 group-hover:opacity-[0.15] dark:group-hover:opacity-[0.2]"></div>
           </div>
           {showFooter && <ResumeCardFooter {...props} />}
         </Card>

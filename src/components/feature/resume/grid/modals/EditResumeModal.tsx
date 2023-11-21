@@ -3,7 +3,7 @@ import FormikInput from "@/components/global/forms/formik/FormikInput";
 import Modal, { ModalProps } from "@/components/global/modal/Modal";
 import ModalBody from "@/components/global/modal/ModalBody";
 import ModalHeader from "@/components/global/modal/ModalHeader";
-import { useHomePageContext } from "@/context/HomePageContextProvider";
+import { useHomePageContext } from "@/context/page/HomePageContextProvider";
 import useUpdateResume from "@/hooks/resume/data/useUpdateResume";
 import { HomePageActions } from "@/reducers/HomePageReducer";
 import { Resume } from "@/types/resume.types";
