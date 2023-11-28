@@ -110,8 +110,8 @@ export default function ExperienceForm() {
         onDragEnd={handleSequenceChange}
       />
       <MotionDiv>
-        <div className="flex gap-x-8 items-start">
-          <div className="w-1/4">
+        <div className="flex flex-col md:flex-row gap-8 items-start">
+          <div className="w-full md:w-1/4">
             <div className="text-lg font-bold mb-2">Your Experiences</div>
             <ListGroup items={listItems} />
             <Button
@@ -122,7 +122,7 @@ export default function ExperienceForm() {
               customClassNames="mt-4 w-full"
             />
           </div>
-          <div className="w-3/4 grid grid-cols-2 items-start gap-x-8 gap-y-2">
+          <div className="w-full md:w-3/4 grid grid-cols-2 items-start gap-x-8 gap-y-2">
             <RenderIf isTrue={!doExperiencesExist}>
               <div className="col-span-2 text-center">
                 {`To add an experience click on "Add new experience" on the left
@@ -153,25 +153,31 @@ export default function ExperienceForm() {
                 </div>
                 <div className="col-span-2">
                   <Label label="How long were you with the company? *" />
-                  <div className="flex items-center gap-x-4">
-                    <FormikDatepicker
-                      //type="month"
-                      name={`${selectedExpName}.startDate`}
-                      placeholder="Start Date"
-                      format={START_END_DATE_FORMAT}
-                    />
-                    <FormikDatepicker
-                      name={`${selectedExpName}.endDate`}
-                      //type="month"
-                      placeholder="End Date"
-                      disabled={Boolean(selectedExperience?.currentlyWorking)}
-                      format={START_END_DATE_FORMAT}
-                    />
-                    <FormikSwitch
-                      name={`${selectedExpName}.currentlyWorking`}
-                      label="Currently working here"
-                      containerClassNames="mt-1"
-                    />
+                  <div className="grid grid-cols-2 md:grid-cols-3 items-center gap-y-2 gap-x-4">
+                    <div className="col-span-2 md:col-span-1">
+                      <FormikDatepicker
+                        //type="month"
+                        name={`${selectedExpName}.startDate`}
+                        placeholder="Start Date"
+                        format={START_END_DATE_FORMAT}
+                      />
+                    </div>
+                    <div className="col-span-2 md:col-span-1">
+                      <FormikDatepicker
+                        name={`${selectedExpName}.endDate`}
+                        //type="month"
+                        placeholder="End Date"
+                        disabled={Boolean(selectedExperience?.currentlyWorking)}
+                        format={START_END_DATE_FORMAT}
+                      />
+                    </div>
+                    <div className="col-span-2 md:col-span-1">
+                      <FormikSwitch
+                        name={`${selectedExpName}.currentlyWorking`}
+                        label="Currently working here"
+                        containerClassNames="mt-1 shrink-0"
+                      />
+                    </div>
                   </div>
                 </div>
                 <div className="col-span-2">

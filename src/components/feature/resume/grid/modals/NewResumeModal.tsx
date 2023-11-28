@@ -4,7 +4,7 @@ import Modal, { ModalProps } from "@/components/global/modal/Modal";
 import ModalBody from "@/components/global/modal/ModalBody";
 import ModalHeader from "@/components/global/modal/ModalHeader";
 import { NEW_CONTACT, NEW_RESUME } from "@/constants/resume.constants";
-import { useHomePageContext } from "@/context/HomePageContextProvider";
+import { useHomePageContext } from "@/context/page/HomePageContextProvider";
 import useNextAuthSession from "@/hooks/auth/useNextAuthSession";
 import useInsertCompleteResume from "@/hooks/resume/data/useInsertCompleteResume";
 import { HomePageActions } from "@/reducers/HomePageReducer";

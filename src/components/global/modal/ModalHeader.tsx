@@ -1,6 +1,6 @@
 import { useModalContext } from "@/context/ModalContextProvider";
 import { classNames } from "@/utils";
-import { XMarkIcon } from "@heroicons/react/24/solid";
+import { XMarkIcon } from "@heroicons/react/20/solid";
 
 type ModalHeaderProps = {
   children?: React.ReactNode;
@@ -25,7 +25,7 @@ const ModalHeader = ({ children }: ModalHeaderProps) => {
   return (
     <div
       className={classNames(
-        "flex items-start justify-between rounded-t ",
+        "flex items-center justify-between rounded-t ",
         !popup ? "border-b dark:border-gray-600 p-4" : "p-2"
       )}
     >

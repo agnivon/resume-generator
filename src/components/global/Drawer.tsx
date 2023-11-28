@@ -1,5 +1,5 @@
 import { classNames } from "@/utils";
-import { XMarkIcon } from "@heroicons/react/24/solid";
+import { XMarkIcon } from "@heroicons/react/20/solid";
 import MotionDiv from "./motion/MotionDiv";
 import { AnimatePresence } from "framer-motion";
 

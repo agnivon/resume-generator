@@ -1,6 +1,6 @@
 import { TemplateFont, TemplateSize } from "@/constants/template.constants";
 import { useResumeTemplateContext } from "@/context/ResumeTemplateContextProvider";
-import {
+import type {
   Certification,
   CompleteResume,
   Contact,
@@ -30,13 +30,13 @@ import { ResumeTemplateProps } from "./ResumeTemplate";
 const Divider = () => <hr className="my-2" />;
 
 const ContactInformation = ({ contact }: { contact: Contact | null }) => {
-  const { fontSize = 1, lineHeight = 1 } = useResumeTemplateContext();
+  const { fontSize, lineHeight, accentColor } = useResumeTemplateContext();
   if (!contact) return <></>;
   return (
     <div>
       <div
         className="text-center mb-1 font-bold"
-        style={getFontStyle(fontSize, lineHeight, "2xl")}
+        style={getFontStyle(fontSize, lineHeight, "3xl", accentColor)}
       >
         {contact.fullName}
       </div>
@@ -462,13 +462,13 @@ const StandardTemplate = React.forwardRef(
   (props: ResumeTemplateProps, ref: React.Ref<HTMLDivElement> | undefined) => {
     const {
       resume,
-      pageSize = TemplateSize.LETTER,
+      paperSize = TemplateSize.LETTER,
       thumbnailScale = 0.233,
       font = TemplateFont.MERRIWEATHER,
       thumbnail,
     } = props;
 
-    const sizeClass = getSizeClass(pageSize, thumbnail);
+    const sizeClass = getSizeClass(paperSize, thumbnail);
 
     const fontClass = getFontClass(font);
 

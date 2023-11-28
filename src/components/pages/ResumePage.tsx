@@ -1,28 +1,19 @@
 "use client";
 
-import ResumePageContextProvider, {
-  useResumePageContext,
-} from "@/context/ResumePageContextProvider";
-import useGetCompleteResumeById from "@/hooks/resume/data/useGetCompleteResumeById";
-import { CompleteResume } from "@/types/resume.types";
+import { useResumePageContext } from "@/context/page/ResumePageContextProvider";
 import ResumeForm from "../feature/resume/form/ResumeForm";
-import ErrorMessage from "../global/ErrorMessage";
-import LoadingMessage from "../global/LoadingMessage";
-import RenderIf from "../global/RenderIf";
-import useGetPreviewSettingsByResumeId from "@/hooks/resume/data/useGetPreviewSettingsByResumeId";
-import { ResumePreviewSettings } from "@/types/form.types";
-import { exclude } from "@/utils/object.utils";
-type ResumePageProps = {
-  resumeId: string;
-};
 
-const PageComponent = (_props: ResumePageProps) => {
+/* type ResumePageProps = {
+  resumeId: string;
+}; */
+
+const PageComponent = () => {
   const { value } = useResumePageContext();
 
   return (
     <>
       <div className="w-full flex-grow">
-        <div className="p-10 print-padding-none">
+        <div className="p-10 print:p-0">
           <ResumeForm
             resume={value.resume}
             previewSettings={value.previewSettings}
@@ -33,37 +24,10 @@ const PageComponent = (_props: ResumePageProps) => {
   );
 };
 
-export default function ResumePage(props: ResumePageProps) {
-  const resumeQuery = useGetCompleteResumeById(props.resumeId);
-  const previewSettingsQuery = useGetPreviewSettingsByResumeId(props.resumeId);
-  const previewSettings = previewSettingsQuery.data
-    ? (exclude(previewSettingsQuery.data, [
-        "id",
-        "resumeId",
-      ]) as ResumePreviewSettings)
-    : null;
+export default function ResumePage() {
   return (
     <>
-      <ResumePageContextProvider
-        value={{
-          resume: resumeQuery.data as CompleteResume,
-          previewSettings,
-        }}
-      >
-        <RenderIf
-          isTrue={resumeQuery.isLoading || previewSettingsQuery.isLoading}
-        >
-          <LoadingMessage />
-        </RenderIf>
-        <RenderIf isTrue={resumeQuery.isError || previewSettingsQuery.isError}>
-          <ErrorMessage message="Resume not found" />
-        </RenderIf>
-        <RenderIf
-          isTrue={resumeQuery.isSuccess && previewSettingsQuery.isSuccess}
-        >
-          <PageComponent {...props} />
-        </RenderIf>
-      </ResumePageContextProvider>
+      <PageComponent />
     </>
   );
 }

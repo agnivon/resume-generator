@@ -1,12 +1,10 @@
+import prisma from "@/clients/prismaClient";
 import { CompleteResume } from "@/types/resume.types";
 import { exclude } from "@/utils/object.utils";
 import { isAuthenticated } from "@/utils/session.utils";
 import { CompleteResumeSchema } from "@/validation/schema/resume.schema";
-import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-
-const prisma = new PrismaClient();
 
 export async function POST(request: Request) {
   const session = await getServerSession();

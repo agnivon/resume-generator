@@ -1,6 +1,6 @@
 import { TemplateFont, TemplateSize } from "@/constants/template.constants";
 import { useResumeTemplateContext } from "@/context/ResumeTemplateContextProvider";
-import {
+import type {
   Certification,
   Contact,
   Course,
@@ -30,13 +30,17 @@ import Markdown from "react-markdown";
 import { ResumeTemplateProps } from "./ResumeTemplate";
 
 const ContactInformation = ({ contact }: { contact: Contact | null }) => {
-  const { fontSize = 1, lineHeight = 1 } = useResumeTemplateContext();
+  const {
+    fontSize = 1,
+    lineHeight = 1,
+    accentColor,
+  } = useResumeTemplateContext();
   if (!contact) return <></>;
   return (
     <div className="w-fit min-w-[75%]">
       <div
-        className="mb-1 font-semibold text-blue-500"
-        style={getFontStyle(fontSize, lineHeight, "3xl")}
+        className="mb-1 font-semibold"
+        style={getFontStyle(fontSize, lineHeight, "3xl", accentColor)}
       >
         {contact.fullName}
       </div>
@@ -87,7 +91,7 @@ const ContactInformation = ({ contact }: { contact: Contact | null }) => {
 };
 
 const Summary = ({ summary }: { summary: CompleteResume["summary"] }) => {
-  const { fontSize = 1, lineHeight = 1 } = useResumeTemplateContext();
+  const { fontSize, lineHeight } = useResumeTemplateContext();
 
   return (
     <div>
@@ -109,7 +113,7 @@ const Summary = ({ summary }: { summary: CompleteResume["summary"] }) => {
 };
 
 const Experience = ({ experiences }: { experiences: Experience[] }) => {
-  const { fontSize = 1, lineHeight = 1 } = useResumeTemplateContext();
+  const { fontSize, lineHeight, accentColor } = useResumeTemplateContext();
 
   return (
     <div>
@@ -136,7 +140,9 @@ const Experience = ({ experiences }: { experiences: Experience[] }) => {
                     className="font-semibold leading-none mt-1"
                     style={getFontStyle(fontSize, lineHeight, "sm")}
                   >
-                    <span className="text-blue-500">{exp.role}</span>
+                    <span className="" style={{ color: accentColor }}>
+                      {exp.role}
+                    </span>
                     &nbsp;|&nbsp;{exp.companyName}
                   </div>
                   <div
@@ -165,7 +171,7 @@ const Experience = ({ experiences }: { experiences: Experience[] }) => {
 };
 
 const Project = ({ projects }: { projects: Project[] }) => {
-  const { fontSize = 1, lineHeight = 1 } = useResumeTemplateContext();
+  const { fontSize, lineHeight, accentColor } = useResumeTemplateContext();
 
   return (
     <div>
@@ -192,7 +198,9 @@ const Project = ({ projects }: { projects: Project[] }) => {
                     className="font-semibold mt-1"
                     style={getFontStyle(fontSize, lineHeight, "sm")}
                   >
-                    <span className="text-blue-500">{proj.title}</span>
+                    <span className="" style={{ color: accentColor }}>
+                      {proj.title}
+                    </span>
                     &nbsp;|&nbsp;{proj.organization}
                   </div>
                   <div
@@ -221,7 +229,7 @@ const Project = ({ projects }: { projects: Project[] }) => {
 };
 
 const Education = ({ education }: { education: Education[] }) => {
-  const { fontSize = 1, lineHeight = 1 } = useResumeTemplateContext();
+  const { fontSize, lineHeight, accentColor } = useResumeTemplateContext();
 
   return (
     <div>
@@ -244,7 +252,9 @@ const Education = ({ education }: { education: Education[] }) => {
                     className="font-semibold mt-1"
                     style={getFontStyle(fontSize, lineHeight, "sm")}
                   >
-                    <span className="text-blue-500">{edu.major}</span>
+                    <span className="" style={{ color: accentColor }}>
+                      {edu.major}
+                    </span>
                     &nbsp;|&nbsp;{edu.institution}&nbsp;-&nbsp;{edu.location}
                   </div>
                   <div
@@ -254,10 +264,10 @@ const Education = ({ education }: { education: Education[] }) => {
                     {[
                       edu.minor ? `Minor in ${edu.minor}` : ``,
                       edu.year,
-                      edu.gpa,
+                      edu.gpa ? `${edu.gpa} GPA` : ``,
                     ]
                       .filter(Boolean)
-                      .join(` , `)}
+                      .join(`, `)}
                   </div>
                   <div
                     className="my-1"
@@ -282,7 +292,7 @@ const Certification = ({
 }: {
   certifications: Certification[];
 }) => {
-  const { fontSize = 1, lineHeight = 1 } = useResumeTemplateContext();
+  const { fontSize, lineHeight, accentColor } = useResumeTemplateContext();
 
   return (
     <div>
@@ -305,7 +315,9 @@ const Certification = ({
                     className="font-semibold mt-1"
                     style={getFontStyle(fontSize, lineHeight, "sm")}
                   >
-                    <span className="text-blue-500">{cert.name}</span>
+                    <span className="" style={{ color: accentColor }}>
+                      {cert.name}
+                    </span>
                     &nbsp;|&nbsp;
                     {cert.institution}
                   </div>
@@ -334,7 +346,7 @@ const Certification = ({
 };
 
 const Course = ({ courses }: { courses: Course[] }) => {
-  const { fontSize = 1, lineHeight = 1 } = useResumeTemplateContext();
+  const { fontSize = 1, lineHeight, accentColor } = useResumeTemplateContext();
 
   return (
     <div>
@@ -357,7 +369,9 @@ const Course = ({ courses }: { courses: Course[] }) => {
                     className="font-semibold mt-1"
                     style={getFontStyle(fontSize, lineHeight, "sm")}
                   >
-                    <span className="text-blue-500">{course.name}</span>
+                    <span className="" style={{ color: accentColor }}>
+                      {course.name}
+                    </span>
                     &nbsp;|&nbsp;
                     {course.institution}
                   </div>
@@ -386,7 +400,7 @@ const Course = ({ courses }: { courses: Course[] }) => {
 };
 
 const Skills = ({ skills }: { skills: Skill[] }) => {
-  const { fontSize = 1, lineHeight = 1 } = useResumeTemplateContext();
+  const { fontSize, lineHeight } = useResumeTemplateContext();
 
   return (
     <div>
@@ -420,13 +434,13 @@ const ModernTemplate = React.forwardRef(
   (props: ResumeTemplateProps, ref: React.Ref<HTMLDivElement> | undefined) => {
     const {
       resume,
-      pageSize = TemplateSize.LETTER,
+      paperSize = TemplateSize.LETTER,
       thumbnailScale = 0.233,
       font = TemplateFont.MERRIWEATHER,
       thumbnail,
     } = props;
 
-    const sizeClass = getSizeClass(pageSize, thumbnail);
+    const sizeClass = getSizeClass(paperSize, thumbnail);
 
     const fontClass = getFontClass(font);
 

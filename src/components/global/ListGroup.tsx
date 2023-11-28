@@ -14,7 +14,7 @@ export type ListItem = {
 type ListItemProps = ListItem & { first?: boolean; last?: boolean };
 
 const BASE_CLASSES =
-  "relative inline-flex items-center text-base w-full px-4 py-2 font-medium cursor-pointer";
+  "relative inline-flex items-center text-base w-full px-4 py-2 font-medium cursor-pointer first:rounded-t-lg last:rounded-b-lg";
 
 const DISABLED_COLOR_CLASSES =
   "bg-gray-100 cursor-not-allowed dark:bg-gray-600 dark:text-gray-400";
@@ -27,9 +27,9 @@ const BASE_COLOR_CLASSES =
 
 const NOT_LAST_CLASSES = "border-b border-gray-200 dark:border-gray-600";
 
-const LAST_CLASSES = "rounded-b-lg";
+//const LAST_CLASSES = "rounded-b-lg";
 
-const FIRST_CLASSES = "rounded-t-lg";
+//const FIRST_CLASSES = "rounded-t-lg";
 
 export const ListItem = React.memo((props: ListItemProps) => {
   const { content, Icon, onClick, selected, disabled, first, last } = props;
@@ -43,8 +43,7 @@ export const ListItem = React.memo((props: ListItemProps) => {
           : selected
           ? SELECTED_COLOR_CLASSES
           : BASE_COLOR_CLASSES,
-        !last ? NOT_LAST_CLASSES : LAST_CLASSES,
-        first ? FIRST_CLASSES : ""
+        !last ? NOT_LAST_CLASSES : ""
       )}
       onClick={onClick}
     >

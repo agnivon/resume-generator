@@ -1,6 +1,6 @@
-import { ResumePreviewSettings } from "@/types/form.types";
+import { AccentColor, ResumePreviewSettings } from "@/types/template.types";
 
-export enum ResumeTemplate {
+export enum TemplateType {
   STANDARD = "Standard",
   BOLD = "Bold",
   MODERN = "Modern",
@@ -23,13 +23,24 @@ export enum TemplateFont {
   AR_ONE_SANS = "ar-one-sans",
 }
 
-export const INITIAL_PREVIEW_SETTINGS = (): ResumePreviewSettings => ({
-  template: ResumeTemplate.STANDARD,
-  font: TemplateFont.MERRIWEATHER,
-  paperSize: TemplateSize.LETTER,
-  fontSize: 0.9,
-  lineHeight: 1,
-});
+const AccentColors: Record<string, AccentColor> = {
+  gray: {
+    color: "rgb(55 65 81 / var(--tw-text-opacity))",
+    name: "Gray",
+  },
+  blue: {
+    color: "rgb(59 130 246 / var(--tw-text-opacity))",
+    name: "Blue",
+  },
+};
+
+export const AccentColorList = Object.values(AccentColors);
+
+export const TemplateAccentColors = {
+  [TemplateType.STANDARD]: [AccentColors["gray"]],
+  [TemplateType.BOLD]: [AccentColors["blue"], AccentColors["gray"]],
+  [TemplateType.MODERN]: [AccentColors["blue"], AccentColors["gray"]],
+};
 
 export const FONT_SIZE_MULTIPLIER = {
   xs: 0.75,
@@ -50,3 +61,12 @@ export const LINE_HEIGHT_MULTIPLIER = {
   "2xl": 2,
   "3xl": 2.25,
 } as const;
+
+export const INITIAL_PREVIEW_SETTINGS = (): ResumePreviewSettings => ({
+  template: TemplateType.STANDARD,
+  font: TemplateFont.MERRIWEATHER,
+  paperSize: TemplateSize.LETTER,
+  fontSize: 0.9,
+  lineHeight: 1,
+  accentColor: TemplateAccentColors[TemplateType.STANDARD][0].color,
+});

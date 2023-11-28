@@ -10,8 +10,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  email         String   @unique
+  image         String
+  emailVerified Boolean?
+  Resume        Resume[]
+
+  @@map("users")
+}
+
 model Resume {
   id              String                 @id @default(auto()) @map("_id") @db.ObjectId
+  user            User                   @relation(fields: [userId], references: [email])
   userId          String
   name            String
   createdOn       Int
@@ -136,14 +148,15 @@ model Skill {
 }
 
 model ResumePreviewSettings {
-  id         String @id @default(auto()) @map("_id") @db.ObjectId
-  Resume     Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
-  resumeId   String @unique @db.ObjectId
-  template   String
-  font       String
-  paperSize  String
-  fontSize   Float
-  lineHeight Float
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  Resume      Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  resumeId    String @unique @db.ObjectId
+  template    String
+  font        String
+  paperSize   String
+  fontSize    Float
+  lineHeight  Float
+  accentColor String @default("")
 
   @@map("preview-settings")
 }

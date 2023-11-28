@@ -1,20 +1,23 @@
 import PilledTabs from "@/components/global/tabs/PilledTabs";
+import { Routes } from "@/constants/routes.constants";
 import { ResumeFormTab } from "@/constants/state.constants";
-import { useResumePageContext } from "@/context/ResumePageContextProvider";
+import { useResumePageContext } from "@/context/page/ResumePageContextProvider";
+import useIsGlobalQueryRunning from "@/hooks/query/useIsGlobalQueryRunning";
 import { ResumePageActions } from "@/reducers/ResumePageReducer";
 import { ResumeFormValues } from "@/types/form.types";
-import { FormikProps, useFormikContext } from "formik";
-import React from "react";
-import _ from "lodash";
-import ConfirmationModal from "./modals/ConfirmationModal";
-import { useIsFetching, useIsMutating } from "@tanstack/react-query";
 import { exclude } from "@/utils/object.utils";
-import useIsGlobalQueryRunning from "@/hooks/query/useIsGlobalQueryRunning";
+import { useFormikContext } from "formik";
+import _ from "lodash";
+import { useRouter } from "next/navigation";
+import React from "react";
+import ConfirmationModal from "./modals/ConfirmationModal";
 
 export default function ResumeFormTabs({}: {}) {
   const { value, state, dispatch } = useResumePageContext();
 
   const formik = useFormikContext<ResumeFormValues>();
+
+  const router = useRouter();
 
   const { globalRunning } = useIsGlobalQueryRunning();
 
@@ -108,14 +111,15 @@ export default function ResumeFormTabs({}: {}) {
     },
     {
       label: "Preview",
-      current: state.currentTab === ResumeFormTab.PREVIEW,
-      onClick: () => handleTabClicked(ResumeFormTab.PREVIEW),
-      loading: state.currentTab !== ResumeFormTab.PREVIEW && isTabDisabled,
+
+      onClick: () =>
+        router.push(Routes.GET_RESUME_PREVIEW_WITH_ID(value.resume.id)),
+      loading: isTabDisabled,
     },
   ];
 
   return (
-    <div className="print-hidden" id="resumeFormTabs">
+    <div className="print:hidden" id="resumeFormTabs">
       <ConfirmationModal
         show={!!changeTab}
         onClose={() => setChangeTab(null)}

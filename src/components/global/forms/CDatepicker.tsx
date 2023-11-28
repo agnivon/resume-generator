@@ -109,6 +109,7 @@ export default function CDatepicker(props: CDatepickerProps) {
           theme={customTheme}
           color={errorText ? "failure" : undefined}
           shadow={true}
+          showClearButton={false}
           {...rest}
         />
       </div>

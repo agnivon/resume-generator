@@ -8,16 +8,16 @@ import {
 import {
   FONT_SIZE_MULTIPLIER,
   LINE_HEIGHT_MULTIPLIER,
-  ResumeTemplate,
+  TemplateType,
   TemplateFont,
   TemplateSize,
 } from "@/constants/template.constants";
 import moment from "moment";
 
-export const getResumeTemplate = (template: ResumeTemplate) => {
-  if (template == ResumeTemplate.STANDARD) return StandardTemplate;
-  if (template == ResumeTemplate.BOLD) return BoldTemplate;
-  if (template == ResumeTemplate.MODERN) return ModernTemplate;
+export const getResumeTemplate = (template: TemplateType) => {
+  if (template == TemplateType.STANDARD) return StandardTemplate;
+  if (template == TemplateType.BOLD) return BoldTemplate;
+  if (template == TemplateType.MODERN) return ModernTemplate;
   return StandardTemplate;
 };
 
@@ -41,13 +41,18 @@ export const getFontClass = (font: TemplateFont) => {
 };
 
 export const getFontStyle = (
-  fontSize: number,
-  lineHeight: number,
-  size: keyof (typeof FONT_SIZE_MULTIPLIER | typeof LINE_HEIGHT_MULTIPLIER)
+  fontSize: number = 1,
+  lineHeight: number = 1,
+  size: keyof (
+    | typeof FONT_SIZE_MULTIPLIER
+    | typeof LINE_HEIGHT_MULTIPLIER
+  ) = "base",
+  color?: string
 ) => {
   return {
     fontSize: `${fontSize * FONT_SIZE_MULTIPLIER[size]}rem`,
     lineHeight: `${lineHeight * LINE_HEIGHT_MULTIPLIER[size]}rem`,
+    color,
   };
 };
 

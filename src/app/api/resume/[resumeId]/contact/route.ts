@@ -1,15 +1,13 @@
+import prisma from "@/clients/prismaClient";
 import { Contact } from "@/types/resume.types";
 import { exclude } from "@/utils/object.utils";
 import { isAuthenticated } from "@/utils/session.utils";
 import {
-  ContactSchema,
-  CompleteResumeSchema,
+  ContactSchema
 } from "@/validation/schema/resume.schema";
-import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-const prisma = new PrismaClient();
 
 export async function GET(
   _request: Request,

@@ -6,12 +6,22 @@ import Link from "next/link";
 type BrandLogoProps = {
   iconDimensions?: number | `${number}`;
   textClasses?: string;
+  containerClasses?: string;
+  hideText?: boolean;
 };
 
 export default function BrandLogo(props: BrandLogoProps) {
-  const { iconDimensions = 28, textClasses = "text-lg" } = props;
+  const {
+    iconDimensions = 28,
+    textClasses = "text-lg",
+    containerClasses,
+    hideText = false,
+  } = props;
   return (
-    <Link href={Routes.HOME} className="flex items-center pl-2.5 mb-5">
+    <Link
+      href={Routes.HOME}
+      className={classNames("flex items-center pl-1 mb-5", containerClasses)}
+    >
       <Image
         src="https://flowbite.com/docs/images/logo.svg"
         className="mr-3"
@@ -19,14 +29,16 @@ export default function BrandLogo(props: BrandLogoProps) {
         height={iconDimensions}
         width={iconDimensions}
       />
-      <span
-        className={classNames(
-          "self-center font-semibold whitespace-nowrap dark:text-white",
-          textClasses
-        )}
-      >
-        Resume Generator
-      </span>
+      {!hideText && (
+        <span
+          className={classNames(
+            "self-center font-semibold whitespace-nowrap dark:text-white",
+            textClasses
+          )}
+        >
+          Resume Generator
+        </span>
+      )}
     </Link>
   );
 }

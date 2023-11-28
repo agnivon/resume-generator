@@ -1,10 +1,9 @@
 "use client";
 
+import useGetTheme from "@/hooks/ui/useGetTheme";
 import { Theme } from "@/types";
 import { SetState } from "@/types/utility.types";
-import React from "react";
-import { useContext } from "react";
-
+import React, { useContext } from "react";
 
 type ThemeContextValue = {
   theme: Theme;
@@ -12,12 +11,13 @@ type ThemeContextValue = {
 };
 
 const ThemeContext = React.createContext<ThemeContextValue>({
-  theme: "dark",
+  theme: "light",
   setTheme: () => undefined,
 });
 
 const ThemeContextProvider = ({ children }: { children?: React.ReactNode }) => {
-  const [theme, setTheme] = React.useState<Theme>("dark");
+  const [theme, setTheme] = useGetTheme();
+
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
       <div className={theme}>{children}</div>

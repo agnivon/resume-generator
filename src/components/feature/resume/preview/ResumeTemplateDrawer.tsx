@@ -1,19 +1,31 @@
 import Drawer, { DrawerProps } from "@/components/global/Drawer";
 import { SAMPLE_RESUME_1 } from "@/constants/sample.resumes";
-import { ResumeTemplate, TemplateSize } from "@/constants/template.constants";
-import { ResumePreviewSettings } from "@/types/form.types";
+import {
+  TemplateType,
+  TemplateAccentColors,
+  TemplateSize,
+} from "@/constants/template.constants";
+import { ResumePreviewSettings } from "@/types/template.types";
 import { classNames } from "@/utils";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { useFormikContext } from "formik";
 import ResumeCard from "../grid/ResumeCard";
 
 const RESUME_TEMPLATES = [
-  ResumeTemplate.STANDARD,
-  ResumeTemplate.BOLD,
-  ResumeTemplate.MODERN,
+  TemplateType.STANDARD,
+  TemplateType.BOLD,
+  TemplateType.MODERN,
 ];
 
-const TemplateCard = ({ template }: { template: ResumeTemplate }) => {
+export const TemplateCard = ({
+  template,
+  sizeClass = "a6",
+  thumbnailScale = 0.5,
+}: {
+  template: TemplateType;
+  sizeClass?: string;
+  thumbnailScale?: number;
+}) => {
   const formik = useFormikContext<{ previewSettings: ResumePreviewSettings }>();
   const selectedTemplate = formik.values.previewSettings.template;
   const isTemplateSelected = template === selectedTemplate;
@@ -33,10 +45,10 @@ const TemplateCard = ({ template }: { template: ResumeTemplate }) => {
             "w-full rounded-lg py-1 text-center",
             isTemplateSelected
               ? "bg-blue-600 group-hover:bg-blue-700 text-white"
-              : "text-gray-500 dark:text-gray-300 font-semibold bg-gray-100 dark:bg-gray-600 group-hover:bg-gray-200 dark:group-hover:bg-gray-700 "
+              : "text-gray-500 dark:text-gray-300 font-semibold bg-gray-100 dark:bg-gray-600 group-hover:bg-gray-200 dark:group-hover:bg-gray-500 "
           )}
         >
-          <span className="inline-flex items-center gap-x-2 uppercase">
+          <span className="inline-flex text-sm items-center gap-x-2 uppercase">
             {template}
             {isTemplateSelected && (
               <CheckCircleIcon className="inline h-4 w-4" />
@@ -47,13 +59,13 @@ const TemplateCard = ({ template }: { template: ResumeTemplate }) => {
           <ResumeCard
             resume={SAMPLE_RESUME_1}
             template={template}
-            pageSize={TemplateSize.A4}
-            thumbnailScale={0.5}
-            sizeClass={"a6"}
+            paperSize={TemplateSize.A4}
+            thumbnailScale={thumbnailScale}
+            sizeClass={sizeClass}
             showFooter={false}
             font={formik.values.previewSettings.font}
             fontSize={formik.values.previewSettings.fontSize}
-            usePreviewSettings={false}
+            accentColor={TemplateAccentColors[template][0].color}
           />
         </div>
       </div>

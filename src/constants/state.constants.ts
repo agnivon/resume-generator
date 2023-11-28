@@ -7,5 +7,4 @@ export enum ResumeFormTab {
   COURSEWORK = "courses",
   SKILLS = "skills",
   SUMMARY = "summary",
-  PREVIEW = "preview",
 }

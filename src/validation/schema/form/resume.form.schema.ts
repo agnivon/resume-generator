@@ -199,10 +199,8 @@ export const CompleteResumeFormSchema = Yup.object().shape({
 });
 
 export const getResumeFormSchema = (tab: ResumeFormTab) =>
-  tab !== ResumeFormTab.PREVIEW
-    ? Yup.object().shape({
-        resume: Yup.object().shape({
-          [tab]: completeResumeFormSchema[tab],
-        }),
-      })
-    : undefined;
+  Yup.object().shape({
+    resume: Yup.object().shape({
+      [tab]: completeResumeFormSchema[tab],
+    }),
+  });

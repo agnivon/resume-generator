@@ -9,7 +9,7 @@ import BrandLogo from "../feature/brand/BrandLogo";
 export default function LandingPage() {
   const router = useRouter();
   return (
-    <div className="h-screen w-screen flex flex-col justify-center items-center relative">
+    <div className="h-screen w-full flex flex-col justify-center items-center relative">
       <div className="absolute left-3 top-4">
         <BrandLogo />
       </div>

@@ -2,9 +2,14 @@ import Button, { ButtonColor, ButtonSize } from "@/components/global/Button";
 import Card from "@/components/global/Card";
 import Dropdown from "@/components/global/Dropdown";
 import MotionDiv from "@/components/global/motion/MotionDiv";
-import { TemplateFont, TemplateSize } from "@/constants/template.constants";
+import {
+  FONT_SELECT_OPTIONS,
+  PAPER_SIZE_DROPDOWN_OPTIONS,
+} from "@/constants/form.constants";
+import { AccentColorList } from "@/constants/template.constants";
+import { useResumePageContext } from "@/context/page/ResumePageContextProvider";
 import useUpsertPreviewSettings from "@/hooks/resume/data/useUpsertPreviewSettings";
-import { ResumePreviewSettings } from "@/types/form.types";
+import { ResumePreviewSettings } from "@/types/template.types";
 import { TypeKeys } from "@/types/utility.types";
 import {
   ChevronLeftIcon,
@@ -16,22 +21,8 @@ import {
 import { ArrowDownTrayIcon } from "@heroicons/react/24/solid";
 import { useFormikContext } from "formik";
 import React from "react";
-import ResumeTemplateDrawer from "./ResumeTemplateDrawer";
-import { useResumePageContext } from "@/context/ResumePageContextProvider";
 import { useAlert } from "react-alert";
-
-const FONT_SELECT_OPTIONS = [
-  { key: "Merriweather", value: TemplateFont.MERRIWEATHER },
-  { key: "Source Sans 3", value: TemplateFont.SOURCE_SANS },
-  { key: "Deja Vu Serif", value: TemplateFont.DEJA_VU_SERIF },
-  { key: "Roboto Mono", value: TemplateFont.ROBOTO_MONO },
-  { key: "AR One Sans", value: TemplateFont.AR_ONE_SANS },
-];
-
-const PAPER_SIZE_DROPDOWN_OPTIONS = [
-  { key: "Letter", value: TemplateSize.LETTER },
-  { key: "A4", value: TemplateSize.A4 },
-];
+import ResumeTemplateDrawer from "./ResumeTemplateDrawer";
 
 const NumericValueWidget = ({
   name,
@@ -67,6 +58,18 @@ const NumericValueWidget = ({
   );
 };
 
+const itemRenderer = (item: { key: string; value: string } | undefined) => (
+  <div className="inline-flex gap-x-2 items-center">
+    <div
+      className="h-5 w-5 rounded-full border-2"
+      style={{
+        backgroundColor: item?.value || undefined,
+      }}
+    ></div>
+    <div>{item?.key}</div>
+  </div>
+);
+
 export default function ResumePreviewToolbar() {
   const formik = useFormikContext<{ previewSettings: ResumePreviewSettings }>();
 
@@ -78,6 +81,14 @@ export default function ResumePreviewToolbar() {
   const [showFontPanel, setShowFontPanel] = React.useState<boolean>(false);
   const [showTemplateDrawer, setShowTemplateDrawer] =
     React.useState<boolean>(false);
+
+  const template = formik.values.previewSettings.template;
+
+  const accentColorDropdownOptions = AccentColorList.map((color) => ({
+    key: color.name,
+    value: color.color,
+  }));
+
   const printResumePdf = () => {
     window.print();
   };
@@ -116,13 +127,6 @@ export default function ResumePreviewToolbar() {
           {showFontPanel && (
             <MotionDiv className="flex items-center gap-x-4">
               <div className="text-sm">Font Family</div>
-              {/* <FormikSelect
-                  name="previewSettings.font"
-                  options={FONT_SELECT_OPTIONS}
-                  size={SelectSize.SMALL}
-                  containerClassNames="w-fit"
-                  showSubText={false}
-                /> */}
               <Dropdown
                 items={FONT_SELECT_OPTIONS}
                 value={formik.values.previewSettings.font}
@@ -147,13 +151,6 @@ export default function ResumePreviewToolbar() {
                 onClick={() => setShowTemplateDrawer(true)}
               />
               <div className="text-sm">Paper Size</div>
-              {/* <FormikSelect
-                  name="previewSettings.paperSize"
-                  options={PAPER_SIZE_SELECT_OPTIONS}
-                  size={SelectSize.SMALL}
-                  containerClassNames="w-fit"
-                  showSubText={false}
-                /> */}
               <Dropdown
                 items={PAPER_SIZE_DROPDOWN_OPTIONS}
                 value={formik.values.previewSettings.paperSize}
@@ -161,6 +158,18 @@ export default function ResumePreviewToolbar() {
                   formik.setFieldValue("previewSettings.paperSize", value)
                 }
                 dropdownButtonProps={{ color: ButtonColor.LIGHT }}
+              />
+              <div className="text-sm">Accent Color</div>
+              <Dropdown
+                items={accentColorDropdownOptions}
+                value={formik.values.previewSettings.accentColor}
+                onChange={(value) =>
+                  formik.setFieldValue("previewSettings.accentColor", value)
+                }
+                selectedValueRenderer={itemRenderer}
+                contentRenderer={itemRenderer}
+                dropdownButtonProps={{ color: ButtonColor.LIGHT }}
+                customMenuButtonClassNames="flex items-center"
               />
             </MotionDiv>
           )}

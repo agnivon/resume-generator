@@ -1,13 +1,11 @@
+import prisma from "@/clients/prismaClient";
 import { Project } from "@/types/resume.types";
 import { exclude } from "@/utils/object.utils";
 import { isAuthenticated } from "@/utils/session.utils";
 import { ProjectSchema } from "@/validation/schema/resume.schema";
-import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import * as Yup from "yup";
-
-const prisma = new PrismaClient();
 
 export async function GET(
   _request: Request,

@@ -1,8 +1,8 @@
 "use client";
 
 import MotionDiv from "@/components/global/motion/MotionDiv";
-import { useResumePageContext } from "@/context/ResumePageContextProvider";
-import { ResumePreviewSettings } from "@/types/form.types";
+import { useResumePageContext } from "@/context/page/ResumePageContextProvider";
+import { ResumePreviewSettings } from "@/types/template.types";
 import { useFormikContext } from "formik";
 import { useRef } from "react";
 import ResumeTemplate from "../template/ResumeTemplate";
@@ -18,23 +18,15 @@ export default function ResumePreview() {
   return (
     <>
       <MotionDiv className="flex flex-col gap-y-8">
-        <div className="print-hidden">
+        <div className="print:hidden">
           <ResumePreviewToolbar />
         </div>
         <div className="flex flex-col items-center gap-y-6">
-          <div className="flex gap-x-10">
-            <div className="grow">
-              <ResumeTemplate
-                resume={value.resume}
-                template={formik.values.previewSettings.template}
-                font={formik.values.previewSettings.font}
-                fontSize={formik.values.previewSettings.fontSize}
-                lineHeight={formik.values.previewSettings.lineHeight}
-                pageSize={formik.values.previewSettings.paperSize}
-                ref={resumeTemplateRef}
-              />
-            </div>
-          </div>
+          <ResumeTemplate
+            resume={value.resume}
+            {...formik.values.previewSettings}
+            ref={resumeTemplateRef}
+          />
         </div>
       </MotionDiv>
     </>
