@@ -9,6 +9,8 @@ import Navbar from "../feature/navbar/Navbar";
 import prisma from "@/clients/prismaClient";
 import AuthLayoutContextProvider from "@/context/layout/AuthLayoutContextProvider";
 
+export const revalidate = 3600; // revalidate the data at most every hour
+
 const getUserDetails = cache(async (id: string) => {
   const user = await prisma.user.findUniqueOrThrow({ where: { email: id } });
   const userMembership = await prisma.userMembership.findUnique({
