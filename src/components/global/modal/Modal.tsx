@@ -2,6 +2,7 @@ import ModalContextProvider from "@/context/ModalContextProvider";
 import { classNames } from "@/utils";
 import MotionDiv from "../motion/MotionDiv";
 import React from "react";
+import { AnimatePresence } from "framer-motion";
 
 export type ModalProps = {
   onClose?: () => void;
@@ -39,31 +40,33 @@ const Modal = (props: ModalProps) => {
 
   return (
     <ModalContextProvider popup={popup} onClose={onClose}>
-      {show && (
-        <MotionDiv
-          tabIndex={-1}
-          aria-hidden="true"
-          className="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-screen max-h-full bg-black bg-opacity-50"
-          onClick={() => {
-            if (dismissible && onClose) onClose();
-          }}
-        >
-          <div
-            className={classNames(
-              "fixed inset-x-0 inset-y-0 mx-auto w-full max-h-full flex items-center justify-center",
-              MODAL_SIZE_CLASSES[size]
-            )}
+      <AnimatePresence>
+        {show && (
+          <MotionDiv
+            tabIndex={-1}
+            aria-hidden="true"
+            className="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-screen max-h-full bg-black bg-opacity-50"
+            onClick={() => {
+              if (dismissible && onClose) onClose();
+            }}
           >
-            {/* Modal content */}
             <div
-              className="relative bg-white rounded-lg shadow dark:bg-gray-700"
-              onClick={(e) => e.stopPropagation()}
+              className={classNames(
+                "fixed inset-x-0 inset-y-0 mx-auto w-full max-h-full flex items-center justify-center",
+                MODAL_SIZE_CLASSES[size]
+              )}
             >
-              {children}
+              {/* Modal content */}
+              <div
+                className="relative bg-white rounded-lg shadow dark:bg-gray-700"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {children}
+              </div>
             </div>
-          </div>
-        </MotionDiv>
-      )}
+          </MotionDiv>
+        )}
+      </AnimatePresence>
     </ModalContextProvider>
   );
 };

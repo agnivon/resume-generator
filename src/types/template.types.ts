@@ -1,5 +1,5 @@
 import {
-  ResumeTemplate,
+  TemplateType,
   TemplateFont,
   TemplateSize,
 } from "@/constants/template.constants";
@@ -7,7 +7,7 @@ import {
 export type AccentColor = { color: string; name: string };
 
 export type ResumePreviewSettings = {
-  template: ResumeTemplate;
+  template: TemplateType;
   font: TemplateFont;
   paperSize: TemplateSize;
   fontSize: number;

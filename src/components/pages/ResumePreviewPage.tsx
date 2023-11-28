@@ -25,7 +25,7 @@ const CloseButton = ({
     <button
       type="button"
       className={classNames(
-        "hidden fixed right-4 top-4 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto lg:inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+        "hidden fixed right-4 top-4 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-xl text-sm p-1.5 ml-auto xl:inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
       )}
       onClick={onClose}
     >
@@ -58,13 +58,13 @@ const PageComponent = () => {
         return (
           <>
             <MotionDiv
-              className="w-full flex flex-col lg:flex-row flex-grow"
+              className="w-full h-full flex flex-grow"
               transition={{ duration: 0.2 }}
             >
-              <div className="w-full h-[10vh] lg:h-full lg:w-1/4 print:hidden">
+              <div className="w-8 h-screen xl:w-1/4 print:hidden">
                 <ResumePreviewSidebar resume={resume} onBack={handleBack} />
               </div>
-              <div className="lg:w-3/4 flex flex-col items-center p-10 print:block print:p-0 print:h-full">
+              <div className="w-full xl:w-3/4 flex flex-col items-center p-10 print:block print:p-0 print:h-full">
                 <CloseButton onClose={handleBack} />
                 <ResumeTemplate resume={resume} {...values.previewSettings} />
               </div>

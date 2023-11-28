@@ -1,21 +1,19 @@
 import Button, { ButtonColor, ButtonSize } from "@/components/global/Button";
 import Dropdown from "@/components/global/Dropdown";
 import RenderIf from "@/components/global/RenderIf";
+import MotionDiv from "@/components/global/motion/MotionDiv";
 import {
   FONT_SELECT_OPTIONS,
   PAPER_SIZE_DROPDOWN_OPTIONS,
 } from "@/constants/form.constants";
-import {
-  AccentColorList,
-  ResumeTemplate,
-} from "@/constants/template.constants";
+import { AccentColorList, TemplateType } from "@/constants/template.constants";
 import useUpsertPreviewSettings from "@/hooks/resume/data/useUpsertPreviewSettings";
 import { CompleteResume } from "@/types/resume.types";
 import { ResumePreviewSettings } from "@/types/template.types";
 import { TypeKeys } from "@/types/utility.types";
 import { classNames } from "@/utils";
 import {
-  ChevronDoubleUpIcon,
+  ChevronDoubleLeftIcon,
   ChevronLeftIcon,
 } from "@heroicons/react/20/solid";
 import {
@@ -26,14 +24,13 @@ import { RangeSlider } from "flowbite-react";
 import { useFormikContext } from "formik";
 import React, { DOMAttributes } from "react";
 import { useAlert } from "react-alert";
-import { TemplateCard } from "./ResumeTemplateDrawer";
-import MotionDiv from "@/components/global/motion/MotionDiv";
+import ResumeTemplateModal from "./ResumeTemplateModal";
 
-const RESUME_TEMPLATES = [
-  ResumeTemplate.STANDARD,
-  ResumeTemplate.BOLD,
-  ResumeTemplate.MODERN,
-];
+/* const RESUME_TEMPLATES = [
+  TemplateType.STANDARD,
+  TemplateType.BOLD,
+  TemplateType.MODERN,
+]; */
 
 const itemRenderer = (item: { key: string; value: string } | undefined) => (
   <div className="inline-flex gap-x-2 items-center">
@@ -83,14 +80,13 @@ export default function ResumePreviewSidebar({
 
   const upsertPreviewSettings = useUpsertPreviewSettings();
 
-  const [showTemplatePanel, setShowTemplatePanel] =
+  const [showResumeTemplateModal, setShowResumeTemplateModal] =
     React.useState<boolean>(false);
 
-  const [showSettingsPanel, setShowSettingsPanel] =
-    React.useState<boolean>(true);
+  const [showAllPanels, setShowAllPanels] = React.useState<boolean>(false);
 
-  const [showSettingsSubLgPanel, setShowSettingsSubLgPanel] =
-    React.useState<boolean>(false);
+  const [panel, setPanel] =
+    React.useState<"settings" /*  | "template" */>("settings");
 
   const { values, setFieldValue } = formik;
 
@@ -127,6 +123,7 @@ export default function ResumePreviewSidebar({
               items={FONT_SELECT_OPTIONS}
               value={values.previewSettings.font}
               onChange={(value) => setFieldValue("previewSettings.font", value)}
+              customMenuClassNames="!w-full"
               dropdownButtonProps={{
                 color: ButtonColor.LIGHT,
                 customClassNames: "w-full",
@@ -144,6 +141,7 @@ export default function ResumePreviewSidebar({
               onChange={(value) =>
                 setFieldValue("previewSettings.paperSize", value)
               }
+              customMenuClassNames="!w-full"
               dropdownButtonProps={{
                 color: ButtonColor.LIGHT,
                 customClassNames: "w-full",
@@ -173,6 +171,7 @@ export default function ResumePreviewSidebar({
             onChange={(value) =>
               setFieldValue("previewSettings.accentColor", value)
             }
+            customMenuClassNames="!w-full"
             selectedValueRenderer={itemRenderer}
             contentRenderer={itemRenderer}
             dropdownButtonProps={{
@@ -188,8 +187,7 @@ export default function ResumePreviewSidebar({
           color={ButtonColor.LIGHT}
           size={ButtonSize.SMALL}
           onClick={() => {
-            setShowTemplatePanel(true);
-            setShowSettingsPanel(false);
+            setShowResumeTemplateModal(true);
           }}
         />
         <Button
@@ -210,66 +208,80 @@ export default function ResumePreviewSidebar({
     </>
   );
 
+  /* const templatePanel = (
+    <div className="flex flex-col items-center xl:justify-center gap-8">
+      {RESUME_TEMPLATES.map((template) => {
+        return (
+          <TemplateCard
+            template={template}
+            key={template}
+            sizeClass="a7"
+            thumbnailScale={0.35}
+          />
+        );
+      })}
+    </div>
+  ); */
+
   return (
     <>
-      <div className="fixed lg:inset-y-0 lg:left-0 inset-x-0 top-0 flex flex-col w-full lg:w-1/4 lg:h-full overflow-y-auto bg-gray-50 dark:bg-gray-800">
-        <div className="p-6">
-          <div className="text-xl mb-6 font-semibold text-gray-500 dark:text-gray-400 flex items-center justify-between cursor-pointer">
-            <div
-              onClick={(event) => {
-                if (showTemplatePanel) {
-                  setShowTemplatePanel(false);
-                  setShowSettingsPanel(true);
-                } else {
-                  onBack?.(event);
-                }
-              }}
-              className="flex items-center"
-            >
-              <ChevronLeftIcon
-                className="h-7 w-7"
-                strokeWidth={2}
-                strokeLinecap="round"
-              />
-              <span className="leading-none">Go Back</span>
-            </div>
-            {showTemplatePanel && <div>Choose Template</div>}
-          </div>
-          <RenderIf isTrue={showSettingsPanel}>
-            <MotionDiv className="hidden lg:block">{settingsPanel}</MotionDiv>
-            {showSettingsSubLgPanel && (
-              <div className="block lg:hidden">{settingsPanel}</div>
-            )}
-          </RenderIf>
-          <RenderIf isTrue={showTemplatePanel}>
-            <MotionDiv className="flex flex-col items-center justify-center gap-y-8">
-              {RESUME_TEMPLATES.map((template) => {
-                return (
-                  <TemplateCard
-                    template={template}
-                    key={template}
-                    sizeClass="a7"
-                    thumbnailScale={0.35}
-                  />
-                );
-              })}
-            </MotionDiv>
-          </RenderIf>
-        </div>
-        <div className="lg:hidden flex items-center justify-center h-[10vh]">
+      <ResumeTemplateModal
+        show={showResumeTemplateModal}
+        onClose={() => setShowResumeTemplateModal(false)}
+      />
+      <div
+        className={classNames("group", showAllPanels ? "show-all-panels" : "")}
+      >
+        <div className="fixed z-20 inset-y-0 left-0 flex xl:w-1/4 h-full overflow-y-auto bg-gray-50 dark:bg-gray-800">
           <div
-            className="flex items-center cursor-pointer"
-            onClick={() => setShowSettingsSubLgPanel((show) => !show)}
+            className={
+              "py-4 pl-6 pr-3 xl:pr-6 w-full max-xl:hidden max-xl:group-[.show-all-panels]:block"
+            }
           >
-            <ChevronDoubleUpIcon
-              className={classNames(
-                "h-6 w-6",
-                !showSettingsSubLgPanel ? "rotate-180" : ""
-              )}
-            />
-            <span>{`${
-              showSettingsSubLgPanel ? "Close" : "Open"
-            }  Settings`}</span>
+            <div className="-ml-2 mb-5 text-lg xl:text-xl font-semibold text-gray-500 dark:text-gray-400 flex items-center justify-between">
+              <div
+                onClick={(event) => {
+                  /* if (panel === "template") {
+                    setPanel("settings");
+                  } else {
+                    onBack?.(event);
+                  } */
+                  onBack?.(event);
+                }}
+                className="flex items-center cursor-pointer"
+              >
+                <ChevronLeftIcon
+                  className="h-7 w-7"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                />
+                <span className="leading-none">Go Back</span>
+              </div>
+              {/* {panel === "template" && <div>Choose Template</div>} */}
+            </div>
+            <RenderIf isTrue={panel === "settings"}>
+              <MotionDiv>{settingsPanel}</MotionDiv>
+            </RenderIf>
+            {/* <RenderIf isTrue={panel === "template"}>
+              <MotionDiv>{templatePanel}</MotionDiv>
+            </RenderIf> */}
+          </div>
+          <div
+            className={classNames(
+              "xl:hidden w-8 cursor-pointer flex items-center justify-center h-full hover:bg-gray-100 hover:dark:bg-gray-700"
+              //showSubLgPanel ? " mb-6" : "my-4"
+            )}
+            onClick={() => setShowAllPanels((show) => !show)}
+          >
+            <div className="flex items-center">
+              <ChevronDoubleLeftIcon
+                className={classNames(
+                  "h-6 w-6",
+                  !showAllPanels ? "rotate-180" : ""
+                )}
+              />
+              {/* <span>{`${showSubLgPanel ? "Close" : "Open"}  Settings`}</span> */}
+            </div>
           </div>
         </div>
       </div>

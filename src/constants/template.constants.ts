@@ -1,6 +1,6 @@
 import { AccentColor, ResumePreviewSettings } from "@/types/template.types";
 
-export enum ResumeTemplate {
+export enum TemplateType {
   STANDARD = "Standard",
   BOLD = "Bold",
   MODERN = "Modern",
@@ -37,9 +37,9 @@ const AccentColors: Record<string, AccentColor> = {
 export const AccentColorList = Object.values(AccentColors);
 
 export const TemplateAccentColors = {
-  [ResumeTemplate.STANDARD]: [AccentColors["gray"]],
-  [ResumeTemplate.BOLD]: [AccentColors["blue"], AccentColors["gray"]],
-  [ResumeTemplate.MODERN]: [AccentColors["blue"], AccentColors["gray"]],
+  [TemplateType.STANDARD]: [AccentColors["gray"]],
+  [TemplateType.BOLD]: [AccentColors["blue"], AccentColors["gray"]],
+  [TemplateType.MODERN]: [AccentColors["blue"], AccentColors["gray"]],
 };
 
 export const FONT_SIZE_MULTIPLIER = {
@@ -63,10 +63,10 @@ export const LINE_HEIGHT_MULTIPLIER = {
 } as const;
 
 export const INITIAL_PREVIEW_SETTINGS = (): ResumePreviewSettings => ({
-  template: ResumeTemplate.STANDARD,
+  template: TemplateType.STANDARD,
   font: TemplateFont.MERRIWEATHER,
   paperSize: TemplateSize.LETTER,
   fontSize: 0.9,
   lineHeight: 1,
-  accentColor: TemplateAccentColors[ResumeTemplate.STANDARD][0].color,
+  accentColor: TemplateAccentColors[TemplateType.STANDARD][0].color,
 });

@@ -11,7 +11,7 @@ import { ResumePreviewSettings } from "@prisma/client";
 import { MouseEventHandler } from "react";
 import { useAlert } from "react-alert";
 import {
-  ResumeTemplate,
+  TemplateType,
   TemplateFont,
 } from "../../../../constants/template.constants";
 import Template, { ResumeTemplateProps } from "../template/ResumeTemplate";
@@ -101,7 +101,7 @@ export default function ResumeCard(props: ResumeCardProps) {
 
   const previewSettingProps = previewSetting
     ? {
-        template: previewSetting?.template as ResumeTemplate | undefined,
+        template: previewSetting?.template as TemplateType | undefined,
         font: previewSetting?.font as TemplateFont | undefined,
         fontSize: previewSetting?.fontSize,
         lineHeight: previewSetting?.lineHeight,

@@ -1,7 +1,7 @@
 import Drawer, { DrawerProps } from "@/components/global/Drawer";
 import { SAMPLE_RESUME_1 } from "@/constants/sample.resumes";
 import {
-  ResumeTemplate,
+  TemplateType,
   TemplateAccentColors,
   TemplateSize,
 } from "@/constants/template.constants";
@@ -12,9 +12,9 @@ import { useFormikContext } from "formik";
 import ResumeCard from "../grid/ResumeCard";
 
 const RESUME_TEMPLATES = [
-  ResumeTemplate.STANDARD,
-  ResumeTemplate.BOLD,
-  ResumeTemplate.MODERN,
+  TemplateType.STANDARD,
+  TemplateType.BOLD,
+  TemplateType.MODERN,
 ];
 
 export const TemplateCard = ({
@@ -22,7 +22,7 @@ export const TemplateCard = ({
   sizeClass = "a6",
   thumbnailScale = 0.5,
 }: {
-  template: ResumeTemplate;
+  template: TemplateType;
   sizeClass?: string;
   thumbnailScale?: number;
 }) => {
@@ -45,10 +45,10 @@ export const TemplateCard = ({
             "w-full rounded-lg py-1 text-center",
             isTemplateSelected
               ? "bg-blue-600 group-hover:bg-blue-700 text-white"
-              : "text-gray-500 dark:text-gray-300 font-semibold bg-gray-100 dark:bg-gray-600 group-hover:bg-gray-200 dark:group-hover:bg-gray-700 "
+              : "text-gray-500 dark:text-gray-300 font-semibold bg-gray-100 dark:bg-gray-600 group-hover:bg-gray-200 dark:group-hover:bg-gray-500 "
           )}
         >
-          <span className="inline-flex items-center gap-x-2 uppercase">
+          <span className="inline-flex text-sm items-center gap-x-2 uppercase">
             {template}
             {isTemplateSelected && (
               <CheckCircleIcon className="inline h-4 w-4" />

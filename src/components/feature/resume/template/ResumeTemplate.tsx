@@ -1,5 +1,5 @@
 import {
-  ResumeTemplate,
+  TemplateType,
   TemplateFont,
   TemplateSize,
 } from "@/constants/template.constants";
@@ -10,7 +10,7 @@ import React from "react";
 
 export type ResumeTemplateProps = {
   resume: CompleteResume;
-  template?: ResumeTemplate;
+  template?: TemplateType;
   paperSize?: TemplateSize;
   thumbnail?: boolean;
   thumbnailScale?: number;
@@ -25,7 +25,7 @@ export default React.forwardRef(function Template(
   props: ResumeTemplateProps,
   ref: React.Ref<HTMLDivElement> | undefined
 ) {
-  const { template = ResumeTemplate.STANDARD } = props;
+  const { template = TemplateType.STANDARD } = props;
 
   const ResumeTemplateComponent = getResumeTemplate(template);
 

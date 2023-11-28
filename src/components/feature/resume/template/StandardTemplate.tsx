@@ -1,6 +1,6 @@
 import { TemplateFont, TemplateSize } from "@/constants/template.constants";
 import { useResumeTemplateContext } from "@/context/ResumeTemplateContextProvider";
-import {
+import type {
   Certification,
   CompleteResume,
   Contact,
@@ -36,7 +36,7 @@ const ContactInformation = ({ contact }: { contact: Contact | null }) => {
     <div>
       <div
         className="text-center mb-1 font-bold"
-        style={getFontStyle(fontSize, lineHeight, "2xl", accentColor)}
+        style={getFontStyle(fontSize, lineHeight, "3xl", accentColor)}
       >
         {contact.fullName}
       </div>

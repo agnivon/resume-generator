@@ -1,6 +1,6 @@
 import { TemplateFont, TemplateSize } from "@/constants/template.constants";
 import { useResumeTemplateContext } from "@/context/ResumeTemplateContextProvider";
-import {
+import type {
   Certification,
   Contact,
   Course,

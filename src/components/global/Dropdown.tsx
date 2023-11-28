@@ -105,7 +105,7 @@ export default function Dropdown<T extends DropdownItem>(
           <div className="relative w-full">
             <MotionDiv
               className={classNames(
-                "absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow min-w-[11rem] w-full dark:bg-gray-700",
+                "absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700",
                 positionClass,
                 customMenuClassNames
               )}

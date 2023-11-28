@@ -177,7 +177,7 @@ export default function ProjectForm() {
                   <FormikInput
                     label="Project URL"
                     name={`${selectedProjName}.url`}
-                    placeholder="https://www.freeresumegenerator.com"
+                    placeholder="https://www.resumegenerator.com"
                   />
                 </div>
                 <div className="col-span-2">
