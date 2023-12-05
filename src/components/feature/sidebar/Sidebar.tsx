@@ -120,6 +120,7 @@ export function MainComponent(_props: SidebarProps) {
                 label={
                   <Avatar
                     name={session?.user?.name}
+                    email={session?.user?.email}
                     imageUrl={session?.user?.image}
                   />
                 }

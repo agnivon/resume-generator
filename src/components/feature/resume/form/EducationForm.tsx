@@ -13,6 +13,8 @@ import ListItemSequenceChangeModal from "./modals/ListItemSequenceChangeModal";
 import React from "react";
 import FormikTextArea from "@/components/global/forms/formik/FormikTextArea";
 import MotionDiv from "@/components/global/motion/MotionDiv";
+import ResumeTipsCard from "../tips/ResumeTipsCard";
+import { EDUCATION_TIPS } from "@/constants/tips.constants";
 
 export default function EducationForm() {
   const formik = useFormikContext<ResumeFormValues>();
@@ -103,21 +105,37 @@ export default function EducationForm() {
         onDragEnd={handleSequenceChange}
       />
       <MotionDiv>
+        <div className="mb-6">
+          <div className="col-span-2">
+            <div className="text-lg mb-1 font-bold">Education</div>
+          </div>
+          <div className="col-span-2">
+            <div className="mb-2">
+              The education section of your resume is an essential component,
+              especially for recent graduates and those early in their careers.
+            </div>
+          </div>
+        </div>
         <div className="flex flex-col md:flex-row gap-8 items-start">
-          <div className="w-full md:w-1/4">
-            <div className="text-lg mb-2 font-bold">Your Education</div>
-            <ListGroup items={listItems} />
-            <Button
-              label="Change sequence"
-              onClick={() => setShowListSequenceChangeModal(true)}
-              color={ButtonColor.ALT}
-              size={ButtonSize.SMALL}
-              customClassNames="mt-4 w-full"
-            />
+          <div className="w-full md:w-1/4 space-y-6">
+            <div>
+              <div className="text-lg mb-2 font-bold">Your Education</div>
+              <ListGroup items={listItems} />
+              {doesEducationExist && (
+                <Button
+                  label="Change sequence"
+                  onClick={() => setShowListSequenceChangeModal(true)}
+                  color={ButtonColor.ALT}
+                  size={ButtonSize.SMALL}
+                  customClassNames="mt-4 w-full"
+                />
+              )}
+            </div>
+            <ResumeTipsCard tips={EDUCATION_TIPS} />
           </div>
           <div className="w-full md:w-3/4 grid grid-cols-2 items-start gap-x-8 gap-y-2">
             <RenderIf isTrue={!doesEducationExist}>
-              <div className="col-span-2 text-center dark:text-white text-gray-600">
+              <div className="col-span-2 text-center dark:text-gray-400 text-gray-600">
                 {`To add an education click on "Add new education" on the left
                 panel`}
               </div>

@@ -114,17 +114,19 @@ export default function ProjectForm() {
           <div className="w-full md:w-1/4">
             <div className="text-lg mb-2 font-bold">Your Projects</div>
             <ListGroup items={listItems} />
-            <Button
-              label="Change sequence"
-              onClick={() => setShowListSequenceChangeModal(true)}
-              color={ButtonColor.ALT}
-              size={ButtonSize.SMALL}
-              customClassNames="mt-4 w-full"
-            />
+            {doProjectsExist && (
+              <Button
+                label="Change sequence"
+                onClick={() => setShowListSequenceChangeModal(true)}
+                color={ButtonColor.ALT}
+                size={ButtonSize.SMALL}
+                customClassNames="mt-4 w-full"
+              />
+            )}
           </div>
           <div className="w-full md:w-3/4 grid grid-cols-2 items-start gap-x-8 gap-y-2">
             <RenderIf isTrue={!doProjectsExist}>
-              <div className="col-span-2 text-center dark:text-white text-gray-600">
+              <div className="col-span-2 text-center dark:text-gray-400 text-gray-600">
                 {`To add a project click on "Add new project" on the left panel`}
               </div>
             </RenderIf>

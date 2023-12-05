@@ -38,7 +38,7 @@ export default function CoursesForm() {
   const [showListSequenceChangeModal, setShowListSequenceChangeModal] =
     React.useState<boolean>(false);
 
-  const doCertificationsExist = formik.values.resume.courses.length > 0;
+  const doCoursesExist = formik.values.resume.courses.length > 0;
 
   const selectedCourseName = `resume.courses.${selectedItemIdx}`;
 
@@ -107,21 +107,23 @@ export default function CoursesForm() {
           <div className="w-full md:w-1/4">
             <div className="text-lg mb-2 font-bold">Your Courses</div>
             <ListGroup items={listItems} />
-            <Button
-              label="Change sequence"
-              onClick={() => setShowListSequenceChangeModal(true)}
-              color={ButtonColor.ALT}
-              size={ButtonSize.SMALL}
-              customClassNames="mt-4 w-full"
-            />
+            {doCoursesExist && (
+              <Button
+                label="Change sequence"
+                onClick={() => setShowListSequenceChangeModal(true)}
+                color={ButtonColor.ALT}
+                size={ButtonSize.SMALL}
+                customClassNames="mt-4 w-full"
+              />
+            )}
           </div>
           <div className="w-full md:w-3/4 grid grid-cols-2 items-start gap-x-8 gap-y-2">
-            <RenderIf isTrue={!doCertificationsExist}>
-              <div className="col-span-2 text-center dark:text-white text-gray-600">
+            <RenderIf isTrue={!doCoursesExist}>
+              <div className="col-span-2 text-center dark:text-gray-400 text-gray-600">
                 {`To add a course click on "Add new course" on the left panel`}
               </div>
             </RenderIf>
-            <RenderIf isTrue={doCertificationsExist}>
+            <RenderIf isTrue={doCoursesExist}>
               <RenderIf isTrue={selectedItemIdx === null}>
                 <div className="col-span-2 text-center">
                   Select a course from the side panel to view and edit the

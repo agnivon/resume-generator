@@ -112,17 +112,19 @@ export default function CertificationsForm() {
           <div className="w-full md:w-1/4">
             <div className="text-lg mb-2 font-bold">Your Certifications</div>
             <ListGroup items={listItems} />
-            <Button
-              label="Change sequence"
-              onClick={() => setShowListSequenceChangeModal(true)}
-              color={ButtonColor.ALT}
-              size={ButtonSize.SMALL}
-              customClassNames="mt-4 w-full"
-            />
+            {doCertificationsExist && (
+              <Button
+                label="Change sequence"
+                onClick={() => setShowListSequenceChangeModal(true)}
+                color={ButtonColor.ALT}
+                size={ButtonSize.SMALL}
+                customClassNames="mt-4 w-full"
+              />
+            )}
           </div>
           <div className="w-full md:w-3/4 grid grid-cols-2 items-start gap-x-8 gap-y-2">
             <RenderIf isTrue={!doCertificationsExist}>
-              <div className="col-span-2 text-center dark:text-white text-gray-600">
+              <div className="col-span-2 text-center dark:text-gray-400 text-gray-600">
                 {`To add a certification click on "Add new
                 certification" on the left panel`}
               </div>

@@ -30,6 +30,7 @@ const authOptions: NextAuthOptions = {
   pages: {
     signIn: Routes.SIGNIN,
     signOut: Routes.SIGNOUT,
+    error: Routes.ERROR
   },
 };
 const handler = NextAuth(authOptions);
