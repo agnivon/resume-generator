@@ -13,10 +13,7 @@ export default function useUpdateResume() {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (
-      resume: Pick<Resume, "id" | "name" | "userId"> &
-        Partial<Pick<Resume, "createdOn" | "summary">>
-    ) => updateResume(resume.id, resume),
+    mutationFn: (resume: Resume) => updateResume(resume.id, resume),
     onSuccess: (data) => {
       dispatch(
         resumeSlice.actions.updateOneResume({ id: data.id, changes: data })

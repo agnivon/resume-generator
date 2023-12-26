@@ -120,11 +120,11 @@ export const EDUCATION_TIPS = [
     content:
       "Mention relevant extracurricular activities, leadership roles, or memberships in academic organizations to demonstrate a well-rounded skill set.",
   },
-  {
-    heading: "Use Consistent Formatting",
-    content:
-      "Maintain a consistent format for listing each educational experience, making it easy for employers to quickly scan and understand your academic background.",
-  },
+  // {
+  //   heading: "Use Consistent Formatting",
+  //   content:
+  //     "Maintain a consistent format for listing each educational experience, making it easy for employers to quickly scan and understand your academic background.",
+  // },
   {
     heading: "Tailor to the Job",
     content:

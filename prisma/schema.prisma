@@ -28,6 +28,11 @@ model Resume {
   name            String
   createdOn       Int
   summary         String
+  domain          String                 @default("")
+  experienceLevel String                 @default("")
+  jobTitle        String                 @default("")
+  companyName     String                 @default("")
+  jobDescription  String                 @default("")
   contact         Contact?
   experiences     Experience[]
   projects        Project[]

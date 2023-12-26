@@ -42,8 +42,7 @@ export const deleteCompleteResume = (id: String): Promise<CompleteResume> =>
 
 export const updateResume = (
   resumeId: string,
-  resume: Pick<Resume, "id" | "name" | "userId"> &
-    Partial<Pick<Resume, "createdOn" | "summary">>
+  resume: Resume
 ): Promise<Resume> =>
   axios
     .patch<Resume>(`/api/resume/${resumeId}`, resume)

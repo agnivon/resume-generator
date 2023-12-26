@@ -5,6 +5,11 @@ export const SAMPLE_RESUME_1: CompleteResume = {
   userId: "snoffice2012@gmail.com",
   name: "Padma Lahiri",
   createdOn: 1699276544114,
+  domain: "",
+  experienceLevel: "",
+  jobTitle: "",
+  companyName: "",
+  jobDescription: "",
   summary:
     "Experienced Software Developer with over 10 years of experience. Certified in Adobe development and well-versed in various programming languages, with a speciality in UI/UX design.",
   contact: {

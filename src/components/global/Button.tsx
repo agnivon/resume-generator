@@ -18,6 +18,7 @@ export enum ButtonColor {
   RED = "red",
   PINK = "pink",
   PURPLE = "purple",
+  GREEN_TO_BLUE = "green-to-blue",
 }
 
 export enum ButtonSize {
@@ -32,8 +33,8 @@ export enum ButtonVariant {
   DEFAULT = "default",
   OUTLINE = "outline",
   GRADIENT_MONO = "gradient-monochrome",
-  /*   GRADIENT_DUO = "gradient-duotone",
-  GRADIENT_OUTLINE = "gradient-outline", */
+  GRADIENT_DUO = "gradient-duotone",
+  /* GRADIENT_OUTLINE = "gradient-outline", */
 }
 
 export type ButtonProps = ComponentProps<"button"> & {
@@ -77,7 +78,11 @@ const COLOR_CLASSES: { [index: string]: { [index: string]: string } } = {
   },
   [ButtonVariant.GRADIENT_MONO]: {
     [ButtonColor.BLUE]:
-      "text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800",
+      "text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-blue-300 dark:focus:ring-blue-800",
+  },
+  [ButtonVariant.GRADIENT_DUO]: {
+    [ButtonColor.GREEN_TO_BLUE]:
+      "text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-green-200 dark:focus:ring-green-800",
   },
   [ButtonVariant.OUTLINE]: {
     [ButtonColor.BLUE]:

@@ -66,7 +66,7 @@ const PageComponent = () => {
               </div>
               <div className="w-full xl:w-3/4 flex flex-col items-center p-10 print:block print:p-0">
                 <CloseButton onClose={handleBack} />
-                <ResumeTemplate resume={resume} {...values.previewSettings} />
+                <ResumeTemplate resume={resume} responsive={true} {...values.previewSettings} />
               </div>
             </MotionDiv>
           </>

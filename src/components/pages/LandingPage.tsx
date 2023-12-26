@@ -1,11 +1,9 @@
 "use client";
 
-import { ArrowRightIcon } from "@heroicons/react/20/solid";
-import Button, { ButtonSize } from "../global/Button";
-import { useRouter } from "next/navigation";
 import { Routes } from "@/constants/routes.constants";
-import BrandLogo from "../feature/brand/BrandLogo";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import BrandLogo from "../feature/brand/BrandLogo";
 
 const HeroSection = () => {
   return (
@@ -53,8 +51,8 @@ const HeroSection = () => {
 export default function LandingPage() {
   const router = useRouter();
   return (
-    <div className="h-screen w-full flex flex-col justify-center items-center relative">
-      <div className="absolute left-3 top-4">
+    <div className="w-full flex flex-col justify-center items-center relative">
+      <div className="ml-3 mt-4 w-full">
         <BrandLogo />
       </div>
       <HeroSection />

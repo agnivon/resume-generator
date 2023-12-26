@@ -132,6 +132,11 @@ export const NEW_RESUME = (value: Partial<CompleteResume>): CompleteResume => {
     courses: [],
     skills: [],
     summary: "",
+    domain: "",
+    experienceLevel: "",
+    jobTitle: "",
+    companyName: "",
+    jobDescription: "",
     ...value,
   };
 };

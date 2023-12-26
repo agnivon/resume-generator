@@ -5,7 +5,7 @@ import { FORM_INVALID_MESSAGE } from "@/constants/form.constants";
 import useUpsertContact from "@/hooks/resume/data/useUpsertContact";
 import { ResumeFormValues } from "@/types/form.types";
 import { getFormikTouchedObject, validateFormikForm } from "@/utils/form.utils";
-import { FormikErrors, useFormikContext } from "formik";
+import { useFormikContext } from "formik";
 import { useAlert } from "react-alert";
 
 export default function ContactForm() {
@@ -48,14 +48,14 @@ export default function ContactForm() {
           <FormikInput
             label="Full Name *"
             name="resume.contact.fullName"
-            placeholder="Rajesh Khanna"
+            placeholder="Emily Thompson"
           />
         </div>
         <div className="col-span-1">
           <FormikInput
             label="Email Address *"
             name="resume.contact.email"
-            placeholder="rajeshkhanna@gmail.com"
+            placeholder="emilythompson@gmail.com"
           />
         </div>
         <div className="col-span-1">
@@ -69,14 +69,14 @@ export default function ContactForm() {
           <FormikInput
             label="Linkedin URL"
             name="resume.contact.linkedinUrl"
-            placeholder="in/rajesh-khanna"
+            placeholder="in/emily-thompson"
           />
         </div>
         <div className="col-span-1">
           <FormikInput
             label="Personal Website or Relevant Link"
             name="resume.contact.personalUrl"
-            placeholder="https://www.rajeshkhanna.com"
+            placeholder="https://www.emilythompson.com"
           />
         </div>
         <div className="col-span-1">

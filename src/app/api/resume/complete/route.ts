@@ -21,6 +21,11 @@ export async function POST(request: Request) {
           name: resume.name,
           userId: resume.userId,
           summary: resume.summary,
+          domain: resume.domain,
+          experienceLevel: resume.experienceLevel,
+          jobTitle: resume.jobTitle,
+          companyName: resume.companyName,
+          jobDescription: resume.jobDescription,
           createdOn: resume.createdOn || Date.now(),
         },
       });
@@ -125,6 +130,11 @@ export async function PUT(request: Request) {
               name: resume.name,
               userId: resume.userId,
               summary: resume.summary || "",
+              domain: resume.domain || "",
+              experienceLevel: resume.experienceLevel || "",
+              jobTitle: resume.jobTitle || "",
+              companyName: resume.companyName || "",
+              jobDescription: resume.jobDescription || "",
               createdOn: resume.createdOn || Date.now(),
             },
           })

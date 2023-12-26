@@ -26,6 +26,7 @@ import {
 } from "react-bootstrap-icons";
 import Markdown from "react-markdown";
 import { ResumeTemplateProps } from "./ResumeTemplate";
+import ResumeTemplateContainer from "./container/ResumeTemplateContainer";
 
 const Divider = () => <hr className="my-2" />;
 
@@ -460,46 +461,20 @@ const Skills = ({ skills }: { skills: Skill[] }) => {
 
 const StandardTemplate = React.forwardRef(
   (props: ResumeTemplateProps, ref: React.Ref<HTMLDivElement> | undefined) => {
-    const {
-      resume,
-      paperSize = TemplateSize.LETTER,
-      thumbnailScale = 0.233,
-      font = TemplateFont.MERRIWEATHER,
-      thumbnail,
-    } = props;
-
-    const sizeClass = getSizeClass(paperSize, thumbnail);
-
-    const fontClass = getFontClass(font);
-
-    const thumbnailClass = thumbnail
-      ? "transform origin-top-left overflow-hidden shrink-0"
-      : "";
+    const { resume } = props;
 
     return (
-      <div ref={ref}>
-        <div
-          className={classNames(
-            "resume-template bg-white p-10 shadow-2xl flex flex-col text-gray-700 relative",
-            sizeClass,
-            fontClass,
-            thumbnailClass
-          )}
-          style={{
-            scale: thumbnail ? thumbnailScale : undefined,
-          }}
-        >
-          {/* <div className="absolute w-full border border-dashed border-gray-300 top-[28cm] left-0 right-0"></div> */}
-          <ContactInformation contact={resume.contact} />
-          <Summary summary={resume.summary} />
-          <Experience experiences={resume.experiences} />
-          <Project projects={resume.projects} />
-          <Skills skills={resume.skills} />
-          <Certification certifications={resume.certifications} />
-          <Course courses={resume.courses} />
-          <Education education={resume.education} />
-        </div>
-      </div>
+      <ResumeTemplateContainer {...props} ref={ref}>
+        {/* <div className="absolute w-full border border-dashed border-gray-300 top-[28cm] left-0 right-0"></div> */}
+        <ContactInformation contact={resume.contact} />
+        <Summary summary={resume.summary} />
+        <Experience experiences={resume.experiences} />
+        <Project projects={resume.projects} />
+        <Skills skills={resume.skills} />
+        <Certification certifications={resume.certifications} />
+        <Course courses={resume.courses} />
+        <Education education={resume.education} />
+      </ResumeTemplateContainer>
     );
   }
 );

@@ -6,6 +6,11 @@ export const getResumeFromCompleteResume = (resume: CompleteResume): Resume => {
     userId: resume.userId,
     name: resume.name,
     summary: resume.summary,
+    domain: resume.domain,
+    experienceLevel: resume.experienceLevel,
+    jobTitle: resume.jobTitle,
+    companyName: resume.companyName,
+    jobDescription: resume.jobDescription,
     createdOn: resume.createdOn,
   };
 };
@@ -18,6 +23,11 @@ export const getResumeFromPartialCompleteResume = (
     userId: resume.userId,
     name: resume.name,
     summary: resume.summary,
+    domain: resume.domain,
+    experienceLevel: resume.experienceLevel,
+    jobTitle: resume.jobTitle,
+    companyName: resume.companyName,
+    jobDescription: resume.jobDescription,
     createdOn: resume.createdOn,
   };
 };

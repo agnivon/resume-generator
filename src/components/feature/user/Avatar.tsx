@@ -44,7 +44,7 @@ export default function Avatar(props: AvatarProps) {
       {showName && (
         <div className="font-medium dark:text-white truncate">
           <div>{name}</div>
-          <div className="text-sm text-gray-500 dark:text-gray-400">
+          <div className="text-xs 2xl:text-sm text-gray-500 dark:text-gray-400">
             {email}
           </div>
         </div>

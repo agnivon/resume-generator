@@ -13,11 +13,12 @@ export type ResumeTemplateProps = {
   template?: TemplateType;
   paperSize?: TemplateSize;
   thumbnail?: boolean;
-  thumbnailScale?: number;
+  scale?: number;
   font?: TemplateFont;
   fontSize?: number;
   lineHeight?: number;
   accentColor?:string;
+  responsive?:boolean;
   showDivider?: boolean;
 };
 

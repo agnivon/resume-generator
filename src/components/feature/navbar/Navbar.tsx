@@ -105,13 +105,13 @@ const UserDropdown = () => {
           </button>
         )}
         items={items}
-        customMenuClassNames="-left-36"
+        customMenuClassNames="-left-36 md:-left-40 !w-48"
         dropdownHeader={
           <>
             <span className="block text-sm text-gray-900 dark:text-white">
               {session?.user?.name}
             </span>
-            <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">
+            <span className="block text-xs  text-gray-500 truncate dark:text-gray-400">
               {session?.user?.email}
             </span>
           </>
@@ -174,7 +174,7 @@ export function MainComponent() {
             "w-full md:block md:w-auto md:order-1"
           )}
         >
-          <ul className="flex flex-col font-medium p-2 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-800 dark:border-gray-700 md:items-center">
+          <ul className="flex flex-col font-medium p-2 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-6 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-800 dark:border-gray-700 md:items-center">
             {navbarItems.map((item) => (
               <NavbarItem {...item} key={item.label} />
             ))}

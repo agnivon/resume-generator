@@ -124,6 +124,7 @@ export default function ResumeCard(props: ResumeCardProps) {
           >
             <Template
               thumbnail={true}
+              scale={0.233}
               {...previewSettingProps}
               {...templateProps}
             />

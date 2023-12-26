@@ -1,23 +1,15 @@
-import { TemplateFont, TemplateSize } from "@/constants/template.constants";
 import { useResumeTemplateContext } from "@/context/ResumeTemplateContextProvider";
 import type {
   Certification,
+  CompleteResume,
   Contact,
   Course,
   Education,
   Experience,
   Project,
-  CompleteResume,
   Skill,
 } from "@/types/resume.types";
-import { classNames } from "@/utils";
-import {
-  getFontClass,
-  getFontStyle,
-  getSizeClass,
-  getStartEndDate,
-} from "@/utils/template.utils";
-import moment from "moment";
+import { getFontStyle, getStartEndDate } from "@/utils/template.utils";
 import React from "react";
 import {
   EnvelopeFill,
@@ -28,6 +20,7 @@ import {
 } from "react-bootstrap-icons";
 import Markdown from "react-markdown";
 import { ResumeTemplateProps } from "./ResumeTemplate";
+import ResumeTemplateContainer from "./container/ResumeTemplateContainer";
 
 const ContactInformation = ({ contact }: { contact: Contact | null }) => {
   const { fontSize, lineHeight } = useResumeTemplateContext();
@@ -392,52 +385,25 @@ const Skills = ({ skills }: { skills: Skill[] }) => {
 
 const BoldTemplate = React.forwardRef(
   (props: ResumeTemplateProps, ref: React.Ref<HTMLDivElement> | undefined) => {
-    const {
-      resume,
-      paperSize = TemplateSize.LETTER,
-      thumbnailScale = 0.233,
-      font = TemplateFont.MERRIWEATHER,
-      thumbnail,
-      accentColor = "#000000",
-    } = props;
-
-    const sizeClass = getSizeClass(paperSize, thumbnail);
-
-    const fontClass = getFontClass(font);
-
-    const thumbnailClass = thumbnail
-      ? "transform origin-top-left overflow-hidden shrink-0"
-      : "";
+    const { resume, accentColor = "#000000" } = props;
 
     return (
-      <div ref={ref}>
+      <ResumeTemplateContainer {...props} ref={ref}>
         <div
-          className={classNames(
-            "resume-template bg-white shadow-2xl p-10 flex flex-col text-gray-700",
-            sizeClass,
-            fontClass,
-            thumbnailClass
-          )}
-          style={{
-            scale: thumbnail ? thumbnailScale : undefined,
-          }}
+          className="h-2 w-full mb-3"
+          style={{ backgroundColor: accentColor }}
         >
-          <div
-            className="h-2 w-full mb-3"
-            style={{ backgroundColor: accentColor }}
-          >
-            &nbsp;
-          </div>
-          <ContactInformation contact={resume.contact} />
-          <Summary summary={resume.summary} />
-          <Experience experiences={resume.experiences} />
-          <Project projects={resume.projects} />
-          <Skills skills={resume.skills} />
-          <Certification certifications={resume.certifications} />
-          <Course courses={resume.courses} />
-          <Education education={resume.education} />
+          &nbsp;
         </div>
-      </div>
+        <ContactInformation contact={resume.contact} />
+        <Summary summary={resume.summary} />
+        <Experience experiences={resume.experiences} />
+        <Project projects={resume.projects} />
+        <Skills skills={resume.skills} />
+        <Certification certifications={resume.certifications} />
+        <Course courses={resume.courses} />
+        <Education education={resume.education} />
+      </ResumeTemplateContainer>
     );
   }
 );

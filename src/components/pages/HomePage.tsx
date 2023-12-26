@@ -7,7 +7,7 @@ import useDeleteCompleteResume from "@/hooks/resume/data/useDeleteCompleteResume
 import useGetCompleteResumes from "@/hooks/resume/data/useGetCompleteResumes";
 import useGetPreviewSettings from "@/hooks/resume/data/useGetPreviewSettings";
 import { HomePageActions } from "@/reducers/HomePageReducer";
-import { CompleteResume, Resume } from "@/types/resume.types";
+import { CompleteResume } from "@/types/resume.types";
 import { useAlert } from "react-alert";
 import ConfirmationModal from "../feature/resume/form/modals/ConfirmationModal";
 import ResumeGrid from "../feature/resume/grid/ResumeGrid";
