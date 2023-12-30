@@ -1,4 +1,4 @@
-import { OBJECT_ID_REGEX_STRING } from "@/utils/database.constants";
+import { OBJECT_ID_REGEX_STRING } from "@/constants/database.constants";
 
 export const Routes = {
   ROOT: "/",

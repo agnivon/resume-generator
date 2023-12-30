@@ -13,6 +13,7 @@ export enum SpinnerColor {
 }
 
 export enum SpinnerSize {
+  EXTRA_SMALL = "h-3 w-3",
   SMALL = "h-4 w-4",
   BASE = "h-6 w-6",
   MEDIUM = "h-8 w-8",

@@ -51,9 +51,11 @@ const HeroSection = () => {
 export default function LandingPage() {
   const router = useRouter();
   return (
-    <div className="w-full flex flex-col justify-center items-center relative">
-      <div className="ml-3 mt-4 w-full">
-        <BrandLogo />
+    <div className="w-full flex flex-col justify-center items-center">
+      <div className="w-full">
+        <div className="ml-3 mt-4 ">
+          <BrandLogo />
+        </div>
       </div>
       <HeroSection />
     </div>

@@ -50,11 +50,11 @@ export default function ResumeTipsCard({ tips }: ResumeTipsCardProps) {
             return (
               <>
                 {idx === currentTip && (
-                  <MotionDiv>
-                    <p className="text-sm text-blue-800 dark:text-blue-400">
+                  <MotionDiv key={tip.heading}>
+                    <div className="text-sm text-blue-800 dark:text-blue-400">
                       <p className="font-bold mb-2">{tip.heading}</p>
                       <p>{tip.content}</p>
-                    </p>
+                    </div>
                   </MotionDiv>
                 )}
               </>

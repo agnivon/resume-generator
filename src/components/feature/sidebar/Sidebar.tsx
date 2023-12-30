@@ -83,7 +83,7 @@ export function MainComponent(_props: SidebarProps) {
 
   const { isAuthenticated, session } = useNextAuthSession();
 
-  console.log(session?.user?.image);
+  //console.log(session?.user?.image);
 
   const sidebarItems = [
     {

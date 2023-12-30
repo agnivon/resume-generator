@@ -56,7 +56,7 @@ const BASE_CLASSES =
   "inline-flex justify-center items-center focus:ring-4 focus:outline-none font-medium text-center disabled:cursor-not-allowed ease-in duration-600";
 
 const SIZE_CLASSES = {
-  [ButtonSize.EXTRA_SMALL]: "px-3 py-2 text-xs",
+  [ButtonSize.EXTRA_SMALL]: "px-2 py-2 text-xs",
   [ButtonSize.SMALL]: "px-3 py-2 text-sm",
   [ButtonSize.BASE]: "text-base px-5 py-2.5",
   [ButtonSize.LARGE]: "px-5 py-3 text-lg",
@@ -95,7 +95,7 @@ const COLOR_CLASSES: { [index: string]: { [index: string]: string } } = {
 };
 
 const DISABLED_COLOR_CLASSES =
-  "disabled:text-gray-700 disabled:bg-gray-300 disabled:hover:bg-gray-300 disabled:dark:bg-gray-400 disabled:hover:dark:bg-gray-400";
+  "disabled:text-gray-700 disabled:bg-gray-300 disabled:hover:bg-gray-300 disabled:dark:bg-gray-400 disabled:hover:dark:bg-gray-400 disabled:bi-none disabled:hover:bi-none";
 
 const Button = (props: ButtonProps) => {
   const {
