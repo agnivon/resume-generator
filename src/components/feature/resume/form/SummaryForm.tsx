@@ -3,35 +3,31 @@ import Button, {
   ButtonSize,
   ButtonVariant,
 } from "@/components/global/Button";
-import FormikTextArea from "@/components/global/forms/formik/FormikTextArea";
-import MotionDiv from "@/components/global/motion/MotionDiv";
-import { FORM_INVALID_MESSAGE } from "@/constants/form.constants";
-import { SUMMARY_TIPS } from "@/constants/tips.constants";
-import useUpsertCompleteResume from "@/hooks/resume/data/useUpsertCompleteResume";
-import { ResumeFormValues } from "@/types/form.types";
-import { getFormikTouchedObject, validateFormikForm } from "@/utils/form.utils";
-import { useFormikContext } from "formik";
-import { useAlert } from "react-alert";
-import ResumeTipsCard from "../tips/ResumeTipsCard";
 import Card from "@/components/global/Card";
+import FormikTextArea from "@/components/global/forms/formik/FormikTextArea";
 import OpenAIIcon from "@/components/global/icons/OpenAIIcon";
+import MotionDiv from "@/components/global/motion/MotionDiv";
+import { SUMMARY_TIPS } from "@/constants/tips.constants";
+import { ResumeFormValues } from "@/types/form.types";
 import { Cog8ToothIcon } from "@heroicons/react/20/solid";
+import { useFormikContext } from "formik";
 import React from "react";
 import SummaryGenerationModal from "../../ai/summary/SummaryGenerationModal";
+import ResumeTipsCard from "../tips/ResumeTipsCard";
 
 export default function SummaryForm() {
   const formik = useFormikContext<ResumeFormValues>();
 
-  const alert = useAlert();
+  //////const alert = useAlert();
 
-  const upsertResume = useUpsertCompleteResume();
+  //const upsertResume = useUpsertCompleteResume();
 
   const [showSummaryGeneratorModal, setShowSummaryGeneratorModal] =
     React.useState<boolean>(false);
 
   //const isFormValid = !Boolean(formik.errors?.resume?.summary);
 
-  const handleSaveSummaryForm = async () => {
+  /* const handleSaveSummaryForm = async () => {
     validateFormikForm(
       formik,
       async () => {
@@ -53,7 +49,7 @@ export default function SummaryForm() {
         alert.error(FORM_INVALID_MESSAGE);
       }
     );
-  };
+  }; */
 
   return (
     <>
@@ -86,11 +82,10 @@ export default function SummaryForm() {
             <div className="col-span-2">
               <Button
                 label="Save Summary"
-                type="button"
-                //disabled={!isFormValid}
-                processing={formik.isSubmitting || upsertResume.isPending}
+                type="submit"
+                //disabled=\{!formik\.isValid\}
+                processing={formik.isSubmitting}
                 customClassNames="w-full"
-                onClick={handleSaveSummaryForm}
               />
             </div>
           </div>

@@ -18,7 +18,7 @@ export default function Avatar(props: AvatarProps) {
     width = 35,
     showName = true,
   } = props;
-  name = name || "User";
+  name = name || "Free User";
   const [firstName, lastName] = name.split(" ");
   return (
     <div className="flex gap-4 items-center">
@@ -37,7 +37,7 @@ export default function Avatar(props: AvatarProps) {
         >
           <span className="font-medium text-gray-600 dark:text-gray-300">
             {firstName[0]}
-            {lastName[0]}
+            {lastName && lastName[0]}
           </span>
         </div>
       )}

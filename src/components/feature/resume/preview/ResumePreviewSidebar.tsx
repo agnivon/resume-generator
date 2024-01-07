@@ -25,6 +25,7 @@ import { useFormikContext } from "formik";
 import React, { DOMAttributes } from "react";
 import { useAlert } from "react-alert";
 import ResumeTemplateModal from "./ResumeTemplateModal";
+import { ResumeV2 } from "@prisma/client";
 
 /* const RESUME_TEMPLATES = [
   TemplateType.STANDARD,
@@ -71,7 +72,7 @@ export default function ResumePreviewSidebar({
   resume,
   onBack,
 }: {
-  resume: CompleteResume;
+  resume: ResumeV2;
   onBack: DOMAttributes<HTMLDivElement>["onClick"];
 }) {
   const formik = useFormikContext<{ previewSettings: ResumePreviewSettings }>();

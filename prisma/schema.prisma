@@ -11,12 +11,13 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
   name          String
-  email         String   @unique
+  email         String     @unique
   image         String
   emailVerified Boolean?
   Resume        Resume[]
+  ResumeV2      ResumeV2[]
 
   @@map("users")
 }
@@ -74,6 +75,7 @@ model Experience {
   resumeId         String  @db.ObjectId
   hidden           Boolean @default(false)
   displayOrder     Int     @default(0)
+  resumeV2Id       String? @db.ObjectId
 
   @@map("experiences")
 }
@@ -91,6 +93,7 @@ model Project {
   resumeId         String  @db.ObjectId
   hidden           Boolean @default(false)
   displayOrder     Int     @default(0)
+  resumeV2Id       String? @db.ObjectId
 
   @@map("projects")
 }
@@ -108,6 +111,7 @@ model Education {
   resumeId       String  @db.ObjectId
   hidden         Boolean @default(false)
   displayOrder   Int     @default(0)
+  resumeV2Id     String? @db.ObjectId
 
   @@map("education")
 }
@@ -122,6 +126,7 @@ model Certification {
   resumeId     String  @db.ObjectId
   hidden       Boolean @default(false)
   displayOrder Int     @default(0)
+  resumeV2Id   String? @db.ObjectId
 
   @@map("certifications")
 }
@@ -137,6 +142,7 @@ model Course {
   resumeId     String  @db.ObjectId
   hidden       Boolean @default(false)
   displayOrder Int     @default(0)
+  resumeV2Id   String? @db.ObjectId
 
   @@map("courses")
 }
@@ -148,20 +154,22 @@ model Skill {
   resumeId     String  @db.ObjectId
   hidden       Boolean @default(false)
   displayOrder Int     @default(0)
+  resumeV2Id   String? @db.ObjectId
 
   @@map("skills")
 }
 
 model ResumePreviewSettings {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
-  Resume      Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
-  resumeId    String @unique @db.ObjectId
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  Resume      Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  ResumeV2    ResumeV2 @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  resumeId    String   @unique @db.ObjectId
   template    String
   font        String
   paperSize   String
   fontSize    Float
   lineHeight  Float
-  accentColor String @default("")
+  accentColor String   @default("")
 
   @@map("preview-settings")
 }
@@ -172,4 +180,100 @@ model UserMembership {
   premium Boolean @default(false)
 
   @@map("user-memberships")
+}
+
+model ResumeV2 {
+  id              String                 @id @default(auto()) @map("_id") @db.ObjectId
+  user            User                   @relation(fields: [userId], references: [email])
+  userId          String
+  name            String
+  createdOn       Int
+  summary         String
+  domain          String                 @default("")
+  experienceLevel String                 @default("")
+  jobTitle        String                 @default("")
+  companyName     String                 @default("")
+  jobDescription  String                 @default("")
+  contact         ContactV2?
+  experiences     ExperienceV2[]
+  projects        ProjectV2[]
+  education       EducationV2[]
+  certifications  CertificationV2[]
+  courses         CourseV2[]
+  skills          SkillV2[]
+  previewSettings ResumePreviewSettings?
+
+  @@map("resumes-v2")
+}
+
+type ContactV2 {
+  fullName    String
+  email       String
+  phone       String
+  linkedinUrl String @default("")
+  personalUrl String @default("")
+  country     String
+  state       String @default("")
+  city        String @default("")
+}
+
+type ExperienceV2 {
+  role             String
+  companyName      String
+  startDate        String
+  endDate          String  @default("")
+  companyLocation  String  @default("")
+  description      String  @default("")
+  currentlyWorking Boolean @default(false)
+  hidden           Boolean @default(false)
+  displayOrder     Int     @default(0)
+}
+
+type ProjectV2 {
+  title            String
+  organization     String
+  startDate        String
+  endDate          String  @default("")
+  url              String  @default("")
+  description      String  @default("")
+  currentlyWorking Boolean @default(false)
+  hidden           Boolean @default(false)
+  displayOrder     Int     @default(0)
+}
+
+type EducationV2 {
+  major          String
+  institution    String
+  location       String
+  year           String  @default("")
+  minor          String  @default("")
+  gpa            String  @default("")
+  additionalInfo String  @default("")
+  hidden         Boolean @default(false)
+  displayOrder   Int     @default(0)
+}
+
+type CertificationV2 {
+  name         String
+  institution  String
+  year         String
+  relevance    String  @default("")
+  hidden       Boolean @default(false)
+  displayOrder Int     @default(0)
+}
+
+type CourseV2 {
+  name         String
+  institution  String
+  year         String
+  skills       String  @default("")
+  applications String  @default("")
+  hidden       Boolean @default(false)
+  displayOrder Int     @default(0)
+}
+
+type SkillV2 {
+  skill        String
+  hidden       Boolean @default(false)
+  displayOrder Int     @default(0)
 }

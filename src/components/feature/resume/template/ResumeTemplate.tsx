@@ -1,15 +1,15 @@
 import {
-  TemplateType,
   TemplateFont,
   TemplateSize,
+  TemplateType,
 } from "@/constants/template.constants";
 import ResumeTemplateContextProvider from "@/context/ResumeTemplateContextProvider";
-import { CompleteResume } from "@/types/resume.types";
 import { getResumeTemplate } from "@/utils/template.utils";
+import { ResumeV2 } from "@prisma/client";
 import React from "react";
 
 export type ResumeTemplateProps = {
-  resume: CompleteResume;
+  resume: ResumeV2;
   template?: TemplateType;
   paperSize?: TemplateSize;
   thumbnail?: boolean;
@@ -17,8 +17,8 @@ export type ResumeTemplateProps = {
   font?: TemplateFont;
   fontSize?: number;
   lineHeight?: number;
-  accentColor?:string;
-  responsive?:boolean;
+  accentColor?: string;
+  responsive?: boolean;
   showDivider?: boolean;
 };
 

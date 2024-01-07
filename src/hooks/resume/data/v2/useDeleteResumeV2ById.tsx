@@ -1,23 +1,20 @@
 import {
-  deleteCompleteResume
+    deleteResumeV2
 } from "@/endpoints/resume.endpoints";
-import resumeSlice from "@/redux/slices/resumeSlice";
-import {
-  getSetQueryDataForDeleteInArray
-} from "@/utils/query.utils";
+import { getSetQueryDataForDeleteInArray } from "@/utils/query.utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useAppDispatch } from "../../redux/useAppDispatch";
+import { useAppDispatch } from "../../../redux/useAppDispatch";
 
-export default function useDeleteCompleteResume() {
+export default function useDeleteResumeV2ById() {
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (id: string) => deleteCompleteResume(id),
+    mutationFn: (id: string) => deleteResumeV2(id),
     onSuccess: (data) => {
-      dispatch(resumeSlice.actions.deleteOneCompleteResume(data.id));
+      //dispatch(resumeSlice.actions.deleteOneCompleteResume(data.id));
       queryClient.setQueriesData(
-        { queryKey: ["resumes"], exact: true },
+        { queryKey: ["resumesV2"], exact: true },
         getSetQueryDataForDeleteInArray(data.id)
       );
       //queryClient.invalidateQueries({ queryKey: ["resumes"], exact: true });

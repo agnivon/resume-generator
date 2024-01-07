@@ -13,6 +13,7 @@ import _ from "lodash";
 import React from "react";
 import ConfirmationModal from "./modals/ConfirmationModal";
 import ListItemSequenceChangeModal from "./modals/ListItemSequenceChangeModal";
+import { NEW_SKILL_V2 } from "@/constants/resume.v2.constants";
 
 export default function SkillsForm() {
   const formik = useFormikContext<ResumeFormValues>();
@@ -23,7 +24,6 @@ export default function SkillsForm() {
     setChangeIdx,
     deleteIdx,
     setDeleteIdx,
-    isFormValid,
     isMutationPending,
     handleAddNewItem,
     handleDeleteItem,
@@ -32,8 +32,7 @@ export default function SkillsForm() {
     getListItemContent,
     handleSequenceChange,
     getDraggableListItemContent,
-    handleSaveForm,
-  } = useFormListManager(formik, "skills", "skill", NEW_SKILL);
+  } = useFormListManager(formik, "skills", "skill", NEW_SKILL_V2);
 
   const [showListSequenceChangeModal, setShowListSequenceChangeModal] =
     React.useState<boolean>(false);
@@ -137,11 +136,10 @@ export default function SkillsForm() {
                 <div className="col-span-2">
                   <Button
                     label="Save Skills"
-                    type="button"
-                    //disabled={!isFormValid}
+                    type="submit"
+                    //disabled=\{!formik\.isValid\}
                     processing={formik.isSubmitting || isMutationPending}
                     customClassNames="w-full"
-                    onClick={handleSaveForm}
                   />
                 </div>
               </RenderIf>

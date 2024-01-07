@@ -1,22 +1,5 @@
-import { TemplateFont, TemplateSize } from "@/constants/template.constants";
 import { useResumeTemplateContext } from "@/context/ResumeTemplateContextProvider";
-import type {
-  Certification,
-  CompleteResume,
-  Contact,
-  Course,
-  Education,
-  Experience,
-  Project,
-  Skill,
-} from "@/types/resume.types";
-import { classNames } from "@/utils";
-import {
-  getFontClass,
-  getFontStyle,
-  getSizeClass,
-  getStartEndDate,
-} from "@/utils/template.utils";
+import { getFontStyle, getStartEndDate } from "@/utils/template.utils";
 import React from "react";
 import {
   EnvelopeFill,
@@ -27,10 +10,20 @@ import {
 import Markdown from "react-markdown";
 import { ResumeTemplateProps } from "./ResumeTemplate";
 import ResumeTemplateContainer from "./container/ResumeTemplateContainer";
+import {
+  CertificationV2,
+  ContactV2,
+  CourseV2,
+  EducationV2,
+  ExperienceV2,
+  ProjectV2,
+  ResumeV2,
+  SkillV2,
+} from "@prisma/client";
 
 const Divider = () => <hr className="my-2" />;
 
-const ContactInformation = ({ contact }: { contact: Contact | null }) => {
+const ContactInformation = ({ contact }: { contact: ContactV2 | null }) => {
   const { fontSize, lineHeight, accentColor } = useResumeTemplateContext();
   if (!contact) return <></>;
   return (
@@ -85,7 +78,7 @@ const ContactInformation = ({ contact }: { contact: Contact | null }) => {
   );
 };
 
-const Summary = ({ summary }: { summary: CompleteResume["summary"] }) => {
+const Summary = ({ summary }: { summary: ResumeV2["summary"] }) => {
   const {
     fontSize = 1,
     lineHeight = 1,
@@ -116,7 +109,7 @@ const Summary = ({ summary }: { summary: CompleteResume["summary"] }) => {
   );
 };
 
-const Experience = ({ experiences }: { experiences: Experience[] }) => {
+const Experience = ({ experiences }: { experiences: ExperienceV2[] }) => {
   const {
     fontSize = 1,
     lineHeight = 1,
@@ -177,7 +170,7 @@ const Experience = ({ experiences }: { experiences: Experience[] }) => {
   );
 };
 
-const Project = ({ projects }: { projects: Project[] }) => {
+const Project = ({ projects }: { projects: ProjectV2[] }) => {
   const {
     fontSize = 1,
     lineHeight = 1,
@@ -239,7 +232,7 @@ const Project = ({ projects }: { projects: Project[] }) => {
   );
 };
 
-const Education = ({ education }: { education: Education[] }) => {
+const Education = ({ education }: { education: EducationV2[] }) => {
   const {
     fontSize = 1,
     lineHeight = 1,
@@ -306,7 +299,7 @@ const Education = ({ education }: { education: Education[] }) => {
 const Certification = ({
   certifications,
 }: {
-  certifications: Certification[];
+  certifications: CertificationV2[];
 }) => {
   const {
     fontSize = 1,
@@ -364,7 +357,7 @@ const Certification = ({
   );
 };
 
-const Course = ({ courses }: { courses: Course[] }) => {
+const Course = ({ courses }: { courses: CourseV2[] }) => {
   const {
     fontSize = 1,
     lineHeight = 1,
@@ -422,7 +415,7 @@ const Course = ({ courses }: { courses: Course[] }) => {
   );
 };
 
-const Skills = ({ skills }: { skills: Skill[] }) => {
+const Skills = ({ skills }: { skills: SkillV2[] }) => {
   const {
     fontSize = 1,
     lineHeight = 1,

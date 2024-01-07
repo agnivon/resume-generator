@@ -5,13 +5,16 @@ import {
   ResumeEntity,
   ResumeEntityArray,
 } from "@/types/resume.types";
-import { ResumePreviewSettings } from "@prisma/client";
+import { ResumePreviewSettings, ResumeV2 } from "@prisma/client";
 import axios from "axios";
 
 export const getCompleteResumes = (): Promise<CompleteResume[]> =>
   axios
     .get<CompleteResume[]>("/api/resumes/complete")
     .then((result) => result.data);
+
+export const getResumesV2 = (): Promise<ResumeV2[]> =>
+  axios.get<ResumeV2[]>("/api/resumes/v2").then((result) => result.data);
 
 export const getCompleteResumeById = (
   resumeId: string
@@ -20,12 +23,20 @@ export const getCompleteResumeById = (
     .get<CompleteResume>(`/api/resume/complete/${resumeId}`)
     .then((result) => result.data);
 
+export const getResumeV2ById = (resumeId: string): Promise<ResumeV2> =>
+  axios
+    .get<ResumeV2>(`/api/resume/v2/${resumeId}`)
+    .then((result) => result.data);
+
 export const insertCompleteResume = (
   resume: CompleteResume
 ): Promise<CompleteResume> =>
   axios
     .post<CompleteResume>("/api/resume/complete", resume)
     .then((result) => result.data);
+
+export const insertResumeV2 = (resume: ResumeV2): Promise<ResumeV2> =>
+  axios.post<ResumeV2>("/api/resume/v2", resume).then((result) => result.data);
 
 export const upsertCompleteResume = (
   resume: Partial<CompleteResume> &
@@ -40,12 +51,23 @@ export const deleteCompleteResume = (id: String): Promise<CompleteResume> =>
     .delete<CompleteResume>(`/api/resume/complete/${id}`)
     .then((result) => result.data);
 
+export const deleteResumeV2 = (id: String): Promise<ResumeV2> =>
+  axios.delete<ResumeV2>(`/api/resume/v2/${id}`).then((result) => result.data);
+
 export const updateResume = (
   resumeId: string,
   resume: Resume
 ): Promise<Resume> =>
   axios
     .patch<Resume>(`/api/resume/${resumeId}`, resume)
+    .then((result) => result.data);
+
+export const updateResumeV2 = (
+  resumeId: string,
+  resume: Partial<ResumeV2>
+): Promise<ResumeV2> =>
+  axios
+    .put<ResumeV2>(`/api/resume/v2/${resumeId}`, resume)
     .then((result) => result.data);
 
 export const upsertContact = (

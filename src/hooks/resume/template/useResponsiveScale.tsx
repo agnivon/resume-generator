@@ -16,6 +16,7 @@ export default function useResponsiveScale(
       setScale(newScale);
     };
     if (responsive) {
+      handleResize();
       window.addEventListener("resize", handleResize);
     } else {
       window.removeEventListener("resize", handleResize);

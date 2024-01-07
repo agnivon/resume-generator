@@ -7,40 +7,43 @@ import {
 import { ResumePreviewSettings } from "@prisma/client";
 import _ from "lodash";
 
-export const getSetQueryDataForCompleteResumes =
-  (data: CompleteResume) => (oldResumes: CompleteResume[] | undefined) => {
-    if (oldResumes) {
-      const resumes = _.cloneDeep(oldResumes);
-      const index = resumes.findIndex((resume) => resume.id === data.id);
+export const getSetQueryDataForInsertOrUpdateInArray =
+  <T extends { id: string }>(data: T) =>
+  (oldArray: T[] | undefined) => {
+    if (oldArray) {
+      const array = _.cloneDeep(oldArray);
+      const index = array.findIndex((item) => item.id === data.id);
       if (index > -1) {
-        resumes[index] = data;
+        array[index] = data;
       } else {
-        resumes.unshift(data);
+        array.unshift(data);
       }
-      return resumes;
+      return array;
     }
-    return oldResumes;
+    return oldArray;
   };
 
-export const getSetQueryDataForCompleteResumeById =
-  (data: CompleteResume) => (oldResume: CompleteResume | undefined) => {
-    if (oldResume) {
+export const getSetQueryDataForInsertOrUpdateById =
+  <T>(data: T) =>
+  (oldItem: T | undefined) => {
+    if (oldItem) {
       return data;
     }
-    return oldResume;
+    return oldItem;
   };
 
-export const getSetQueryDataForDeleteCompleteResumes =
-  (id: string) => (oldResumes: CompleteResume[] | undefined) => {
-    if (oldResumes) {
-      const resumes = _.cloneDeep(oldResumes);
-      const index = resumes.findIndex((resume) => resume.id === id);
+export const getSetQueryDataForDeleteInArray =
+  <T extends { id: string }>(id: string) =>
+  (oldArray: T[] | undefined) => {
+    if (oldArray) {
+      const array = _.cloneDeep(oldArray);
+      const index = array.findIndex((item) => item.id === id);
       if (index > -1) {
-        resumes.splice(index, 1);
+        array.splice(index, 1);
       }
-      return resumes;
+      return array;
     }
-    return oldResumes;
+    return oldArray;
   };
 
 export const getSetQueryDataForResumes =
@@ -149,18 +152,3 @@ export const getSetQueryDataForDeleteEntityByResumeId =
     }
     return oldResume;
   };
-
-export const getSetQueryDataForPreviewSettings = (
-  data: ResumePreviewSettings
-) => {
-  (oldPreviewSettings: ResumePreviewSettings[] | undefined) => {
-    if (oldPreviewSettings) {
-      const previewSettings = _.cloneDeep(oldPreviewSettings);
-      const index = previewSettings.findIndex((s) => data.id);
-      if (index > -1) {
-        previewSettings[index] = data;
-      }
-      return previewSettings;
-    } else return oldPreviewSettings;
-  };
-};

@@ -5,10 +5,10 @@ import Modal, { ModalProps } from "@/components/global/modal/Modal";
 import ModalBody from "@/components/global/modal/ModalBody";
 import ModalHeader from "@/components/global/modal/ModalHeader";
 import { SAMPLE_JOB_DESCRIPTION } from "@/constants/form.constants";
-import { NEW_CONTACT, NEW_RESUME } from "@/constants/resume.constants";
+import { NEW_RESUME_V2, NEW_CONTACT_V2 } from "@/constants/resume.v2.constants";
 import { useHomePageContext } from "@/context/page/HomePageContextProvider";
 import useNextAuthSession from "@/hooks/auth/useNextAuthSession";
-import useInsertCompleteResume from "@/hooks/resume/data/useInsertCompleteResume";
+import useInsertResumeV2 from "@/hooks/resume/data/v2/useInsertResumeV2";
 import { HomePageActions } from "@/reducers/HomePageReducer";
 import { Form, Formik, FormikHelpers } from "formik";
 import { useAlert } from "react-alert";
@@ -23,7 +23,7 @@ export default function NewResumeModal(props: ModalProps) {
   const { dispatch } = useHomePageContext();
   const { session } = useNextAuthSession();
 
-  const insertResume = useInsertCompleteResume();
+  const insertResume = useInsertResumeV2();
   const initialValues = {
     name: "",
     domain: "",
@@ -40,10 +40,10 @@ export default function NewResumeModal(props: ModalProps) {
     formik.setSubmitting(true);
     try {
       if (session?.user?.email) {
-        const newResume = NEW_RESUME({
+        const newResume = NEW_RESUME_V2({
           name: values.name,
           userId: session?.user?.email,
-          contact: NEW_CONTACT({}),
+          contact: NEW_CONTACT_V2({}),
         });
         await insertResume.mutation.mutateAsync(newResume);
         dispatch(HomePageActions.setShowNewResumeModal(false));

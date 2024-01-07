@@ -1,21 +1,17 @@
 import Button from "@/components/global/Button";
 import FormikInput from "@/components/global/forms/formik/FormikInput";
 import MotionDiv from "@/components/global/motion/MotionDiv";
-import { FORM_INVALID_MESSAGE } from "@/constants/form.constants";
-import useUpsertContact from "@/hooks/resume/data/useUpsertContact";
 import { ResumeFormValues } from "@/types/form.types";
-import { getFormikTouchedObject, validateFormikForm } from "@/utils/form.utils";
 import { useFormikContext } from "formik";
-import { useAlert } from "react-alert";
 
 export default function ContactForm() {
   const formik = useFormikContext<ResumeFormValues>();
 
-  const alert = useAlert();
+  //const alert = useAlert();
 
-  const upsertContact = useUpsertContact();
+  //const upsertContact = useUpsertContact();
 
-  const handleSaveContactForm = async () => {
+  /* const handleSaveContactForm = async () => {
     validateFormikForm(
       formik,
       async () => {
@@ -37,7 +33,7 @@ export default function ContactForm() {
         alert.error(FORM_INVALID_MESSAGE);
       }
     );
-  };
+  }; */
 
   //const isFormValid = !Boolean(formik.errors?.resume?.contact);
 
@@ -103,11 +99,10 @@ export default function ContactForm() {
         <div className="col-span-1">
           <Button
             label="Save Contact Information"
-            type="button"
-            //disabled={!isFormValid}
-            processing={formik.isSubmitting || upsertContact.isPending}
+            type="submit"
+            //disabled=\{!formik\.isValid\}
+            processing={formik.isSubmitting}
             customClassNames="w-full"
-            onClick={handleSaveContactForm}
           />
         </div>
       </div>

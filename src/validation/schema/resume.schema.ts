@@ -3,7 +3,6 @@ import {
   SKILL_LENGTH,
   SUMMARY_LENGTH,
 } from "@/constants/schema.constants";
-import { ResumeFormTab } from "@/constants/state.constants";
 import * as Yup from "yup";
 
 const PHONE_REGEX =

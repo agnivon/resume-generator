@@ -8,7 +8,6 @@ import FormikSwitch from "@/components/global/forms/formik/FormikSwitch";
 import FormikTextArea from "@/components/global/forms/formik/FormikTextArea";
 import MotionDiv from "@/components/global/motion/MotionDiv";
 import { START_END_DATE_FORMAT } from "@/constants/date.constants";
-import { NEW_EXPERIENCE } from "@/constants/resume.constants";
 import useFormListManager from "@/hooks/resume/form/useFormListManager";
 import { ResumeFormValues } from "@/types/form.types";
 import { PlusIcon } from "@heroicons/react/24/solid";
@@ -20,6 +19,7 @@ import ListItemSequenceChangeModal from "./modals/ListItemSequenceChangeModal";
 import { getTextAreaRows } from "@/utils/form.utils";
 import ResumeTipsCard from "../tips/ResumeTipsCard";
 import { EXPERIENCE_TIPS } from "@/constants/tips.constants";
+import { NEW_EXPERIENCE_V2 } from "@/constants/resume.v2.constants";
 
 export default function ExperienceForm() {
   const formik = useFormikContext<ResumeFormValues>();
@@ -38,8 +38,12 @@ export default function ExperienceForm() {
     getListItemContent,
     handleSequenceChange,
     getDraggableListItemContent,
-    handleSaveForm,
-  } = useFormListManager(formik, "experiences", "experience", NEW_EXPERIENCE);
+  } = useFormListManager(
+    formik,
+    "experiences",
+    "experience",
+    NEW_EXPERIENCE_V2
+  );
 
   const [showListSequenceChangeModal, setShowListSequenceChangeModal] =
     React.useState<boolean>(false);
@@ -216,11 +220,10 @@ export default function ExperienceForm() {
                 <div className="col-span-2">
                   <Button
                     label="Save Experiences"
-                    type="button"
-                    //disabled={!isFormValid}
+                    type="submit"
+                    //disabled=\{!formik\.isValid\}
                     processing={formik.isSubmitting || isMutationPending}
                     customClassNames="w-full"
-                    onClick={handleSaveForm}
                   />
                 </div>
               </RenderIf>

@@ -18,16 +18,16 @@ import ModalHeader from "@/components/global/modal/ModalHeader";
 import MotionDiv from "@/components/global/motion/MotionDiv";
 import { SAMPLE_JOB_DESCRIPTION } from "@/constants/form.constants";
 import { ResumeFormValues } from "@/types/form.types";
-import { CompleteResume } from "@/types/resume.types";
 import { classNames } from "@/utils";
 import { ArrowPathIcon, ChevronLeftIcon } from "@heroicons/react/20/solid";
 import { XCircleIcon } from "@heroicons/react/24/outline";
+import { ResumeV2 } from "@prisma/client";
 import { useCompletion } from "ai/react";
 import { Form, Formik, FormikHelpers, useFormikContext } from "formik";
 import React from "react";
 
 type SummaryGenerationModalProps = ModalProps & {
-  resume: CompleteResume;
+  resume: ResumeV2;
 };
 
 export default function SummaryGenerationModal(

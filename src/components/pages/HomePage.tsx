@@ -16,13 +16,16 @@ import NewResumeModal from "../feature/resume/grid/modals/NewResumeModal";
 import ErrorMessage from "../global/ErrorMessage";
 import LoadingMessage from "../global/LoadingMessage";
 import RenderIf from "../global/RenderIf";
+import useGetResumesV2 from "@/hooks/resume/data/v2/useGetResumesV2";
+import useDeleteResumeV2ById from "@/hooks/resume/data/v2/useDeleteResumeV2ById";
+import { ResumeV2 } from "@prisma/client";
 
 function PageComponent() {
   const { state, dispatch } = useHomePageContext();
 
-  const { query: resumeQuery, data: resumes } = useGetCompleteResumes();
+  const { query: resumeQuery, data: resumes } = useGetResumesV2();
   const { query: previewSettingsQuery } = useGetPreviewSettings();
-  const deleteResume = useDeleteCompleteResume();
+  const deleteResume = useDeleteResumeV2ById();
 
   const alert = useAlert();
 
@@ -74,7 +77,7 @@ function PageComponent() {
         />
         <div className="w-full flex-grow">
           <div className="h-full flex flex-col p-10">
-            <ResumeGrid resumes={resumes as CompleteResume[]} />
+            <ResumeGrid resumes={resumes as ResumeV2[]} />
           </div>
         </div>
       </RenderIf>

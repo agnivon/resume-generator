@@ -15,6 +15,7 @@ import {
   TemplateFont,
 } from "../../../../constants/template.constants";
 import Template, { ResumeTemplateProps } from "../template/ResumeTemplate";
+import useInsertResumeV2 from "@/hooks/resume/data/v2/useInsertResumeV2";
 
 type ResumeCardProps = ResumeTemplateProps & {
   previewSetting?: ResumePreviewSettings;
@@ -37,17 +38,13 @@ const ResumeCardFooter = (props: ResumeCardProps) => {
 
   const alert = useAlert();
   const { dispatch } = useHomePageContext();
-  const insertResume = useInsertCompleteResume();
+  const insertResume = useInsertResumeV2();
   const { globalRunning } = useIsGlobalQueryRunning();
 
   const handleOnChange = async (value: string | number | null) => {
     try {
       if (value === "Edit") {
-        dispatch(
-          HomePageActions.setShowEditResumeModal(
-            getResumeFromCompleteResume(resume)
-          )
-        );
+        dispatch(HomePageActions.setShowEditResumeModal(resume));
       } else if (value === "Clone") {
         await insertResume.mutation.mutateAsync({
           ...resume,
@@ -56,11 +53,7 @@ const ResumeCardFooter = (props: ResumeCardProps) => {
         });
         alert.success(`${resume.name} cloned`);
       } else if (value === "Delete") {
-        dispatch(
-          HomePageActions.setShowDeleteResumeModal(
-            getResumeFromCompleteResume(resume)
-          )
-        );
+        dispatch(HomePageActions.setShowDeleteResumeModal(resume));
       }
     } catch {
       alert.error("Something went wrong");

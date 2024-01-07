@@ -1,12 +1,12 @@
 import { Routes } from "@/constants/routes.constants";
-import { CompleteResume } from "@/types/resume.types";
+import { useAppSelector } from "@/hooks/redux/useAppSelector";
+import { ResumeV2 } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import NewResumeCard from "./NewResumeCard";
 import ResumeCard from "./ResumeCard";
-import { useAppSelector } from "@/hooks/redux/useAppSelector";
 
 type ResumeGridProps = {
-  resumes: CompleteResume[];
+  resumes: ResumeV2[];
 };
 
 export default function ResumeGrid(props: ResumeGridProps) {

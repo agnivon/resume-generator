@@ -13,6 +13,7 @@ import React from "react";
 import ListItemSequenceChangeModal from "./modals/ListItemSequenceChangeModal";
 import FormikTextArea from "@/components/global/forms/formik/FormikTextArea";
 import MotionDiv from "@/components/global/motion/MotionDiv";
+import { NEW_CERTIFICATION_V2 } from "@/constants/resume.v2.constants";
 
 export default function CertificationsForm() {
   const formik = useFormikContext<ResumeFormValues>();
@@ -23,7 +24,6 @@ export default function CertificationsForm() {
     setChangeIdx,
     deleteIdx,
     setDeleteIdx,
-    isFormValid,
     isMutationPending,
     handleAddNewItem,
     handleDeleteItem,
@@ -32,12 +32,11 @@ export default function CertificationsForm() {
     getListItemContent,
     handleSequenceChange,
     getDraggableListItemContent,
-    handleSaveForm,
   } = useFormListManager(
     formik,
     "certifications",
     "certification",
-    NEW_CERTIFICATION
+    NEW_CERTIFICATION_V2
   );
 
   const [showListSequenceChangeModal, setShowListSequenceChangeModal] =
@@ -169,11 +168,10 @@ export default function CertificationsForm() {
                 <div className="col-span-2">
                   <Button
                     label="Save Certifications"
-                    type="button"
-                    //disabled={!isFormValid}
+                    type="submit"
+                    //disabled=\{!formik\.isValid\}
                     processing={formik.isSubmitting || isMutationPending}
                     customClassNames="w-full"
-                    onClick={handleSaveForm}
                   />
                 </div>
               </RenderIf>

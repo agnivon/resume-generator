@@ -2,22 +2,22 @@ import Button, { ButtonColor, ButtonSize } from "@/components/global/Button";
 import ListGroup, { ListItem } from "@/components/global/ListGroup";
 import RenderIf from "@/components/global/RenderIf";
 import Label from "@/components/global/forms/Label";
+import FormikDatepicker from "@/components/global/forms/formik/FormikDatepicker";
 import FormikInput from "@/components/global/forms/formik/FormikInput";
 import FormikSwitch from "@/components/global/forms/formik/FormikSwitch";
 import FormikTextArea from "@/components/global/forms/formik/FormikTextArea";
-import { NEW_PROJECT } from "@/constants/resume.constants";
+import MotionDiv from "@/components/global/motion/MotionDiv";
+import { START_END_DATE_FORMAT } from "@/constants/date.constants";
+import { NEW_PROJECT_V2 } from "@/constants/resume.v2.constants";
 import useFormListManager from "@/hooks/resume/form/useFormListManager";
 import { ResumeFormValues } from "@/types/form.types";
+import { getTextAreaRows } from "@/utils/form.utils";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { useFormikContext } from "formik";
 import _ from "lodash";
 import React from "react";
 import ConfirmationModal from "./modals/ConfirmationModal";
 import ListItemSequenceChangeModal from "./modals/ListItemSequenceChangeModal";
-import MotionDiv from "@/components/global/motion/MotionDiv";
-import FormikDatepicker from "@/components/global/forms/formik/FormikDatepicker";
-import { START_END_DATE_FORMAT } from "@/constants/date.constants";
-import { getTextAreaRows } from "@/utils/form.utils";
 
 export default function ProjectForm() {
   const formik = useFormikContext<ResumeFormValues>();
@@ -28,7 +28,6 @@ export default function ProjectForm() {
     setChangeIdx,
     deleteIdx,
     setDeleteIdx,
-    isFormValid,
     isMutationPending,
     handleAddNewItem,
     handleDeleteItem,
@@ -37,8 +36,7 @@ export default function ProjectForm() {
     getListItemContent,
     handleSequenceChange,
     getDraggableListItemContent,
-    handleSaveForm,
-  } = useFormListManager(formik, "projects", "project", NEW_PROJECT);
+  } = useFormListManager(formik, "projects", "project", NEW_PROJECT_V2);
 
   const [showListSequenceChangeModal, setShowListSequenceChangeModal] =
     React.useState<boolean>(false);
@@ -194,11 +192,10 @@ export default function ProjectForm() {
                 <div className="col-span-2">
                   <Button
                     label="Save Projects"
-                    type="button"
-                    //disabled={!isFormValid}
+                    type="submit"
+                    //disabled=\{!formik\.isValid\}
                     processing={formik.isSubmitting || isMutationPending}
                     customClassNames="w-full"
-                    onClick={handleSaveForm}
                   />
                 </div>
               </RenderIf>

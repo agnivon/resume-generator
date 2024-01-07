@@ -2,13 +2,13 @@ import {
   resumePageInitialState,
   resumePageReducer,
 } from "@/reducers/ResumePageReducer";
-import { ResumePreviewSettings } from "@/types/template.types";
-import { CompleteResume } from "@/types/resume.types";
 import { ResumePageState } from "@/types/state.types";
+import { ResumePreviewSettings } from "@/types/template.types";
+import { ResumeV2 } from "@prisma/client";
 import React from "react";
 
 type ResumePageContextValue = {
-  resume: CompleteResume;
+  resume: ResumeV2;
   previewSettings: ResumePreviewSettings | null;
 };
 

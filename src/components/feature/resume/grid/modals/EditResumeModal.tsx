@@ -6,9 +6,9 @@ import ModalBody from "@/components/global/modal/ModalBody";
 import ModalHeader from "@/components/global/modal/ModalHeader";
 import { SAMPLE_JOB_DESCRIPTION } from "@/constants/form.constants";
 import { useHomePageContext } from "@/context/page/HomePageContextProvider";
-import useUpdateResume from "@/hooks/resume/data/useUpdateResume";
+import useUpdateResumeV2ById from "@/hooks/resume/data/v2/useUpdateResumeV2ById";
 import { HomePageActions } from "@/reducers/HomePageReducer";
-import { Resume } from "@/types/resume.types";
+import { ResumeV2 } from "@prisma/client";
 import { Form, Formik, FormikHelpers } from "formik";
 import { useAlert } from "react-alert";
 import * as Yup from "yup";
@@ -18,12 +18,12 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function EditResumeModal(
-  props: ModalProps & { resume: Resume | null }
+  props: ModalProps & { resume: ResumeV2 | null }
 ) {
   const { resume } = props;
   const alert = useAlert();
   const { dispatch } = useHomePageContext();
-  const updateResume = useUpdateResume();
+  const updateResume = useUpdateResumeV2ById();
 
   if (!resume) return <></>;
 
@@ -43,7 +43,10 @@ export default function EditResumeModal(
     formik.setSubmitting(true);
     try {
       const editedResume = { ...resume, ...values };
-      await updateResume.mutation.mutateAsync(editedResume);
+      await updateResume.mutation.mutateAsync({
+        id: resume.id,
+        resume: editedResume,
+      });
       dispatch(HomePageActions.setShowEditResumeModal(null));
       alert.success(`Changes saved`);
     } catch {

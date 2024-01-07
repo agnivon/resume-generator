@@ -13,6 +13,7 @@ import _ from "lodash";
 import React from "react";
 import ConfirmationModal from "./modals/ConfirmationModal";
 import ListItemSequenceChangeModal from "./modals/ListItemSequenceChangeModal";
+import { NEW_COURSE_V2 } from "@/constants/resume.v2.constants";
 
 export default function CoursesForm() {
   const formik = useFormikContext<ResumeFormValues>();
@@ -23,7 +24,6 @@ export default function CoursesForm() {
     setChangeIdx,
     deleteIdx,
     setDeleteIdx,
-    isFormValid,
     isMutationPending,
     handleAddNewItem,
     handleDeleteItem,
@@ -32,8 +32,7 @@ export default function CoursesForm() {
     getListItemContent,
     handleSequenceChange,
     getDraggableListItemContent,
-    handleSaveForm,
-  } = useFormListManager(formik, "courses", "course", NEW_COURSE);
+  } = useFormListManager(formik, "courses", "course", NEW_COURSE_V2);
 
   const [showListSequenceChangeModal, setShowListSequenceChangeModal] =
     React.useState<boolean>(false);
@@ -170,11 +169,10 @@ export default function CoursesForm() {
                 <div className="col-span-2">
                   <Button
                     label="Save Courses"
-                    type="button"
-                    //disabled={!isFormValid}
+                    type="submit"
+                    //disabled=\{!formik\.isValid\}
                     processing={formik.isSubmitting || isMutationPending}
                     customClassNames="w-full"
-                    onClick={handleSaveForm}
                   />
                 </div>
               </RenderIf>

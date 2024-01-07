@@ -1,15 +1,22 @@
 import { useResumeTemplateContext } from "@/context/ResumeTemplateContextProvider";
 import type {
   Certification,
-  CompleteResume,
-  Contact,
   Course,
   Education,
   Experience,
-  Project,
-  Skill,
+  Project
 } from "@/types/resume.types";
 import { getFontStyle, getStartEndDate } from "@/utils/template.utils";
+import {
+  CertificationV2,
+  ContactV2,
+  CourseV2,
+  EducationV2,
+  ExperienceV2,
+  ProjectV2,
+  ResumeV2,
+  SkillV2,
+} from "@prisma/client";
 import React from "react";
 import {
   EnvelopeFill,
@@ -22,7 +29,7 @@ import Markdown from "react-markdown";
 import { ResumeTemplateProps } from "./ResumeTemplate";
 import ResumeTemplateContainer from "./container/ResumeTemplateContainer";
 
-const ContactInformation = ({ contact }: { contact: Contact | null }) => {
+const ContactInformation = ({ contact }: { contact: ContactV2 | null }) => {
   const { fontSize, lineHeight } = useResumeTemplateContext();
   if (!contact) return <></>;
   return (
@@ -80,7 +87,7 @@ const ContactInformation = ({ contact }: { contact: Contact | null }) => {
   );
 };
 
-const Summary = ({ summary }: { summary: CompleteResume["summary"] }) => {
+const Summary = ({ summary }: { summary: ResumeV2["summary"] }) => {
   const { fontSize, lineHeight } = useResumeTemplateContext();
 
   return (
@@ -102,7 +109,7 @@ const Summary = ({ summary }: { summary: CompleteResume["summary"] }) => {
   );
 };
 
-const Experience = ({ experiences }: { experiences: Experience[] }) => {
+const Experience = ({ experiences }: { experiences: ExperienceV2[] }) => {
   const { fontSize, lineHeight } = useResumeTemplateContext();
 
   return (
@@ -152,7 +159,7 @@ const Experience = ({ experiences }: { experiences: Experience[] }) => {
   );
 };
 
-const Project = ({ projects }: { projects: Project[] }) => {
+const Project = ({ projects }: { projects: ProjectV2[] }) => {
   const { fontSize, lineHeight } = useResumeTemplateContext();
 
   return (
@@ -202,7 +209,7 @@ const Project = ({ projects }: { projects: Project[] }) => {
   );
 };
 
-const Education = ({ education }: { education: Education[] }) => {
+const Education = ({ education }: { education: EducationV2[] }) => {
   const { fontSize, lineHeight } = useResumeTemplateContext();
 
   return (
@@ -258,7 +265,7 @@ const Education = ({ education }: { education: Education[] }) => {
 const Certification = ({
   certifications,
 }: {
-  certifications: Certification[];
+  certifications: CertificationV2[];
 }) => {
   const { fontSize, lineHeight } = useResumeTemplateContext();
 
@@ -305,7 +312,7 @@ const Certification = ({
   );
 };
 
-const Course = ({ courses }: { courses: Course[] }) => {
+const Course = ({ courses }: { courses: CourseV2[] }) => {
   const { fontSize, lineHeight } = useResumeTemplateContext();
 
   return (
@@ -352,7 +359,7 @@ const Course = ({ courses }: { courses: Course[] }) => {
   );
 };
 
-const Skills = ({ skills }: { skills: Skill[] }) => {
+const Skills = ({ skills }: { skills: SkillV2[] }) => {
   const { fontSize, lineHeight } = useResumeTemplateContext();
 
   return (
