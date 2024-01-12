@@ -2,13 +2,12 @@ import prisma from "@/clients/prismaClient";
 import { CompleteResume } from "@/types/resume.types";
 import { exclude } from "@/utils/object.utils";
 import { getUniqueCompleteResume } from "@/utils/prisma.utils";
-import { isAuthenticated } from "@/utils/session.utils";
+import { getNextAuthServerSession, isAuthenticated } from "@/utils/session.utils";
 import { CompleteResumeSchema } from "@/validation/schema/resume.schema";
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
-  const session = await getServerSession();
+  const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {
     try {
@@ -117,7 +116,7 @@ export async function POST(request: Request) {
 }
 
 export async function PUT(request: Request) {
-  const session = await getServerSession();
+  const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {
     try {

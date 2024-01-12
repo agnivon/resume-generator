@@ -1,18 +1,17 @@
+import prisma from "@/clients/prismaClient";
 import { Routes } from "@/constants/routes.constants";
-import { getServerSession } from "next-auth";
+import AuthLayoutContextProvider from "@/context/layout/AuthLayoutContextProvider";
+import { getNextAuthServerSession, isAuthenticated } from "@/utils/session.utils";
 import { redirect } from "next/navigation";
 import React, { cache } from "react";
-import RenderIf from "../global/RenderIf";
-import Sidebar from "../feature/sidebar/Sidebar";
-import { isAuthenticated } from "@/utils/session.utils";
 import Navbar from "../feature/navbar/Navbar";
-import prisma from "@/clients/prismaClient";
-import AuthLayoutContextProvider from "@/context/layout/AuthLayoutContextProvider";
+import Sidebar from "../feature/sidebar/Sidebar";
+import RenderIf from "../global/RenderIf";
 
 export const revalidate = 3600; // revalidate the data at most every hour
 
 const getUserDetails = cache(async (id: string) => {
-  const user = await prisma.user.findUniqueOrThrow({ where: { email: id } });
+  const user = await prisma.user.findUniqueOrThrow({ where: { id: id } });
   const userMembership = await prisma.userMembership.findUnique({
     where: { userId: user.id },
   });
@@ -25,7 +24,7 @@ export default async function AuthLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession();
+  const session = await getNextAuthServerSession();
 
   const authenticated = isAuthenticated(session);
 
@@ -33,11 +32,15 @@ export default async function AuthLayout({
     redirect(Routes.SIGNIN);
   }
 
-  const userId = session.user?.email;
+  if (!session?.user) return <></>;
+
+  const userId = session.user?.id;
 
   if (!userId) {
     redirect(Routes.SIGNIN);
   }
+
+  //console.log(session);
 
   const userDetails = await getUserDetails(userId);
 

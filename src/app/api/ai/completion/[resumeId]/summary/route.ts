@@ -1,8 +1,7 @@
 import { getResumeSummaryPrompt } from "@/constants/prompt.constants";
 import { getUniqueCompleteResume } from "@/utils/prisma.utils";
-import { isAuthenticated } from "@/utils/session.utils";
+import { getNextAuthServerSession, isAuthenticated } from "@/utils/session.utils";
 import { OpenAIStream, StreamingTextResponse } from "ai";
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
@@ -19,7 +18,7 @@ export async function POST(
   req: Request,
   { params }: { params: { resumeId: string } }
 ) {
-  const session = await getServerSession();
+  const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {
     try {

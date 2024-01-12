@@ -1,11 +1,10 @@
 import prisma from "@/clients/prismaClient";
 import { Contact } from "@/types/resume.types";
 import { exclude } from "@/utils/object.utils";
-import { isAuthenticated } from "@/utils/session.utils";
+import { getNextAuthServerSession, isAuthenticated } from "@/utils/session.utils";
 import {
   ContactSchema
 } from "@/validation/schema/resume.schema";
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 
@@ -13,7 +12,7 @@ export async function GET(
   _request: Request,
   { params }: { params: { resumeId: string } }
 ) {
-  const session = await getServerSession();
+  const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {
     const contact: Contact | null = await prisma.contact.findFirst({
@@ -29,7 +28,7 @@ export async function PUT(
   request: Request,
   { params }: { params: { resumeId: string } }
 ) {
-  const session = await getServerSession();
+  const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {
     try {

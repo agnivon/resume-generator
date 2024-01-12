@@ -4,9 +4,10 @@ import ReduxProvider from "./ReduxProvider";
 import SessionProvider from "./SessionProvider";
 import ThemeContextProvider from "./ThemeContextProvider";
 import ReactQueryProvider from "./ReactQueryProvider";
+import { getNextAuthServerSession } from "@/utils/session.utils";
 
 const AppProvider = async ({ children }: { children: React.ReactNode }) => {
-  const session = await getServerSession();
+  const session = await getNextAuthServerSession();
 
   return (
     <>

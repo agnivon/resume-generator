@@ -12,6 +12,7 @@ import Textarea from "@/components/global/forms/Textarea";
 import FormikCheckbox from "@/components/global/forms/formik/FormikCheckbox";
 import FormikInput from "@/components/global/forms/formik/FormikInput";
 import FormikTextArea from "@/components/global/forms/formik/FormikTextArea";
+import OpenAIIcon from "@/components/global/icons/OpenAIIcon";
 import Modal, { ModalProps } from "@/components/global/modal/Modal";
 import ModalBody from "@/components/global/modal/ModalBody";
 import ModalHeader from "@/components/global/modal/ModalHeader";
@@ -20,7 +21,7 @@ import { SAMPLE_JOB_DESCRIPTION } from "@/constants/form.constants";
 import { ResumeFormValues } from "@/types/form.types";
 import { classNames } from "@/utils";
 import { ArrowPathIcon, ChevronLeftIcon } from "@heroicons/react/20/solid";
-import { XCircleIcon } from "@heroicons/react/24/outline";
+import { Cog8ToothIcon, XCircleIcon } from "@heroicons/react/24/outline";
 import { ResumeV2 } from "@prisma/client";
 import { useCompletion } from "ai/react";
 import { Form, Formik, FormikHelpers, useFormikContext } from "formik";
@@ -88,7 +89,7 @@ export default function SummaryGenerationModal(
             <Form>
               <ModalHeader>
                 <>
-                  Generate Summary
+                  Summary Writer
                   <div className="text-sm font-normal">
                     Generate a resume summary tailored to the job posting
                   </div>
@@ -126,7 +127,7 @@ export default function SummaryGenerationModal(
                       </div>
                       <div className="mt-6">
                         <Button
-                          label="Generate Summary"
+                          label="Generate"
                           type="submit"
                           variant={ButtonVariant.GRADIENT_DUO}
                           color={ButtonColor.GREEN_TO_BLUE}
@@ -134,6 +135,7 @@ export default function SummaryGenerationModal(
                           //processing={formik.isSubmitting}
                           customClassNames="w-full"
                           size={ButtonSize.BASE}
+                          Icon={Cog8ToothIcon}
                         />
                       </div>
                     </MotionDiv>

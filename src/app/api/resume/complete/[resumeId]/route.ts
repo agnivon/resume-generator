@@ -4,15 +4,14 @@ import {
   getUniqueCompleteResume,
   deleteCompleteResume,
 } from "@/utils/prisma.utils";
-import { isAuthenticated } from "@/utils/session.utils";
-import { getServerSession } from "next-auth";
+import { getNextAuthServerSession, isAuthenticated } from "@/utils/session.utils";
 import { NextResponse } from "next/server";
 
 export async function GET(
   _request: Request,
   { params }: { params: { resumeId: string } }
 ) {
-  const session = await getServerSession();
+  const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {
     const resume: CompleteResume = await getUniqueCompleteResume(
@@ -28,7 +27,7 @@ export async function DELETE(
   _request: Request,
   { params }: { params: { resumeId: string } }
 ) {
-  const session = await getServerSession();
+  const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {
     const resume: CompleteResume | null = await deleteCompleteResume(

@@ -39,10 +39,10 @@ export default function NewResumeModal(props: ModalProps) {
   ) => {
     formik.setSubmitting(true);
     try {
-      if (session?.user?.email) {
+      if (session?.user?.id) {
         const newResume = NEW_RESUME_V2({
           name: values.name,
-          userId: session?.user?.email,
+          userId: session?.user?.id,
           contact: NEW_CONTACT_V2({}),
         });
         await insertResume.mutation.mutateAsync(newResume);

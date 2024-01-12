@@ -1,16 +1,18 @@
 import prisma from "@/clients/prismaClient";
-import { isAuthenticated } from "@/utils/session.utils";
+import {
+  getNextAuthServerSession,
+  isAuthenticated,
+} from "@/utils/session.utils";
 import { ResumeV2 } from "@prisma/client";
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 export async function GET(_request: Request) {
-  const session = await getServerSession();
+  const session = await getNextAuthServerSession();
 
-  if (isAuthenticated(session) && session.user?.email) {
+  if (isAuthenticated(session) && session.user.id) {
     try {
       const resumes = await prisma.resumeV2.findMany({
-        where: { userId: session.user.email },
+        where: { userId: session.user.id },
         orderBy: { createdOn: "desc" },
       });
       return NextResponse.json<ResumeV2[]>(resumes);
