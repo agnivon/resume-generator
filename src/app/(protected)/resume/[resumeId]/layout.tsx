@@ -5,8 +5,8 @@ import LoadingMessage from "@/components/global/LoadingMessage";
 import RenderIf from "@/components/global/RenderIf";
 import ResumePageContextProvider from "@/context/page/ResumePageContextProvider";
 import useGetResumePageData from "@/hooks/resume/data/page/useGetResumePageData";
-import { CompleteResume } from "@/types/resume.types";
 import { ResumePreviewSettings } from "@/types/template.types";
+import { ResumeV2 } from "@prisma/client";
 
 export default function ResumePageWrapper({
   params,
@@ -21,7 +21,7 @@ export default function ResumePageWrapper({
     <>
       <ResumePageContextProvider
         value={{
-          resume: resume as CompleteResume,
+          resume: resume as ResumeV2,
           previewSettings: previewSettings as ResumePreviewSettings,
         }}
       >

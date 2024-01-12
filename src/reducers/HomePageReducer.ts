@@ -1,7 +1,6 @@
-import { Resume } from "@/types/resume.types";
 import { HomePageState } from "@/types/state.types";
-import { createReducerFunction } from "immer-reducer";
-import { ImmerReducer, createActionCreators } from "immer-reducer";
+import { ResumeV2 } from "@prisma/client";
+import { ImmerReducer, createActionCreators, createReducerFunction } from "immer-reducer";
 
 export const homePageInitialState: HomePageState = {
   showNewResumeModal: false,
@@ -13,10 +12,10 @@ class HomePageReducer extends ImmerReducer<HomePageState> {
   setShowNewResumeModal(show: boolean) {
     this.draftState.showNewResumeModal = show;
   }
-  setShowEditResumeModal(resume: Resume | null) {
+  setShowEditResumeModal(resume: ResumeV2 | null) {
     this.draftState.showEditResumeModal = resume;
   }
-  setShowDeleteResumeModal(id: Resume | null) {
+  setShowDeleteResumeModal(id: ResumeV2 | null) {
     this.draftState.showDeleteResumeModal = id;
   }
 }

@@ -30,9 +30,9 @@ const ModalHeader = ({ children }: ModalHeaderProps) => {
       )}
     >
       {children && (
-        <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+        <div className="text-xl font-semibold text-gray-900 dark:text-white">
           {children}
-        </h3>
+        </div>
       )}
       <CloseButton />
     </div>

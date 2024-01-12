@@ -1,9 +1,10 @@
-import { OBJECT_ID_REGEX_STRING } from "@/utils/database.constants";
+import { OBJECT_ID_REGEX_STRING } from "@/constants/database.constants";
 
 export const Routes = {
   ROOT: "/",
   SIGNIN: "/auth/signin",
   SIGNOUT: "/auth/signout",
+  ERROR: "/auth/error",
   HOME: "/home",
   RESUME: "/resume",
   GET_RESUME_WITH_ID: (id: string) => `/resume/${id}`,

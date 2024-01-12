@@ -13,6 +13,7 @@ import React from "react";
 import ListItemSequenceChangeModal from "./modals/ListItemSequenceChangeModal";
 import FormikTextArea from "@/components/global/forms/formik/FormikTextArea";
 import MotionDiv from "@/components/global/motion/MotionDiv";
+import { NEW_CERTIFICATION_V2 } from "@/constants/resume.v2.constants";
 
 export default function CertificationsForm() {
   const formik = useFormikContext<ResumeFormValues>();
@@ -23,7 +24,6 @@ export default function CertificationsForm() {
     setChangeIdx,
     deleteIdx,
     setDeleteIdx,
-    isFormValid,
     isMutationPending,
     handleAddNewItem,
     handleDeleteItem,
@@ -32,12 +32,11 @@ export default function CertificationsForm() {
     getListItemContent,
     handleSequenceChange,
     getDraggableListItemContent,
-    handleSaveForm,
   } = useFormListManager(
     formik,
     "certifications",
     "certification",
-    NEW_CERTIFICATION
+    NEW_CERTIFICATION_V2
   );
 
   const [showListSequenceChangeModal, setShowListSequenceChangeModal] =
@@ -112,17 +111,19 @@ export default function CertificationsForm() {
           <div className="w-full md:w-1/4">
             <div className="text-lg mb-2 font-bold">Your Certifications</div>
             <ListGroup items={listItems} />
-            <Button
-              label="Change sequence"
-              onClick={() => setShowListSequenceChangeModal(true)}
-              color={ButtonColor.ALT}
-              size={ButtonSize.SMALL}
-              customClassNames="mt-4 w-full"
-            />
+            {doCertificationsExist && (
+              <Button
+                label="Change sequence"
+                onClick={() => setShowListSequenceChangeModal(true)}
+                color={ButtonColor.ALT}
+                size={ButtonSize.SMALL}
+                customClassNames="mt-4 w-full"
+              />
+            )}
           </div>
           <div className="w-full md:w-3/4 grid grid-cols-2 items-start gap-x-8 gap-y-2">
             <RenderIf isTrue={!doCertificationsExist}>
-              <div className="col-span-2 text-center dark:text-white text-gray-600">
+              <div className="col-span-2 text-center dark:text-gray-400 text-gray-600">
                 {`To add a certification click on "Add new
                 certification" on the left panel`}
               </div>
@@ -167,11 +168,10 @@ export default function CertificationsForm() {
                 <div className="col-span-2">
                   <Button
                     label="Save Certifications"
-                    type="button"
-                    //disabled={!isFormValid}
+                    type="submit"
+                    //disabled=\{!formik\.isValid\}
                     processing={formik.isSubmitting || isMutationPending}
                     customClassNames="w-full"
-                    onClick={handleSaveForm}
                   />
                 </div>
               </RenderIf>

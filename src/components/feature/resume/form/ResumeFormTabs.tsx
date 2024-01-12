@@ -73,7 +73,7 @@ export default function ResumeFormTabs({}: {}) {
       loading: state.currentTab !== ResumeFormTab.EXPERIENCE && isTabDisabled,
     },
     {
-      label: "Project",
+      label: "Projects",
       current: state.currentTab === ResumeFormTab.PROJECT,
       onClick: () => handleTabClicked(ResumeFormTab.PROJECT),
       loading: state.currentTab !== ResumeFormTab.PROJECT && isTabDisabled,

@@ -3,7 +3,7 @@ import {
 } from "@/endpoints/resume.endpoints";
 import resumeSlice from "@/redux/slices/resumeSlice";
 import {
-  getSetQueryDataForDeleteCompleteResumes
+  getSetQueryDataForDeleteInArray
 } from "@/utils/query.utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAppDispatch } from "../../redux/useAppDispatch";
@@ -18,7 +18,7 @@ export default function useDeleteCompleteResume() {
       dispatch(resumeSlice.actions.deleteOneCompleteResume(data.id));
       queryClient.setQueriesData(
         { queryKey: ["resumes"], exact: true },
-        getSetQueryDataForDeleteCompleteResumes(data.id)
+        getSetQueryDataForDeleteInArray(data.id)
       );
       //queryClient.invalidateQueries({ queryKey: ["resumes"], exact: true });
     },

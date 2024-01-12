@@ -4,15 +4,10 @@ import { FormikProps } from "formik";
 import _ from "lodash";
 import React from "react";
 import { DropResult, ResponderProvided } from "react-beautiful-dnd";
-import useUpsertResumeEntity from "../data/useUpsertResumeEntity";
 import useDeleteResumeEntity from "../data/useDeleteResumeEntity";
-import { useAlert } from "react-alert";
-import { FORM_INVALID_MESSAGE } from "@/constants/form.constants";
-import { getFormikTouchedObject, validateFormikForm } from "@/utils/form.utils";
+import useUpsertResumeEntity from "../data/useUpsertResumeEntity";
 
-export default function useFormListManager<
-  T extends { resumeId: string; displayOrder: number }
->(
+export default function useFormListManager<T extends { displayOrder: number }>(
   formik: FormikProps<ResumeFormValues>,
   entity:
     | "experiences"
@@ -28,7 +23,7 @@ export default function useFormListManager<
 
   const deleteEntity = useDeleteResumeEntity(path, entity);
 
-  const alert = useAlert();
+  //const alert = useAlert();
 
   const [selectedItemIdx, setSelectedItemIdx] = React.useState<number | null>(
     0
@@ -47,7 +42,7 @@ export default function useFormListManager<
     formik.setFieldValue(`resume.${entity}`, [
       ...existingItems,
       NEW_FUNC({
-        resumeId: formik.values.resume.id,
+        //resumeId: formik.values.resume.id,
         displayOrder: existingItems.length,
       } as Partial<T>),
     ]);
@@ -65,7 +60,7 @@ export default function useFormListManager<
       );
       if (selectedItemIdx === deleteIdx) setSelectedItemIdx(null);
       setDeleteIdx(null);
-      try {
+      /* try {
         const e = formik.values.resume[entity][deleteIdx];
         if (e.id) {
           await deleteEntity.mutation.mutateAsync({
@@ -76,7 +71,7 @@ export default function useFormListManager<
         alert.success("Deleted");
       } catch (err) {
         alert.error("Something went wrong");
-      }
+      } */
     }
   };
 
@@ -149,7 +144,7 @@ export default function useFormListManager<
     setSelectedItemIdx(result.destination.index);
   };
 
-  const handleSaveForm = async () => {
+  /* const handleSaveForm = async () => {
     validateFormikForm(
       formik,
       async () => {
@@ -169,7 +164,7 @@ export default function useFormListManager<
         alert.error(FORM_INVALID_MESSAGE);
       }
     );
-  };
+  }; */
 
   return {
     selectedItemIdx,
@@ -187,6 +182,6 @@ export default function useFormListManager<
     getListItemContent,
     handleSequenceChange,
     getDraggableListItemContent,
-    handleSaveForm,
+    //handleSaveForm,
   };
 }

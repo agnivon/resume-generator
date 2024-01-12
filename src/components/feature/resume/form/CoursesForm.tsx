@@ -13,6 +13,7 @@ import _ from "lodash";
 import React from "react";
 import ConfirmationModal from "./modals/ConfirmationModal";
 import ListItemSequenceChangeModal from "./modals/ListItemSequenceChangeModal";
+import { NEW_COURSE_V2 } from "@/constants/resume.v2.constants";
 
 export default function CoursesForm() {
   const formik = useFormikContext<ResumeFormValues>();
@@ -23,7 +24,6 @@ export default function CoursesForm() {
     setChangeIdx,
     deleteIdx,
     setDeleteIdx,
-    isFormValid,
     isMutationPending,
     handleAddNewItem,
     handleDeleteItem,
@@ -32,13 +32,12 @@ export default function CoursesForm() {
     getListItemContent,
     handleSequenceChange,
     getDraggableListItemContent,
-    handleSaveForm,
-  } = useFormListManager(formik, "courses", "course", NEW_COURSE);
+  } = useFormListManager(formik, "courses", "course", NEW_COURSE_V2);
 
   const [showListSequenceChangeModal, setShowListSequenceChangeModal] =
     React.useState<boolean>(false);
 
-  const doCertificationsExist = formik.values.resume.courses.length > 0;
+  const doCoursesExist = formik.values.resume.courses.length > 0;
 
   const selectedCourseName = `resume.courses.${selectedItemIdx}`;
 
@@ -107,21 +106,23 @@ export default function CoursesForm() {
           <div className="w-full md:w-1/4">
             <div className="text-lg mb-2 font-bold">Your Courses</div>
             <ListGroup items={listItems} />
-            <Button
-              label="Change sequence"
-              onClick={() => setShowListSequenceChangeModal(true)}
-              color={ButtonColor.ALT}
-              size={ButtonSize.SMALL}
-              customClassNames="mt-4 w-full"
-            />
+            {doCoursesExist && (
+              <Button
+                label="Change sequence"
+                onClick={() => setShowListSequenceChangeModal(true)}
+                color={ButtonColor.ALT}
+                size={ButtonSize.SMALL}
+                customClassNames="mt-4 w-full"
+              />
+            )}
           </div>
           <div className="w-full md:w-3/4 grid grid-cols-2 items-start gap-x-8 gap-y-2">
-            <RenderIf isTrue={!doCertificationsExist}>
-              <div className="col-span-2 text-center dark:text-white text-gray-600">
+            <RenderIf isTrue={!doCoursesExist}>
+              <div className="col-span-2 text-center dark:text-gray-400 text-gray-600">
                 {`To add a course click on "Add new course" on the left panel`}
               </div>
             </RenderIf>
-            <RenderIf isTrue={doCertificationsExist}>
+            <RenderIf isTrue={doCoursesExist}>
               <RenderIf isTrue={selectedItemIdx === null}>
                 <div className="col-span-2 text-center">
                   Select a course from the side panel to view and edit the
@@ -168,11 +169,10 @@ export default function CoursesForm() {
                 <div className="col-span-2">
                   <Button
                     label="Save Courses"
-                    type="button"
-                    //disabled={!isFormValid}
+                    type="submit"
+                    //disabled=\{!formik\.isValid\}
                     processing={formik.isSubmitting || isMutationPending}
                     customClassNames="w-full"
-                    onClick={handleSaveForm}
                   />
                 </div>
               </RenderIf>

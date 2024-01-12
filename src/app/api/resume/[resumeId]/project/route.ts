@@ -1,9 +1,8 @@
 import prisma from "@/clients/prismaClient";
 import { Project } from "@/types/resume.types";
 import { exclude } from "@/utils/object.utils";
-import { isAuthenticated } from "@/utils/session.utils";
+import { getNextAuthServerSession, isAuthenticated } from "@/utils/session.utils";
 import { ProjectSchema } from "@/validation/schema/resume.schema";
-import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import * as Yup from "yup";
 
@@ -11,7 +10,7 @@ export async function GET(
   _request: Request,
   { params }: { params: { resumeId: string } }
 ) {
-  const session = await getServerSession();
+  const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {
     const projects: Project[] = await prisma.project.findMany({
@@ -27,7 +26,7 @@ export async function PUT(
   request: Request,
   { params }: { params: { resumeId: string } }
 ) {
-  const session = await getServerSession();
+  const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {
     try {
@@ -64,7 +63,7 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: { resumeId: string } }
 ) {
-  const session = await getServerSession();
+  const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {
     try {

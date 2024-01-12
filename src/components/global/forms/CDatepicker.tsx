@@ -5,7 +5,6 @@ import {
 } from "flowbite-react";
 import Label from "./Label";
 import SubText from "./SubText";
-import { classNames } from "@/utils";
 
 export type CDatepickerProps = DatepickerProps & {
   label?: string;
@@ -15,6 +14,13 @@ export type CDatepickerProps = DatepickerProps & {
 const customTheme: CustomFlowbiteTheme["datepicker"] = {
   root: {
     base: "relative",
+    /* input: {
+      field: {
+        input: {
+          base: "focus:ring-blue-500 focus:border-blue-500",
+        },
+      },
+    }, */
   },
   popup: {
     root: {

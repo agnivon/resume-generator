@@ -1,22 +1,5 @@
-import { TemplateFont, TemplateSize } from "@/constants/template.constants";
 import { useResumeTemplateContext } from "@/context/ResumeTemplateContextProvider";
-import type {
-  Certification,
-  CompleteResume,
-  Contact,
-  Course,
-  Education,
-  Experience,
-  Project,
-  Skill,
-} from "@/types/resume.types";
-import { classNames } from "@/utils";
-import {
-  getFontClass,
-  getFontStyle,
-  getSizeClass,
-  getStartEndDate,
-} from "@/utils/template.utils";
+import { getFontStyle, getStartEndDate } from "@/utils/template.utils";
 import React from "react";
 import {
   EnvelopeFill,
@@ -26,10 +9,21 @@ import {
 } from "react-bootstrap-icons";
 import Markdown from "react-markdown";
 import { ResumeTemplateProps } from "./ResumeTemplate";
+import ResumeTemplateContainer from "./container/ResumeTemplateContainer";
+import {
+  CertificationV2,
+  ContactV2,
+  CourseV2,
+  EducationV2,
+  ExperienceV2,
+  ProjectV2,
+  ResumeV2,
+  SkillV2,
+} from "@prisma/client";
 
 const Divider = () => <hr className="my-2" />;
 
-const ContactInformation = ({ contact }: { contact: Contact | null }) => {
+const ContactInformation = ({ contact }: { contact: ContactV2 | null }) => {
   const { fontSize, lineHeight, accentColor } = useResumeTemplateContext();
   if (!contact) return <></>;
   return (
@@ -84,7 +78,7 @@ const ContactInformation = ({ contact }: { contact: Contact | null }) => {
   );
 };
 
-const Summary = ({ summary }: { summary: CompleteResume["summary"] }) => {
+const Summary = ({ summary }: { summary: ResumeV2["summary"] }) => {
   const {
     fontSize = 1,
     lineHeight = 1,
@@ -115,7 +109,7 @@ const Summary = ({ summary }: { summary: CompleteResume["summary"] }) => {
   );
 };
 
-const Experience = ({ experiences }: { experiences: Experience[] }) => {
+const Experience = ({ experiences }: { experiences: ExperienceV2[] }) => {
   const {
     fontSize = 1,
     lineHeight = 1,
@@ -176,7 +170,7 @@ const Experience = ({ experiences }: { experiences: Experience[] }) => {
   );
 };
 
-const Project = ({ projects }: { projects: Project[] }) => {
+const Project = ({ projects }: { projects: ProjectV2[] }) => {
   const {
     fontSize = 1,
     lineHeight = 1,
@@ -238,7 +232,7 @@ const Project = ({ projects }: { projects: Project[] }) => {
   );
 };
 
-const Education = ({ education }: { education: Education[] }) => {
+const Education = ({ education }: { education: EducationV2[] }) => {
   const {
     fontSize = 1,
     lineHeight = 1,
@@ -305,7 +299,7 @@ const Education = ({ education }: { education: Education[] }) => {
 const Certification = ({
   certifications,
 }: {
-  certifications: Certification[];
+  certifications: CertificationV2[];
 }) => {
   const {
     fontSize = 1,
@@ -363,7 +357,7 @@ const Certification = ({
   );
 };
 
-const Course = ({ courses }: { courses: Course[] }) => {
+const Course = ({ courses }: { courses: CourseV2[] }) => {
   const {
     fontSize = 1,
     lineHeight = 1,
@@ -421,7 +415,7 @@ const Course = ({ courses }: { courses: Course[] }) => {
   );
 };
 
-const Skills = ({ skills }: { skills: Skill[] }) => {
+const Skills = ({ skills }: { skills: SkillV2[] }) => {
   const {
     fontSize = 1,
     lineHeight = 1,
@@ -460,46 +454,20 @@ const Skills = ({ skills }: { skills: Skill[] }) => {
 
 const StandardTemplate = React.forwardRef(
   (props: ResumeTemplateProps, ref: React.Ref<HTMLDivElement> | undefined) => {
-    const {
-      resume,
-      paperSize = TemplateSize.LETTER,
-      thumbnailScale = 0.233,
-      font = TemplateFont.MERRIWEATHER,
-      thumbnail,
-    } = props;
-
-    const sizeClass = getSizeClass(paperSize, thumbnail);
-
-    const fontClass = getFontClass(font);
-
-    const thumbnailClass = thumbnail
-      ? "transform origin-top-left overflow-hidden shrink-0"
-      : "";
+    const { resume } = props;
 
     return (
-      <div ref={ref}>
-        <div
-          className={classNames(
-            "resume-template bg-white p-10 shadow-2xl flex flex-col text-gray-700 relative",
-            sizeClass,
-            fontClass,
-            thumbnailClass
-          )}
-          style={{
-            scale: thumbnail ? thumbnailScale : undefined,
-          }}
-        >
-          {/* <div className="absolute w-full border border-dashed border-gray-300 top-[28cm] left-0 right-0"></div> */}
-          <ContactInformation contact={resume.contact} />
-          <Summary summary={resume.summary} />
-          <Experience experiences={resume.experiences} />
-          <Project projects={resume.projects} />
-          <Skills skills={resume.skills} />
-          <Certification certifications={resume.certifications} />
-          <Course courses={resume.courses} />
-          <Education education={resume.education} />
-        </div>
-      </div>
+      <ResumeTemplateContainer {...props} ref={ref}>
+        {/* <div className="absolute w-full border border-dashed border-gray-300 top-[28cm] left-0 right-0"></div> */}
+        <ContactInformation contact={resume.contact} />
+        <Summary summary={resume.summary} />
+        <Experience experiences={resume.experiences} />
+        <Project projects={resume.projects} />
+        <Skills skills={resume.skills} />
+        <Certification certifications={resume.certifications} />
+        <Course courses={resume.courses} />
+        <Education education={resume.education} />
+      </ResumeTemplateContainer>
     );
   }
 );

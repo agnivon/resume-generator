@@ -1,5 +1,8 @@
-import { DESCRIPTION_LENGTH, SKILL_LENGTH, SUMMARY_LENGTH } from "@/constants/schema.constants";
-import { ResumeFormTab } from "@/constants/state.constants";
+import {
+  DESCRIPTION_LENGTH,
+  SKILL_LENGTH,
+  SUMMARY_LENGTH,
+} from "@/constants/schema.constants";
 import * as Yup from "yup";
 
 const PHONE_REGEX =
@@ -94,6 +97,11 @@ const resumeSchema = {
   name: Yup.string().ensure(),
   createdOn: Yup.number().defined(),
   summary: Yup.string().ensure().max(SUMMARY_LENGTH),
+  domain: Yup.string().ensure(),
+  experienceLevel: Yup.string().ensure(),
+  jobTitle: Yup.string().ensure(),
+  companyName: Yup.string().ensure(),
+  jobDescription: Yup.string().ensure(),
 };
 
 const resumeEntitiesSchema = {

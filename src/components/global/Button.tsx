@@ -18,6 +18,7 @@ export enum ButtonColor {
   RED = "red",
   PINK = "pink",
   PURPLE = "purple",
+  GREEN_TO_BLUE = "green-to-blue",
 }
 
 export enum ButtonSize {
@@ -32,8 +33,8 @@ export enum ButtonVariant {
   DEFAULT = "default",
   OUTLINE = "outline",
   GRADIENT_MONO = "gradient-monochrome",
-  /*   GRADIENT_DUO = "gradient-duotone",
-  GRADIENT_OUTLINE = "gradient-outline", */
+  GRADIENT_DUO = "gradient-duotone",
+  /* GRADIENT_OUTLINE = "gradient-outline", */
 }
 
 export type ButtonProps = ComponentProps<"button"> & {
@@ -55,7 +56,7 @@ const BASE_CLASSES =
   "inline-flex justify-center items-center focus:ring-4 focus:outline-none font-medium text-center disabled:cursor-not-allowed ease-in duration-600";
 
 const SIZE_CLASSES = {
-  [ButtonSize.EXTRA_SMALL]: "px-3 py-2 text-xs",
+  [ButtonSize.EXTRA_SMALL]: "px-2 py-2 text-xs",
   [ButtonSize.SMALL]: "px-3 py-2 text-sm",
   [ButtonSize.BASE]: "text-base px-5 py-2.5",
   [ButtonSize.LARGE]: "px-5 py-3 text-lg",
@@ -77,7 +78,11 @@ const COLOR_CLASSES: { [index: string]: { [index: string]: string } } = {
   },
   [ButtonVariant.GRADIENT_MONO]: {
     [ButtonColor.BLUE]:
-      "text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800",
+      "text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-blue-300 dark:focus:ring-blue-800",
+  },
+  [ButtonVariant.GRADIENT_DUO]: {
+    [ButtonColor.GREEN_TO_BLUE]:
+      "text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-green-200 dark:focus:ring-green-800",
   },
   [ButtonVariant.OUTLINE]: {
     [ButtonColor.BLUE]:
@@ -90,7 +95,7 @@ const COLOR_CLASSES: { [index: string]: { [index: string]: string } } = {
 };
 
 const DISABLED_COLOR_CLASSES =
-  "disabled:text-gray-700 disabled:bg-gray-300 disabled:hover:bg-gray-300 disabled:dark:bg-gray-400 disabled:hover:dark:bg-gray-400";
+  "disabled:text-gray-700 disabled:bg-gray-300 disabled:hover:bg-gray-300 disabled:dark:bg-gray-400 disabled:hover:dark:bg-gray-400 disabled:bi-none disabled:hover:bi-none";
 
 const Button = (props: ButtonProps) => {
   const {

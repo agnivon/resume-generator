@@ -1,12 +1,14 @@
 import Button from "@/components/global/Button";
 import FormikInput from "@/components/global/forms/formik/FormikInput";
+import FormikTextArea from "@/components/global/forms/formik/FormikTextArea";
 import Modal, { ModalProps } from "@/components/global/modal/Modal";
 import ModalBody from "@/components/global/modal/ModalBody";
 import ModalHeader from "@/components/global/modal/ModalHeader";
-import { NEW_CONTACT, NEW_RESUME } from "@/constants/resume.constants";
+import { SAMPLE_JOB_DESCRIPTION } from "@/constants/form.constants";
+import { NEW_RESUME_V2, NEW_CONTACT_V2 } from "@/constants/resume.v2.constants";
 import { useHomePageContext } from "@/context/page/HomePageContextProvider";
 import useNextAuthSession from "@/hooks/auth/useNextAuthSession";
-import useInsertCompleteResume from "@/hooks/resume/data/useInsertCompleteResume";
+import useInsertResumeV2 from "@/hooks/resume/data/v2/useInsertResumeV2";
 import { HomePageActions } from "@/reducers/HomePageReducer";
 import { Form, Formik, FormikHelpers } from "formik";
 import { useAlert } from "react-alert";
@@ -21,8 +23,15 @@ export default function NewResumeModal(props: ModalProps) {
   const { dispatch } = useHomePageContext();
   const { session } = useNextAuthSession();
 
-  const insertResume = useInsertCompleteResume();
-  const initialValues = { name: "" };
+  const insertResume = useInsertResumeV2();
+  const initialValues = {
+    name: "",
+    domain: "",
+    experienceLevel: "",
+    jobTitle: "",
+    companyName: "",
+    jobDescription: "",
+  };
 
   const handleSubmit = async (
     values: typeof initialValues,
@@ -30,11 +39,11 @@ export default function NewResumeModal(props: ModalProps) {
   ) => {
     formik.setSubmitting(true);
     try {
-      if (session?.user?.email) {
-        const newResume = NEW_RESUME({
+      if (session?.user?.id) {
+        const newResume = NEW_RESUME_V2({
           name: values.name,
-          userId: session?.user?.email,
-          contact: NEW_CONTACT({}),
+          userId: session?.user?.id,
+          contact: NEW_CONTACT_V2({}),
         });
         await insertResume.mutation.mutateAsync(newResume);
         dispatch(HomePageActions.setShowNewResumeModal(false));
@@ -58,14 +67,50 @@ export default function NewResumeModal(props: ModalProps) {
           {(formik) => {
             return (
               <Form>
-                <div className="flex flex-col gap-y-6">
-                  <FormikInput name="name" label="Resume Name *" />
-                  <Button
-                    label="Create new resume"
-                    type="submit"
-                    disabled={!formik.isValid}
-                    processing={formik.isSubmitting}
+                <div className="grid grid-cols-2 items-start gap-x-4">
+                  <FormikInput
+                    name="name"
+                    label="Resume Name *"
+                    placeholder="Emily Thompson"
                   />
+                  <FormikInput
+                    name="domain"
+                    label="Domain"
+                    placeholder="Software Engineering"
+                  />
+                  <FormikInput
+                    name="experienceLevel"
+                    label="Experience Level"
+                    placeholder="Mid-Senior Level"
+                  />
+                  <FormikInput
+                    name="companyName"
+                    label="Company Name"
+                    placeholder={SAMPLE_JOB_DESCRIPTION.company.name}
+                  />
+                  <div className="col-span-2">
+                    <FormikInput
+                      name="jobTitle"
+                      label="Job Title"
+                      placeholder={SAMPLE_JOB_DESCRIPTION.job.title}
+                    />
+                  </div>
+                  <div className="col-span-2">
+                    <FormikTextArea
+                      name="jobDescription"
+                      label="Job Description"
+                      placeholder={SAMPLE_JOB_DESCRIPTION.job.description}
+                    />
+                  </div>
+                  <div className="col-span-2">
+                    <Button
+                      label="Create new resume"
+                      type="submit"
+                      disabled={!formik.isValid}
+                      processing={formik.isSubmitting}
+                      customClassNames="w-full"
+                    />
+                  </div>
                 </div>
               </Form>
             );

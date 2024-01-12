@@ -1,13 +1,13 @@
 import prisma from "@/clients/prismaClient";
 import { CompleteResume } from "@/types/resume.types";
 import { exclude } from "@/utils/object.utils";
-import { isAuthenticated } from "@/utils/session.utils";
+import { getUniqueCompleteResume } from "@/utils/prisma.utils";
+import { getNextAuthServerSession, isAuthenticated } from "@/utils/session.utils";
 import { CompleteResumeSchema } from "@/validation/schema/resume.schema";
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
-  const session = await getServerSession();
+  const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {
     try {
@@ -21,6 +21,11 @@ export async function POST(request: Request) {
           name: resume.name,
           userId: resume.userId,
           summary: resume.summary,
+          domain: resume.domain,
+          experienceLevel: resume.experienceLevel,
+          jobTitle: resume.jobTitle,
+          companyName: resume.companyName,
+          jobDescription: resume.jobDescription,
           createdOn: resume.createdOn || Date.now(),
         },
       });
@@ -111,7 +116,7 @@ export async function POST(request: Request) {
 }
 
 export async function PUT(request: Request) {
-  const session = await getServerSession();
+  const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {
     try {
@@ -125,6 +130,11 @@ export async function PUT(request: Request) {
               name: resume.name,
               userId: resume.userId,
               summary: resume.summary || "",
+              domain: resume.domain || "",
+              experienceLevel: resume.experienceLevel || "",
+              jobTitle: resume.jobTitle || "",
+              companyName: resume.companyName || "",
+              jobDescription: resume.jobDescription || "",
               createdOn: resume.createdOn || Date.now(),
             },
           })
@@ -293,18 +303,7 @@ export async function PUT(request: Request) {
       );
 
       const upsertedCompleteResume: CompleteResume =
-        await prisma.resume.findUniqueOrThrow({
-          where: { id: upsertedResume.id },
-          include: {
-            contact: true,
-            experiences: { orderBy: { displayOrder: "asc" } },
-            projects: { orderBy: { displayOrder: "asc" } },
-            education: { orderBy: { displayOrder: "asc" } },
-            certifications: { orderBy: { displayOrder: "asc" } },
-            courses: { orderBy: { displayOrder: "asc" } },
-            skills: { orderBy: { displayOrder: "asc" } },
-          },
-        });
+        await getUniqueCompleteResume(upsertedResume.id);
 
       return NextResponse.json<CompleteResume>(upsertedCompleteResume);
     } catch (err) {

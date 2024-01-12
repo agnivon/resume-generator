@@ -9,7 +9,8 @@ export type TextareaProps = ComponentProps<"textarea"> & {
   helperText?: string;
   errorText?: string;
   containerClassNames?: string | undefined;
-  inputClassNames?: string | undefined;
+  textAreaClassNames?: string | undefined;
+  showSubText?: boolean;
 };
 
 export enum TextareaSize {
@@ -18,7 +19,7 @@ export enum TextareaSize {
   LARGE = "large",
 }
 
-const BASE_CLASSES = "block w-full rounded-lg border";
+const BASE_CLASSES = "block w-full rounded-lg border shadow-sm dark:shadow-sm-light";
 
 const SIZE_CLASSES = {
   [TextareaSize.SMALL]: "sm:p-2 text-sm",
@@ -46,7 +47,8 @@ const Textarea = (props: TextareaProps) => {
     disabled,
     readOnly,
     containerClassNames,
-    inputClassNames,
+    textAreaClassNames,
+    showSubText = true,
     ...rest
   } = props;
   return (
@@ -59,7 +61,7 @@ const Textarea = (props: TextareaProps) => {
             BASE_CLASSES,
             SIZE_CLASSES[size],
             errorText ? ERROR_COLOR_CLASSES : COLOR_CLASSES,
-            inputClassNames
+            textAreaClassNames
           )}
           placeholder={placeholder}
           required={required}
@@ -69,7 +71,9 @@ const Textarea = (props: TextareaProps) => {
           onChange={onChange}
           {...rest}
         />
-        <SubText errorText={errorText} helperText={helperText} />
+        {showSubText && (
+          <SubText errorText={errorText} helperText={helperText} />
+        )}
       </div>
     </>
   );

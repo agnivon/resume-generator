@@ -8,7 +8,6 @@ import FormikSwitch from "@/components/global/forms/formik/FormikSwitch";
 import FormikTextArea from "@/components/global/forms/formik/FormikTextArea";
 import MotionDiv from "@/components/global/motion/MotionDiv";
 import { START_END_DATE_FORMAT } from "@/constants/date.constants";
-import { NEW_EXPERIENCE } from "@/constants/resume.constants";
 import useFormListManager from "@/hooks/resume/form/useFormListManager";
 import { ResumeFormValues } from "@/types/form.types";
 import { PlusIcon } from "@heroicons/react/24/solid";
@@ -18,6 +17,9 @@ import React from "react";
 import ConfirmationModal from "./modals/ConfirmationModal";
 import ListItemSequenceChangeModal from "./modals/ListItemSequenceChangeModal";
 import { getTextAreaRows } from "@/utils/form.utils";
+import ResumeTipsCard from "../tips/ResumeTipsCard";
+import { EXPERIENCE_TIPS } from "@/constants/tips.constants";
+import { NEW_EXPERIENCE_V2 } from "@/constants/resume.v2.constants";
 
 export default function ExperienceForm() {
   const formik = useFormikContext<ResumeFormValues>();
@@ -28,7 +30,6 @@ export default function ExperienceForm() {
     setChangeIdx,
     deleteIdx,
     setDeleteIdx,
-    isFormValid,
     isMutationPending,
     handleAddNewItem,
     handleDeleteItem,
@@ -37,8 +38,12 @@ export default function ExperienceForm() {
     getListItemContent,
     handleSequenceChange,
     getDraggableListItemContent,
-    handleSaveForm,
-  } = useFormListManager(formik, "experiences", "experience", NEW_EXPERIENCE);
+  } = useFormListManager(
+    formik,
+    "experiences",
+    "experience",
+    NEW_EXPERIENCE_V2
+  );
 
   const [showListSequenceChangeModal, setShowListSequenceChangeModal] =
     React.useState<boolean>(false);
@@ -110,21 +115,37 @@ export default function ExperienceForm() {
         onDragEnd={handleSequenceChange}
       />
       <MotionDiv>
+        <div className="mb-6">
+          <div className="col-span-2">
+            <div className="text-lg mb-1 font-bold">Employment History</div>
+          </div>
+          <div className="col-span-2">
+            <div className="mb-2">
+              Your employment history is a critical section of your resume,
+              providing a detailed account of your work experience.
+            </div>
+          </div>
+        </div>
         <div className="flex flex-col md:flex-row gap-8 items-start">
-          <div className="w-full md:w-1/4">
-            <div className="text-lg font-bold mb-2">Your Experiences</div>
-            <ListGroup items={listItems} />
-            <Button
-              label="Change sequence"
-              onClick={() => setShowListSequenceChangeModal(true)}
-              color={ButtonColor.ALT}
-              size={ButtonSize.SMALL}
-              customClassNames="mt-4 w-full"
-            />
+          <div className="w-full md:w-1/4 space-y-6">
+            <div>
+              <div className="text-lg font-bold mb-2">Your Experiences</div>
+              <ListGroup items={listItems} />
+              {doExperiencesExist && (
+                <Button
+                  label="Change sequence"
+                  onClick={() => setShowListSequenceChangeModal(true)}
+                  color={ButtonColor.ALT}
+                  size={ButtonSize.SMALL}
+                  customClassNames="mt-4 w-full"
+                />
+              )}
+            </div>
+            <ResumeTipsCard tips={EXPERIENCE_TIPS} />
           </div>
           <div className="w-full md:w-3/4 grid grid-cols-2 items-start gap-x-8 gap-y-2">
             <RenderIf isTrue={!doExperiencesExist}>
-              <div className="col-span-2 text-center">
+              <div className="col-span-2 text-center dark:text-gray-400 text-gray-600">
                 {`To add an experience click on "Add new experience" on the left
                 panel`}
               </div>
@@ -199,11 +220,10 @@ export default function ExperienceForm() {
                 <div className="col-span-2">
                   <Button
                     label="Save Experiences"
-                    type="button"
-                    //disabled={!isFormValid}
+                    type="submit"
+                    //disabled=\{!formik\.isValid\}
                     processing={formik.isSubmitting || isMutationPending}
                     customClassNames="w-full"
-                    onClick={handleSaveForm}
                   />
                 </div>
               </RenderIf>

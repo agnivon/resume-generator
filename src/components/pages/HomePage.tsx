@@ -3,11 +3,11 @@
 import HomePageContextProvider, {
   useHomePageContext,
 } from "@/context/page/HomePageContextProvider";
-import useDeleteCompleteResume from "@/hooks/resume/data/useDeleteCompleteResume";
-import useGetCompleteResumes from "@/hooks/resume/data/useGetCompleteResumes";
 import useGetPreviewSettings from "@/hooks/resume/data/useGetPreviewSettings";
+import useDeleteResumeV2ById from "@/hooks/resume/data/v2/useDeleteResumeV2ById";
+import useGetResumesV2 from "@/hooks/resume/data/v2/useGetResumesV2";
 import { HomePageActions } from "@/reducers/HomePageReducer";
-import { CompleteResume, Resume } from "@/types/resume.types";
+import { ResumeV2 } from "@prisma/client";
 import { useAlert } from "react-alert";
 import ConfirmationModal from "../feature/resume/form/modals/ConfirmationModal";
 import ResumeGrid from "../feature/resume/grid/ResumeGrid";
@@ -19,10 +19,10 @@ import RenderIf from "../global/RenderIf";
 
 function PageComponent() {
   const { state, dispatch } = useHomePageContext();
-
-  const { query: resumeQuery, data: resumes } = useGetCompleteResumes();
+  
+  const { query: resumeQuery, data: resumes } = useGetResumesV2();
   const { query: previewSettingsQuery } = useGetPreviewSettings();
-  const deleteResume = useDeleteCompleteResume();
+  const deleteResume = useDeleteResumeV2ById();
 
   const alert = useAlert();
 
@@ -74,7 +74,7 @@ function PageComponent() {
         />
         <div className="w-full flex-grow">
           <div className="h-full flex flex-col p-10">
-            <ResumeGrid resumes={resumes as CompleteResume[]} />
+            <ResumeGrid resumes={resumes as ResumeV2[]} />
           </div>
         </div>
       </RenderIf>

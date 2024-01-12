@@ -25,11 +25,11 @@ const CloseButton = ({
     <button
       type="button"
       className={classNames(
-        "hidden fixed right-4 top-4 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-xl text-sm p-1.5 ml-auto xl:inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+        "print:hidden fixed right-4 top-4 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-xl text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
       )}
       onClick={onClose}
     >
-      <XMarkIcon className="w-5 h-5" />
+      <XMarkIcon className="w-6 h-6" />
       <span className="sr-only">Close modal</span>
     </button>
   );
@@ -58,15 +58,15 @@ const PageComponent = () => {
         return (
           <>
             <MotionDiv
-              className="w-full h-full flex flex-grow"
+              className="w-full h-full flex flex-grow print:block"
               transition={{ duration: 0.2 }}
             >
               <div className="w-8 h-screen xl:w-1/4 print:hidden">
                 <ResumePreviewSidebar resume={resume} onBack={handleBack} />
               </div>
-              <div className="w-full xl:w-3/4 flex flex-col items-center p-10 print:block print:p-0 print:h-full">
+              <div className="w-full xl:w-3/4 flex flex-col items-center p-10 print:block print:p-0">
                 <CloseButton onClose={handleBack} />
-                <ResumeTemplate resume={resume} {...values.previewSettings} />
+                <ResumeTemplate resume={resume} responsive={true} {...values.previewSettings} />
               </div>
             </MotionDiv>
           </>

@@ -19,7 +19,7 @@ const BaseLayout = async ({ children }: { children: React.ReactNode }) => {
           id="rootContainer"
         >
           <NProgressBar />
-          <div className="min-h-screen w-full bg-white dark:bg-gray-900 text-black dark:text-white overflow-y-auto print-bg-color-reset">
+          <div className="min-h-screen w-full bg-white dark:bg-gray-900 text-black dark:text-white overflow-y-auto print-initial print-bg-color-reset">
             {children}
           </div>
         </MotionDiv>

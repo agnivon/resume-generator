@@ -9,7 +9,6 @@ export type InputProps = Omit<ComponentProps<"input">, "ref"> & {
   size?: InputSize;
   helperText?: string;
   errorText?: string;
-  value?: string | number | readonly string[] | undefined;
   containerClassNames?: string | undefined;
   inputClassNames?: string | undefined;
 };

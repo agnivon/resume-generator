@@ -13,6 +13,7 @@ import _ from "lodash";
 import React from "react";
 import ConfirmationModal from "./modals/ConfirmationModal";
 import ListItemSequenceChangeModal from "./modals/ListItemSequenceChangeModal";
+import { NEW_SKILL_V2 } from "@/constants/resume.v2.constants";
 
 export default function SkillsForm() {
   const formik = useFormikContext<ResumeFormValues>();
@@ -23,7 +24,6 @@ export default function SkillsForm() {
     setChangeIdx,
     deleteIdx,
     setDeleteIdx,
-    isFormValid,
     isMutationPending,
     handleAddNewItem,
     handleDeleteItem,
@@ -32,8 +32,7 @@ export default function SkillsForm() {
     getListItemContent,
     handleSequenceChange,
     getDraggableListItemContent,
-    handleSaveForm,
-  } = useFormListManager(formik, "skills", "skill", NEW_SKILL);
+  } = useFormListManager(formik, "skills", "skill", NEW_SKILL_V2);
 
   const [showListSequenceChangeModal, setShowListSequenceChangeModal] =
     React.useState<boolean>(false);
@@ -113,7 +112,7 @@ export default function SkillsForm() {
           </div>
           <div className="w-full md:w-3/4 grid grid-cols-2 items-start gap-x-8 gap-y-2">
             <RenderIf isTrue={!doSkillsExist}>
-              <div className="col-span-2 text-center dark:text-white text-gray-600">
+              <div className="col-span-2 text-center dark:text-gray-400 text-gray-600">
                 {`To add a skill click on "Add new skill" on the left panel`}
               </div>
             </RenderIf>
@@ -137,11 +136,10 @@ export default function SkillsForm() {
                 <div className="col-span-2">
                   <Button
                     label="Save Skills"
-                    type="button"
-                    //disabled={!isFormValid}
+                    type="submit"
+                    //disabled=\{!formik\.isValid\}
                     processing={formik.isSubmitting || isMutationPending}
                     customClassNames="w-full"
-                    onClick={handleSaveForm}
                   />
                 </div>
               </RenderIf>

@@ -1,13 +1,12 @@
 import RenderIf from "@/components/global/RenderIf";
 import { ResumeFormTab } from "@/constants/state.constants";
 import { useResumePageContext } from "@/context/page/ResumePageContextProvider";
-import useUpsertCompleteResume from "@/hooks/resume/data/useUpsertCompleteResume";
 import { ResumeFormValues } from "@/types/form.types";
-import { CompleteResume } from "@/types/resume.types";
 import { ResumePreviewSettings } from "@/types/template.types";
 import { formikLogger } from "@/utils/form.utils";
-import { getResumeFormSchema } from "@/validation/schema/form/resume.form.schema";
-import { Formik, FormikHelpers } from "formik";
+import { getResumeFormSchema } from "@/validation/schema/form/resume.form.v2.schema";
+import { ResumeV2 } from "@prisma/client";
+import { Form, Formik, FormikHelpers } from "formik";
 import React from "react";
 import { useAlert } from "react-alert";
 import CertificationsForm from "./CertificationsForm";
@@ -19,9 +18,10 @@ import ProjectForm from "./ProjectForm";
 import ResumeFormTabs from "./ResumeFormTabs";
 import SkillsForm from "./SkillsForm";
 import SummaryForm from "./SummaryForm";
+import useUpdateResumeV2ById from "@/hooks/resume/data/v2/useUpdateResumeV2ById";
 
 type ResumeFormProps = {
-  resume: CompleteResume;
+  resume: ResumeV2;
   previewSettings: ResumePreviewSettings | null;
 };
 
@@ -29,7 +29,7 @@ export default function ResumeForm(props: ResumeFormProps) {
   const { resume } = props;
   const { state } = useResumePageContext();
 
-  const upsertResume = useUpsertCompleteResume();
+  const updateResume = useUpdateResumeV2ById();
 
   const alert = useAlert();
 
@@ -50,7 +50,10 @@ export default function ResumeForm(props: ResumeFormProps) {
   ) => {
     formik.setSubmitting(true);
     try {
-      await upsertResume.mutation.mutateAsync(values.resume);
+      await updateResume.mutation.mutateAsync({
+        id: resume.id,
+        resume: values.resume,
+      });
       alert.success("Details saved");
     } catch {
       alert.error("Something went wrong");
@@ -60,7 +63,7 @@ export default function ResumeForm(props: ResumeFormProps) {
 
   return (
     <>
-      <div className="flex flex-col gap-y-8">
+      <div>
         <Formik
           initialValues={resumeFormInitialValues}
           onSubmit={handleSubmit}
@@ -71,7 +74,7 @@ export default function ResumeForm(props: ResumeFormProps) {
           {(formik) => {
             formikLogger(formik, "Resume Form");
             return (
-              <>
+              <Form className="flex flex-col gap-y-8">
                 <ResumeFormTabs />
                 <RenderIf isTrue={currentTab === ResumeFormTab.CONTACT}>
                   <ContactForm />
@@ -97,7 +100,7 @@ export default function ResumeForm(props: ResumeFormProps) {
                 <RenderIf isTrue={currentTab === ResumeFormTab.SUMMARY}>
                   <SummaryForm />
                 </RenderIf>
-              </>
+              </Form>
             );
           }}
         </Formik>

@@ -1,22 +1,19 @@
 import prisma from "@/clients/prismaClient";
-import { CompleteResume, Resume } from "@/types/resume.types";
+import { Resume } from "@/types/resume.types";
 import { exclude } from "@/utils/object.utils";
-import { isAuthenticated } from "@/utils/session.utils";
+import { getNextAuthServerSession, isAuthenticated } from "@/utils/session.utils";
 import { ResumeSchema } from "@/validation/schema/resume.schema";
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 export async function PATCH(
   request: Request,
   { params }: { params: { resumeId: string } }
 ) {
-  const session = await getServerSession();
+  const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {
     try {
-      const resume: Pick<Resume, "id" | "name" | "userId"> &
-        Partial<Pick<Resume, "createdOn" | "summary">> =
-        await ResumeSchema.validate(await request.json());
+      const resume: Resume = await ResumeSchema.validate(await request.json());
 
       const updatedResume = await prisma.resume.update({
         where: {
@@ -24,9 +21,7 @@ export async function PATCH(
         },
         data: exclude(resume, ["id", "userId"]),
       });
-      return NextResponse.json<
-        Pick<CompleteResume, "id" | "name" | "createdOn" | "summary" | "userId">
-      >(updatedResume);
+      return NextResponse.json<Resume>(updatedResume);
     } catch (err) {
       return new NextResponse(err as string, { status: 500 });
     }

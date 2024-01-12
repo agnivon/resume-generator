@@ -1,16 +1,15 @@
 import prisma from "@/clients/prismaClient";
 import { CompleteResume } from "@/types/resume.types";
-import { isAuthenticated } from "@/utils/session.utils";
-import { getServerSession } from "next-auth";
+import { getNextAuthServerSession, isAuthenticated } from "@/utils/session.utils";
 import { NextResponse } from "next/server";
 
 
 export async function GET() {
-  const session = await getServerSession();
+  const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {
     const resumes = await prisma.resume.findMany({
-      where: { userId: session?.user?.email || "" },
+      where: { userId: session?.user?.id || "" },
       include: {
         contact: true,
         experiences: true,

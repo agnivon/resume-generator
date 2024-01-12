@@ -4,8 +4,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAppDispatch } from "../../redux/useAppDispatch";
 import resumeSlice from "@/redux/slices/resumeSlice";
 import {
-  getSetQueryDataForCompleteResumeById,
-  getSetQueryDataForCompleteResumes,
+  getSetQueryDataForInsertOrUpdateById,
+  getSetQueryDataForInsertOrUpdateInArray,
 } from "@/utils/query.utils";
 
 export default function useUpsertCompleteResume() {
@@ -21,11 +21,11 @@ export default function useUpsertCompleteResume() {
       dispatch(resumeSlice.actions.upsertOneCompleteResume(data));
       queryClient.setQueriesData(
         { queryKey: ["resumes"], exact: true },
-        getSetQueryDataForCompleteResumes(data)
+        getSetQueryDataForInsertOrUpdateInArray(data)
       );
       queryClient.setQueriesData(
         { queryKey: ["resumes", data.id], exact: true },
-        getSetQueryDataForCompleteResumeById(data)
+        getSetQueryDataForInsertOrUpdateById(data)
       );
       //queryClient.invalidateQueries({ queryKey: ["resumes"], exact: true });
     },

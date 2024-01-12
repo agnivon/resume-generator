@@ -1,12 +1,14 @@
 import Button from "@/components/global/Button";
 import FormikInput from "@/components/global/forms/formik/FormikInput";
+import FormikTextArea from "@/components/global/forms/formik/FormikTextArea";
 import Modal, { ModalProps } from "@/components/global/modal/Modal";
 import ModalBody from "@/components/global/modal/ModalBody";
 import ModalHeader from "@/components/global/modal/ModalHeader";
+import { SAMPLE_JOB_DESCRIPTION } from "@/constants/form.constants";
 import { useHomePageContext } from "@/context/page/HomePageContextProvider";
-import useUpdateResume from "@/hooks/resume/data/useUpdateResume";
+import useUpdateResumeV2ById from "@/hooks/resume/data/v2/useUpdateResumeV2ById";
 import { HomePageActions } from "@/reducers/HomePageReducer";
-import { Resume } from "@/types/resume.types";
+import { ResumeV2 } from "@prisma/client";
 import { Form, Formik, FormikHelpers } from "formik";
 import { useAlert } from "react-alert";
 import * as Yup from "yup";
@@ -16,16 +18,23 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function EditResumeModal(
-  props: ModalProps & { resume: Resume | null }
+  props: ModalProps & { resume: ResumeV2 | null }
 ) {
   const { resume } = props;
   const alert = useAlert();
   const { dispatch } = useHomePageContext();
-  const updateResume = useUpdateResume();
+  const updateResume = useUpdateResumeV2ById();
 
   if (!resume) return <></>;
 
-  const initialValues = { name: resume.name };
+  const initialValues = {
+    name: resume.name,
+    domain: resume.domain,
+    experienceLevel: resume.experienceLevel,
+    jobTitle: resume.jobTitle,
+    companyName: resume.companyName,
+    jobDescription: resume.jobDescription,
+  };
 
   const handleSubmit = async (
     values: typeof initialValues,
@@ -34,7 +43,10 @@ export default function EditResumeModal(
     formik.setSubmitting(true);
     try {
       const editedResume = { ...resume, ...values };
-      await updateResume.mutation.mutateAsync(editedResume);
+      await updateResume.mutation.mutateAsync({
+        id: resume.id,
+        resume: editedResume,
+      });
       dispatch(HomePageActions.setShowEditResumeModal(null));
       alert.success(`Changes saved`);
     } catch {
@@ -55,14 +67,50 @@ export default function EditResumeModal(
           {(formik) => {
             return (
               <Form>
-                <div className="flex flex-col gap-y-6">
-                  <FormikInput name="name" label="Resume Name *" />
-                  <Button
-                    label="Save changes"
-                    type="submit"
-                    disabled={!formik.isValid}
-                    processing={formik.isSubmitting}
+                <div className="grid grid-cols-2 items-start gap-x-4">
+                  <FormikInput
+                    name="name"
+                    label="Resume Name *"
+                    placeholder="Emily Thompson"
                   />
+                  <FormikInput
+                    name="domain"
+                    label="Domain"
+                    placeholder="Software Engineering"
+                  />
+                  <FormikInput
+                    name="experienceLevel"
+                    label="Experience Level"
+                    placeholder="Mid-Senior Level"
+                  />
+                  <FormikInput
+                    name="companyName"
+                    label="Company Name"
+                    placeholder={SAMPLE_JOB_DESCRIPTION.company.name}
+                  />
+                  <div className="col-span-2">
+                    <FormikInput
+                      name="jobTitle"
+                      label="Job Title"
+                      placeholder={SAMPLE_JOB_DESCRIPTION.job.title}
+                    />
+                  </div>
+                  <div className="col-span-2">
+                    <FormikTextArea
+                      name="jobDescription"
+                      label="Job Description"
+                      placeholder={SAMPLE_JOB_DESCRIPTION.job.description}
+                    />
+                  </div>
+                  <div className="col-span-2">
+                    <Button
+                      label="Save changes"
+                      type="submit"
+                      disabled={!formik.isValid}
+                      processing={formik.isSubmitting}
+                      customClassNames="w-full"
+                    />
+                  </div>
                 </div>
               </Form>
             );
