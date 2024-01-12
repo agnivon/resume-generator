@@ -7,9 +7,7 @@ import { getProviders, signIn } from "next-auth/react";
 import { Github, Google } from "react-bootstrap-icons";
 import BrandLogo from "../brand/BrandLogo";
 
-export default function SignInCard({
-  providers,
-}: {
+export default function SignInCard(_props: {
   providers: Awaited<ReturnType<typeof getProviders>>;
 }) {
   // const [email, setEmail] = React.useState<string>("");
@@ -21,7 +19,7 @@ export default function SignInCard({
             <BrandLogo iconDimensions={40} textClasses="text-2xl" />
           </div>
           <div className="w-full space-y-6">
-            {providers &&
+            {/* {providers &&
               Object.values(providers)?.map((provider) => {
                 return (
                   <Button
@@ -36,7 +34,23 @@ export default function SignInCard({
                     customClassNames="w-full"
                   />
                 );
-              })}
+              })} */}
+            <Button
+              label={<>Sign in with Google</>}
+              onClick={() => signIn("google", { callbackUrl: Routes.HOME })}
+              color={ButtonColor.LIGHT}
+              //size={ButtonSize.LARGE}
+              Icon={Google}
+              customClassNames="w-full"
+            />
+            <Button
+              label={<>Sign in with Github</>}
+              onClick={() => signIn("github", { callbackUrl: Routes.HOME })}
+              color={ButtonColor.LIGHT}
+              //size={ButtonSize.LARGE}
+              Icon={Github}
+              customClassNames="w-full"
+            />
             {/* <div>
               <Input
                 label="Email"
