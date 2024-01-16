@@ -1,6 +1,9 @@
+import prisma from "@/clients/prismaClient";
 import { getResumeSummaryPrompt } from "@/constants/prompt.constants";
-import { getUniqueCompleteResume } from "@/utils/prisma.utils";
-import { getNextAuthServerSession, isAuthenticated } from "@/utils/session.utils";
+import {
+  getNextAuthServerSession,
+  isAuthenticated,
+} from "@/utils/session.utils";
 import { OpenAIStream, StreamingTextResponse } from "ai";
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
@@ -25,7 +28,9 @@ export async function POST(
       const { jobTitle, jobDescription, useExperiences, useSkills } =
         await req.json();
 
-      const resume = await getUniqueCompleteResume(params.resumeId);
+      const resume = await prisma.resumeV2.findUniqueOrThrow({
+        where: { id: params.resumeId },
+      });
 
       const prompt = getResumeSummaryPrompt({
         resume,
@@ -47,7 +52,8 @@ export async function POST(
       // Respond with the stream
       return new StreamingTextResponse(stream);
     } catch (err) {
-      return new NextResponse(err as string, { status: 500 });
+      console.log(err);
+      return new NextResponse("Internal Server Error", { status: 500 });
     }
   } else {
     return new NextResponse("Forbidden", { status: 401 });
