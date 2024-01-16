@@ -39,7 +39,7 @@ const HeroSection = () => {
             settings, and you're good to go.`}
           </p>
           <Link
-            href={Routes.HOME}
+            href={Routes.RESUMES}
             className="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
           >
             Get started

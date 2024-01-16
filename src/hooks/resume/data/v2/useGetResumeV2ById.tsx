@@ -15,6 +15,7 @@ export default function useGetResumeV2ById(id: string) {
         return data;
       }),
     staleTime: Infinity,
+    refetchOnMount: false,
   });
 
   const {

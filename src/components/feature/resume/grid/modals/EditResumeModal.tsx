@@ -5,9 +5,9 @@ import Modal, { ModalProps } from "@/components/global/modal/Modal";
 import ModalBody from "@/components/global/modal/ModalBody";
 import ModalHeader from "@/components/global/modal/ModalHeader";
 import { SAMPLE_JOB_DESCRIPTION } from "@/constants/form.constants";
-import { useHomePageContext } from "@/context/page/HomePageContextProvider";
+import { useResumesPageContext } from "@/context/page/ResumesPageContextProvider";
 import useUpdateResumeV2ById from "@/hooks/resume/data/v2/useUpdateResumeV2ById";
-import { HomePageActions } from "@/reducers/HomePageReducer";
+import { ResumesPageActions } from "@/reducers/ResumesPageReducer";
 import { ResumeV2 } from "@prisma/client";
 import { Form, Formik, FormikHelpers } from "formik";
 import { useAlert } from "react-alert";
@@ -22,7 +22,7 @@ export default function EditResumeModal(
 ) {
   const { resume } = props;
   const alert = useAlert();
-  const { dispatch } = useHomePageContext();
+  const { dispatch } = useResumesPageContext();
   const updateResume = useUpdateResumeV2ById();
 
   if (!resume) return <></>;
@@ -47,7 +47,7 @@ export default function EditResumeModal(
         id: resume.id,
         resume: editedResume,
       });
-      dispatch(HomePageActions.setShowEditResumeModal(null));
+      dispatch(ResumesPageActions.setShowEditResumeModal(null));
       alert.success(`Changes saved`);
     } catch {
       alert.error("Something went wrong");

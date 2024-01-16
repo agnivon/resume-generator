@@ -89,7 +89,7 @@ export function MainComponent(_props: SidebarProps) {
     {
       label: "My Resumes",
       Icon: DocumentTextIcon,
-      onClick: () => router.push(Routes.HOME),
+      onClick: () => router.push(Routes.RESUMES),
     },
   ];
 

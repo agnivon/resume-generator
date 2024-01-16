@@ -1,11 +1,10 @@
 import prisma from "@/clients/prismaClient";
-import { Education } from "@/types/resume.types";
+import { Experience } from "@/types/resume.types";
 import { exclude } from "@/utils/object.utils";
 import { getNextAuthServerSession, isAuthenticated } from "@/utils/session.utils";
-import { EducationSchema } from "@/validation/schema/resume.schema";
+import { ExperienceSchema } from "@/validation/schema/resume.schema";
 import { NextRequest, NextResponse } from "next/server";
 import * as Yup from "yup";
-
 
 export async function GET(
   _request: Request,
@@ -14,10 +13,10 @@ export async function GET(
   const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {
-    const education: Education[] = await prisma.education.findMany({
+    const experiences: Experience[] = await prisma.experience.findMany({
       where: { resumeId: params.resumeId },
     });
-    return NextResponse.json<Education[]>(education);
+    return NextResponse.json<Experience[]>(experiences);
   } else {
     return new NextResponse("Forbidden", { status: 401 });
   }
@@ -31,18 +30,18 @@ export async function PUT(
 
   if (isAuthenticated(session)) {
     try {
-      const education: Education[] = await Yup.array()
-        .of(EducationSchema)
+      const experiences: Experience[] = await Yup.array()
+        .of(ExperienceSchema)
         .defined()
         .validate(await request.json());
 
-      const upsertedEducations = await prisma.$transaction(
-        education.map((ent) =>
+      const upsertedExperiences = await prisma.$transaction(
+        experiences.map((ent) =>
           !ent.id
-            ? prisma["education"].create({
+            ? prisma["experience"].create({
                 data: exclude(ent, ["id"]),
               })
-            : prisma["education"].update({
+            : prisma["experience"].update({
                 where: {
                   id: ent.id,
                 },
@@ -51,9 +50,9 @@ export async function PUT(
         )
       );
 
-      return NextResponse.json<Education[]>(upsertedEducations);
+      return NextResponse.json<Experience[]>(upsertedExperiences);
     } catch (err) {
-      return new NextResponse(err as string, { status: 500 });
+      return new NextResponse("Internal Server Error", { status: 500 });
     }
   } else {
     return new NextResponse("Forbidden", { status: 401 });
@@ -71,12 +70,12 @@ export async function DELETE(
       const searchParams = request.nextUrl.searchParams;
       const id = searchParams.get("id");
       if (!id) throw Error("Id not provided");
-      const deletedEducation = await prisma.education.delete({
+      const deletedExperience = await prisma.experience.delete({
         where: { id },
       });
-      return NextResponse.json<Education>(deletedEducation);
+      return NextResponse.json<Experience>(deletedExperience);
     } catch (err) {
-      return new NextResponse(err as string, { status: 500 });
+      return new NextResponse("Internal Server Error", { status: 500 });
     }
   } else {
     return new NextResponse("Forbidden", { status: 401 });

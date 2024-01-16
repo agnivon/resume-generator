@@ -52,7 +52,7 @@ const Modal = (props: ModalProps) => {
           >
             <div
               className={classNames(
-                "fixed inset-x-0 inset-y-0 mx-auto w-full max-h-[90vh] flex items-center justify-center",
+                "fixed inset-x-0 inset-y-0 mx-auto w-full max-h-screen flex items-center justify-center",
                 MODAL_SIZE_CLASSES[size]
               )}
             >

@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 export default function useGetPreviewSettingsByResumeId(id: string) {
   const dispatch = useAppDispatch();
   const query = useQuery({
-    queryKey: ["previewSettings", id],
+    queryKey: ["previewSetting", id],
     queryFn: () =>
       getPreviewSettingsByResumeId(id).then((data) => {
         if (data) {

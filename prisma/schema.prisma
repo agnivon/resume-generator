@@ -218,7 +218,7 @@ model ResumePreviewSettings {
 
 model UserMembership {
   id      String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId  String  @unique
+  userId  String  @unique @db.ObjectId
   premium Boolean @default(false)
 
   @@map("user-memberships")

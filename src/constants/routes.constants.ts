@@ -5,7 +5,7 @@ export const Routes = {
   SIGNIN: "/auth/signin",
   SIGNOUT: "/auth/signout",
   ERROR: "/auth/error",
-  HOME: "/home",
+  RESUMES: "/resumes",
   RESUME: "/resume",
   GET_RESUME_WITH_ID: (id: string) => `/resume/${id}`,
   GET_RESUME_PREVIEW_WITH_ID: (id: string) => `/resume/${id}/preview`,

@@ -61,7 +61,7 @@ export default function ResumeFormTabs({}: {}) {
 
   const tabs = [
     {
-      label: "Contact",
+      label: "Personal Info",
       current: state.currentTab === ResumeFormTab.CONTACT,
       onClick: () => handleTabClicked(ResumeFormTab.CONTACT),
       loading: state.currentTab !== ResumeFormTab.CONTACT && isTabDisabled,

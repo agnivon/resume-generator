@@ -19,7 +19,7 @@ export default function BrandLogo(props: BrandLogoProps) {
   } = props;
   return (
     <Link
-      href={Routes.HOME}
+      href={Routes.RESUMES}
       className={classNames("flex items-center pl-1 mb-5", containerClasses)}
     >
       <Image

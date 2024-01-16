@@ -37,7 +37,7 @@ export default function SignInCard(_props: {
               })} */}
             <Button
               label={<>Sign in with Google</>}
-              onClick={() => signIn("google", { callbackUrl: Routes.HOME })}
+              onClick={() => signIn("google", { callbackUrl: Routes.RESUMES })}
               color={ButtonColor.LIGHT}
               //size={ButtonSize.LARGE}
               Icon={Google}
@@ -45,7 +45,7 @@ export default function SignInCard(_props: {
             />
             <Button
               label={<>Sign in with Github</>}
-              onClick={() => signIn("github", { callbackUrl: Routes.HOME })}
+              onClick={() => signIn("github", { callbackUrl: Routes.RESUMES })}
               color={ButtonColor.LIGHT}
               //size={ButtonSize.LARGE}
               Icon={Github}

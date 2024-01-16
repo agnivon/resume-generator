@@ -1,7 +1,10 @@
 import prisma from "@/clients/prismaClient";
 import { Routes } from "@/constants/routes.constants";
 import AuthLayoutContextProvider from "@/context/layout/AuthLayoutContextProvider";
-import { getNextAuthServerSession, isAuthenticated } from "@/utils/session.utils";
+import {
+  getNextAuthServerSession,
+  isAuthenticated,
+} from "@/utils/session.utils";
 import { redirect } from "next/navigation";
 import React, { cache } from "react";
 import Navbar from "../feature/navbar/Navbar";
@@ -43,6 +46,8 @@ export default async function AuthLayout({
   //console.log(session);
 
   const userDetails = await getUserDetails(userId);
+
+  //console.log(userDetails);
 
   return (
     <RenderIf isTrue={authenticated}>

@@ -20,7 +20,7 @@ export const getCompleteResumeById = (
   resumeId: string
 ): Promise<CompleteResume> =>
   axios
-    .get<CompleteResume>(`/api/resume/complete/${resumeId}`)
+    .get<CompleteResume>(`/api/resume/v1/complete/${resumeId}`)
     .then((result) => result.data);
 
 export const getResumeV2ById = (resumeId: string): Promise<ResumeV2> =>
@@ -32,7 +32,7 @@ export const insertCompleteResume = (
   resume: CompleteResume
 ): Promise<CompleteResume> =>
   axios
-    .post<CompleteResume>("/api/resume/complete", resume)
+    .post<CompleteResume>("/api/resume/v1/complete", resume)
     .then((result) => result.data);
 
 export const insertResumeV2 = (resume: ResumeV2): Promise<ResumeV2> =>
@@ -43,12 +43,12 @@ export const upsertCompleteResume = (
     Pick<CompleteResume, "id" | "name" | "userId">
 ): Promise<CompleteResume> =>
   axios
-    .put<CompleteResume>("/api/resume/complete", resume)
+    .put<CompleteResume>("/api/resume/v1/complete", resume)
     .then((result) => result.data);
 
 export const deleteCompleteResume = (id: String): Promise<CompleteResume> =>
   axios
-    .delete<CompleteResume>(`/api/resume/complete/${id}`)
+    .delete<CompleteResume>(`/api/resume/v1/complete/${id}`)
     .then((result) => result.data);
 
 export const deleteResumeV2 = (id: String): Promise<ResumeV2> =>
@@ -59,7 +59,7 @@ export const updateResume = (
   resume: Resume
 ): Promise<Resume> =>
   axios
-    .patch<Resume>(`/api/resume/${resumeId}`, resume)
+    .patch<Resume>(`/api/resume/v1/${resumeId}`, resume)
     .then((result) => result.data);
 
 export const updateResumeV2 = (
@@ -75,7 +75,7 @@ export const upsertContact = (
   contact: Contact
 ): Promise<Contact> =>
   axios
-    .put<Contact>(`/api/resume/${resumeId}/contact`, contact)
+    .put<Contact>(`/api/resume/v1/${resumeId}/contact`, contact)
     .then((result) => result.data);
 
 export const upsertResumeEntityById = <T extends ResumeEntityArray>(
@@ -84,7 +84,7 @@ export const upsertResumeEntityById = <T extends ResumeEntityArray>(
   path: string
 ): Promise<T> =>
   axios
-    .put<T>(`/api/resume/${resumeId}/${path}`, entities)
+    .put<T>(`/api/resume/v1/${resumeId}/${path}`, entities)
     .then((result) => result.data);
 
 export const deleteResumeEntityById = <T extends ResumeEntity>(
@@ -93,7 +93,7 @@ export const deleteResumeEntityById = <T extends ResumeEntity>(
   path: string
 ): Promise<T> =>
   axios
-    .delete<T>(`/api/resume/${resumeId}/${path}?id=${id}`)
+    .delete<T>(`/api/resume/v1/${resumeId}/${path}?id=${id}`)
     .then((result) => result.data);
 
 export const getPreviewSettings = (): Promise<ResumePreviewSettings[]> =>
@@ -106,7 +106,7 @@ export const getPreviewSettingsByResumeId = (
 ): Promise<ResumePreviewSettings | null> =>
   axios
     .get<ResumePreviewSettings | null>(
-      `/api/resume/${resumeId}/preview-settings`
+      `/api/resume/v1/${resumeId}/preview-settings`
     )
     .then((result) => result.data);
 
@@ -116,7 +116,7 @@ export const upsertPreviewSettings = (
 ): Promise<ResumePreviewSettings> =>
   axios
     .put<ResumePreviewSettings>(
-      `/api/resume/${resumeId}/preview-settings`,
+      `/api/resume/v1/${resumeId}/preview-settings`,
       previewSettings
     )
     .then((result) => result.data);

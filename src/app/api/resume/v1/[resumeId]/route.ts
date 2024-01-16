@@ -23,7 +23,7 @@ export async function PATCH(
       });
       return NextResponse.json<Resume>(updatedResume);
     } catch (err) {
-      return new NextResponse(err as string, { status: 500 });
+      return new NextResponse("Internal Server Error", { status: 500 });
     }
   } else {
     return new NextResponse("Forbidden", { status: 401 });

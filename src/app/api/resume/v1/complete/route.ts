@@ -108,7 +108,7 @@ export async function POST(request: Request) {
 
       return NextResponse.json<CompleteResume>(insertedCompleteResume);
     } catch (err) {
-      return new NextResponse(err as string, { status: 500 });
+      return new NextResponse("Internal Server Error", { status: 500 });
     }
   } else {
     return new NextResponse("Forbidden", { status: 401 });
@@ -307,7 +307,7 @@ export async function PUT(request: Request) {
 
       return NextResponse.json<CompleteResume>(upsertedCompleteResume);
     } catch (err) {
-      return new NextResponse(err as string, { status: 500 });
+      return new NextResponse("Internal Server Error", { status: 500 });
     }
   } else {
     return new NextResponse("Forbidden", { status: 401 });
