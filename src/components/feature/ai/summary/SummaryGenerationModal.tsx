@@ -12,7 +12,6 @@ import Textarea from "@/components/global/forms/Textarea";
 import FormikCheckbox from "@/components/global/forms/formik/FormikCheckbox";
 import FormikInput from "@/components/global/forms/formik/FormikInput";
 import FormikTextArea from "@/components/global/forms/formik/FormikTextArea";
-import OpenAIIcon from "@/components/global/icons/OpenAIIcon";
 import Modal, { ModalProps } from "@/components/global/modal/Modal";
 import ModalBody from "@/components/global/modal/ModalBody";
 import ModalHeader from "@/components/global/modal/ModalHeader";
@@ -53,7 +52,7 @@ export default function SummaryGenerationModal(
     useSkills: true,
   };
 
-  const handleSubmit = async (
+  const handleGenerate = async (
     values: typeof initialValues,
     helpers: FormikHelpers<typeof initialValues>
   ) => {
@@ -82,7 +81,7 @@ export default function SummaryGenerationModal(
 
   return (
     <Modal dismissible={true} {...rest}>
-      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      <Formik initialValues={initialValues} onSubmit={handleGenerate}>
         {(formik) => {
           //formikLogger(formik, "Summary Generation Modal");
           return (
@@ -128,7 +127,7 @@ export default function SummaryGenerationModal(
                       <div className="mt-6">
                         <Button
                           label="Generate"
-                          type="submit"
+                          //type="submit"
                           variant={ButtonVariant.GRADIENT_DUO}
                           color={ButtonColor.GREEN_TO_BLUE}
                           disabled={!formik.isValid}
@@ -136,6 +135,7 @@ export default function SummaryGenerationModal(
                           customClassNames="w-full"
                           size={ButtonSize.BASE}
                           Icon={Cog8ToothIcon}
+                          onClick={() => formik.submitForm()}
                         />
                       </div>
                     </MotionDiv>
@@ -223,7 +223,7 @@ export default function SummaryGenerationModal(
                           customClassNames="w-full"
                           Icon={ArrowPathIcon}
                           size={ButtonSize.BASE}
-                          onClick={() => handleSubmit(formik.values, formik)}
+                          onClick={() => handleGenerate(formik.values, formik)}
                         />
                       </div>
                     </MotionDiv>

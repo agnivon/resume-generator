@@ -1,4 +1,4 @@
-import { CompleteResume } from "@/types/resume.types";
+import { ResumeV2 } from "@prisma/client";
 
 export const getResumeSummaryPrompt = ({
   resume,
@@ -7,7 +7,7 @@ export const getResumeSummaryPrompt = ({
   useExperiences,
   useSkills,
 }: {
-  resume: CompleteResume;
+  resume: ResumeV2;
   jobTitle: string;
   jobDescription: string;
   useExperiences: boolean;

@@ -36,7 +36,9 @@ export async function POST(
       const { jobTitle, jobDescription, useExperiences, useSkills } =
         await req.json();
 
-      const resume = await getUniqueCompleteResume(params.resumeId);
+      const resume = await prisma.resumeV2.findUniqueOrThrow({
+        where: { id: params.resumeId },
+      });
 
       const prompt = getResumeSummaryPrompt({
         resume,
@@ -58,6 +60,7 @@ export async function POST(
       // Respond with the stream
       return new StreamingTextResponse(stream);
     } catch (err) {
+      console.log(err);
       return new NextResponse("Internal Server Error", { status: 500 });
     }
   } else {
