@@ -1,14 +1,14 @@
-import { HomePageState } from "@/types/state.types";
+import { ResumesPageState } from "@/types/state.types";
 import { ResumeV2 } from "@prisma/client";
 import { ImmerReducer, createActionCreators, createReducerFunction } from "immer-reducer";
 
-export const homePageInitialState: HomePageState = {
+export const resumesPageInitialState: ResumesPageState = {
   showNewResumeModal: false,
   showEditResumeModal: null,
   showDeleteResumeModal: null,
 };
 
-class HomePageReducer extends ImmerReducer<HomePageState> {
+class ResumesPageReducer extends ImmerReducer<ResumesPageState> {
   setShowNewResumeModal(show: boolean) {
     this.draftState.showNewResumeModal = show;
   }
@@ -20,10 +20,10 @@ class HomePageReducer extends ImmerReducer<HomePageState> {
   }
 }
 
-export const HomePageActions = createActionCreators(HomePageReducer);
-export const homePageReducer = createReducerFunction(
-  HomePageReducer,
-  homePageInitialState
+export const ResumesPageActions = createActionCreators(ResumesPageReducer);
+export const resumesPageReducer = createReducerFunction(
+  ResumesPageReducer,
+  resumesPageInitialState
 );
 
-export default HomePageReducer;
+export default ResumesPageReducer;

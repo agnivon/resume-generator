@@ -1,12 +1,12 @@
 "use client";
 
-import HomePageContextProvider, {
-  useHomePageContext,
-} from "@/context/page/HomePageContextProvider";
+import ResumesPageContextProvider, {
+  useResumesPageContext,
+} from "@/context/page/ResumesPageContextProvider";
 import useGetPreviewSettings from "@/hooks/resume/data/useGetPreviewSettings";
 import useDeleteResumeV2ById from "@/hooks/resume/data/v2/useDeleteResumeV2ById";
 import useGetResumesV2 from "@/hooks/resume/data/v2/useGetResumesV2";
-import { HomePageActions } from "@/reducers/HomePageReducer";
+import { ResumesPageActions } from "@/reducers/ResumesPageReducer";
 import { ResumeV2 } from "@prisma/client";
 import { useAlert } from "react-alert";
 import ConfirmationModal from "../feature/resume/form/modals/ConfirmationModal";
@@ -18,8 +18,8 @@ import LoadingMessage from "../global/LoadingMessage";
 import RenderIf from "../global/RenderIf";
 
 function PageComponent() {
-  const { state, dispatch } = useHomePageContext();
-  
+  const { state, dispatch } = useResumesPageContext();
+
   const { query: resumeQuery, data: resumes } = useGetResumesV2();
   const { query: previewSettingsQuery } = useGetPreviewSettings();
   const deleteResume = useDeleteResumeV2ById();
@@ -39,7 +39,7 @@ function PageComponent() {
       try {
         await deleteResume.mutation.mutateAsync(resume.id);
         alert.info(`${resume.name} deleted`);
-        dispatch(HomePageActions.setShowDeleteResumeModal(null));
+        dispatch(ResumesPageActions.setShowDeleteResumeModal(null));
       } catch {
         alert.error("Something went wrong");
       }
@@ -57,17 +57,17 @@ function PageComponent() {
       <RenderIf isTrue={isSuccess}>
         <NewResumeModal
           show={state.showNewResumeModal}
-          onClose={() => dispatch(HomePageActions.setShowNewResumeModal(false))}
+          onClose={() => dispatch(ResumesPageActions.setShowNewResumeModal(false))}
         />
         <EditResumeModal
           show={Boolean(state.showEditResumeModal)}
           resume={state.showEditResumeModal}
-          onClose={() => dispatch(HomePageActions.setShowEditResumeModal(null))}
+          onClose={() => dispatch(ResumesPageActions.setShowEditResumeModal(null))}
         />
         <ConfirmationModal
           show={Boolean(state.showDeleteResumeModal)}
           onClose={() =>
-            dispatch(HomePageActions.setShowDeleteResumeModal(null))
+            dispatch(ResumesPageActions.setShowDeleteResumeModal(null))
           }
           message={"All data will be lost permanently. Do you want to proceed?"}
           onConfirm={handleDeleteResume}
@@ -82,10 +82,10 @@ function PageComponent() {
   );
 }
 
-export default function HomePage() {
+export default function MyResumesPage() {
   return (
-    <HomePageContextProvider>
+    <ResumesPageContextProvider>
       <PageComponent />
-    </HomePageContextProvider>
+    </ResumesPageContextProvider>
   );
 }

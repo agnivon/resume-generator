@@ -57,7 +57,7 @@ export async function PUT(
 
       return NextResponse.json<Certification[]>(upsertedCertifications);
     } catch (err) {
-      return new NextResponse(err as string, { status: 500 });
+      return new NextResponse("Internal Server Error", { status: 500 });
     }
   } else {
     return new NextResponse("Forbidden", { status: 401 });
@@ -80,7 +80,7 @@ export async function DELETE(
       });
       return NextResponse.json<Certification>(deletedCertification);
     } catch (err) {
-      return new NextResponse(err as string, { status: 500 });
+      return new NextResponse("Internal Server Error", { status: 500 });
     }
   } else {
     return new NextResponse("Forbidden", { status: 401 });

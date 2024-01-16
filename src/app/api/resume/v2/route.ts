@@ -1,6 +1,9 @@
 import prisma from "@/clients/prismaClient";
 import { exclude } from "@/utils/object.utils";
-import { getNextAuthServerSession, isAuthenticated } from "@/utils/session.utils";
+import {
+  getNextAuthServerSession,
+  isAuthenticated,
+} from "@/utils/session.utils";
 import { ResumeV2 } from "@prisma/client";
 import { NextResponse } from "next/server";
 
@@ -16,7 +19,7 @@ export async function POST(request: Request) {
       });
       return NextResponse.json<ResumeV2>(createdResume);
     } catch (err) {
-      return new NextResponse(err as string, { status: 500 });
+      return new NextResponse("Internal Server Error", { status: 500 });
     }
   } else {
     return new NextResponse("Forbidden", { status: 401 });

@@ -20,7 +20,7 @@ export async function GET(
       });
       return NextResponse.json<ResumeV2>(resume);
     } catch (err) {
-      return new NextResponse(err as string, { status: 500 });
+      return new NextResponse("Internal Server Error", { status: 500 });
     }
   } else {
     return new NextResponse("Forbidden", { status: 401 });
@@ -43,7 +43,7 @@ export async function PUT(
       });
       return NextResponse.json<ResumeV2>(updatedResume);
     } catch (err) {
-      return new NextResponse(err as string, { status: 500 });
+      return new NextResponse("Internal Server Error", { status: 500 });
     }
   } else {
     return new NextResponse("Forbidden", { status: 401 });
@@ -63,7 +63,7 @@ export async function DELETE(
       });
       return NextResponse.json<ResumeV2>(deletedResume);
     } catch (err) {
-      return new NextResponse(err as string, { status: 500 });
+      return new NextResponse("Internal Server Error", { status: 500 });
     }
   } else {
     return new NextResponse("Forbidden", { status: 401 });

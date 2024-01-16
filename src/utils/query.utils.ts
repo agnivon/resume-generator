@@ -25,11 +25,8 @@ export const getSetQueryDataForInsertOrUpdateInArray =
 
 export const getSetQueryDataForInsertOrUpdateById =
   <T>(data: T) =>
-  (oldItem: T | undefined) => {
-    if (oldItem) {
-      return data;
-    }
-    return oldItem;
+  (_oldItem: T | undefined) => {
+    return data;
   };
 
 export const getSetQueryDataForDeleteInArray =

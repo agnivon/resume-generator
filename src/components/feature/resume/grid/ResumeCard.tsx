@@ -1,9 +1,9 @@
 import Card from "@/components/global/Card";
 import Dropdown from "@/components/global/Dropdown";
-import { useHomePageContext } from "@/context/page/HomePageContextProvider";
+import { useResumesPageContext } from "@/context/page/ResumesPageContextProvider";
 import useIsGlobalQueryRunning from "@/hooks/query/useIsGlobalQueryRunning";
 import useInsertCompleteResume from "@/hooks/resume/data/useInsertCompleteResume";
-import { HomePageActions } from "@/reducers/HomePageReducer";
+import { ResumesPageActions } from "@/reducers/ResumesPageReducer";
 import { classNames } from "@/utils";
 import { getResumeFromCompleteResume } from "@/utils/resume.utils";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
@@ -37,14 +37,14 @@ const ResumeCardFooter = (props: ResumeCardProps) => {
   const { resume } = props;
 
   const alert = useAlert();
-  const { dispatch } = useHomePageContext();
+  const { dispatch } = useResumesPageContext();
   const insertResume = useInsertResumeV2();
   const { globalRunning } = useIsGlobalQueryRunning();
 
   const handleOnChange = async (value: string | number | null) => {
     try {
       if (value === "Edit") {
-        dispatch(HomePageActions.setShowEditResumeModal(resume));
+        dispatch(ResumesPageActions.setShowEditResumeModal(resume));
       } else if (value === "Clone") {
         await insertResume.mutation.mutateAsync({
           ...resume,
@@ -53,7 +53,7 @@ const ResumeCardFooter = (props: ResumeCardProps) => {
         });
         alert.success(`${resume.name} cloned`);
       } else if (value === "Delete") {
-        dispatch(HomePageActions.setShowDeleteResumeModal(resume));
+        dispatch(ResumesPageActions.setShowDeleteResumeModal(resume));
       }
     } catch {
       alert.error("Something went wrong");

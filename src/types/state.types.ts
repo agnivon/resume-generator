@@ -1,7 +1,7 @@
 import { ResumeFormTab } from "@/constants/state.constants";
 import { ResumeV2 } from "@prisma/client";
 
-export type HomePageState = {
+export type ResumesPageState = {
   showNewResumeModal: boolean;
   showEditResumeModal: ResumeV2 | null;
   showDeleteResumeModal: ResumeV2 | null;

@@ -98,7 +98,7 @@ export default function ContactForm() {
         </div>
         <div className="col-span-1">
           <Button
-            label="Save Contact Information"
+            label="Save Personal Information"
             type="submit"
             //disabled=\{!formik\.isValid\}
             processing={formik.isSubmitting}

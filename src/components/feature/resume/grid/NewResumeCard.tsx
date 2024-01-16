@@ -1,13 +1,13 @@
 import Card from "@/components/global/Card";
-import { useHomePageContext } from "@/context/page/HomePageContextProvider";
-import { HomePageActions } from "@/reducers/HomePageReducer";
+import { useResumesPageContext } from "@/context/page/ResumesPageContextProvider";
+import { ResumesPageActions } from "@/reducers/ResumesPageReducer";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 
 export default function NewResumeCard() {
-  const { dispatch } = useHomePageContext();
+  const { dispatch } = useResumesPageContext();
 
   const handleNewResumeCardClicked = () => {
-    dispatch(HomePageActions.setShowNewResumeModal(true));
+    dispatch(ResumesPageActions.setShowNewResumeModal(true));
   };
 
   return (

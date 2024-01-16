@@ -14,11 +14,15 @@ import { useFormikContext } from "formik";
 import React from "react";
 import SummaryGenerationModal from "../../ai/summary/SummaryGenerationModal";
 import ResumeTipsCard from "../tips/ResumeTipsCard";
+import { useAuthLayoutContext } from "@/context/layout/AuthLayoutContextProvider";
 
 export default function SummaryForm() {
   const formik = useFormikContext<ResumeFormValues>();
+  const { userDetails } = useAuthLayoutContext();
 
-  //////const alert = useAlert();
+  const isUserPremium = userDetails.membership?.premium;
+
+  //const alert = useAlert();
 
   //const upsertResume = useUpsertCompleteResume();
 
@@ -53,11 +57,13 @@ export default function SummaryForm() {
 
   return (
     <>
-      <SummaryGenerationModal
-        resume={formik.values.resume}
-        show={showSummaryGeneratorModal}
-        onClose={() => setShowSummaryGeneratorModal(false)}
-      />
+      {isUserPremium && (
+        <SummaryGenerationModal
+          resume={formik.values.resume}
+          show={showSummaryGeneratorModal}
+          onClose={() => setShowSummaryGeneratorModal(false)}
+        />
+      )}
       <MotionDiv>
         <div className="flex flex-col md:flex-row gap-8 items-start">
           <div className="grid grid-cols-2 items-start gap-x-8 gap-y-2 w-full md:w-3/4">
@@ -90,26 +96,28 @@ export default function SummaryForm() {
             </div>
           </div>
           <div className="w-full md:w-1/4 space-y-4">
-            <Card customClassNames="!p-4 space-y-4">
-              <div className="flex gap-x-2 items-center">
-                <OpenAIIcon className="h-5 w-5 fill-gray-600 dark:fill-white" />
-                <span className="font-bold">GPT Summary Writer</span>
-              </div>
-              <div className="text-sm">
-                GPT Summary Writer generates a resume summary based on details
-                entered about the resume and in the sections
-              </div>
-              <Button
-                label="Generate"
-                customClassNames="w-full"
-                size={ButtonSize.SMALL}
-                variant={ButtonVariant.GRADIENT_DUO}
-                color={ButtonColor.GREEN_TO_BLUE}
-                Icon={Cog8ToothIcon}
-                customIconClassNames="!h-4 !w-4"
-                onClick={() => setShowSummaryGeneratorModal(true)}
-              />
-            </Card>
+            {isUserPremium && (
+              <Card customClassNames="!p-4 space-y-4">
+                <div className="flex gap-x-2 items-center">
+                  <OpenAIIcon className="h-5 w-5 fill-gray-600 dark:fill-white" />
+                  <span className="font-bold">GPT Summary Writer</span>
+                </div>
+                <div className="text-sm">
+                  GPT Summary Writer generates a resume summary based on details
+                  entered about the resume and in the sections
+                </div>
+                <Button
+                  label="Generate"
+                  customClassNames="w-full"
+                  size={ButtonSize.SMALL}
+                  variant={ButtonVariant.GRADIENT_DUO}
+                  color={ButtonColor.GREEN_TO_BLUE}
+                  Icon={Cog8ToothIcon}
+                  customIconClassNames="!h-4 !w-4"
+                  onClick={() => setShowSummaryGeneratorModal(true)}
+                />
+              </Card>
+            )}
             <ResumeTipsCard tips={SUMMARY_TIPS} />
           </div>
         </div>

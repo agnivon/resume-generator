@@ -9,7 +9,7 @@ import { getProviders } from "next-auth/react";
 
 export default async function SignInPage() {
   const session = await getNextAuthServerSession();
-  if (isAuthenticated(session)) redirect(Routes.HOME);
+  if (isAuthenticated(session)) redirect(Routes.RESUMES);
   const providers = await getProviders();
   return (
     <div className="h-screen w-full flex flex-col justify-center items-center">

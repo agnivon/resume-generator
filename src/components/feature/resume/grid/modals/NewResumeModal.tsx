@@ -6,10 +6,10 @@ import ModalBody from "@/components/global/modal/ModalBody";
 import ModalHeader from "@/components/global/modal/ModalHeader";
 import { SAMPLE_JOB_DESCRIPTION } from "@/constants/form.constants";
 import { NEW_RESUME_V2, NEW_CONTACT_V2 } from "@/constants/resume.v2.constants";
-import { useHomePageContext } from "@/context/page/HomePageContextProvider";
+import { useResumesPageContext } from "@/context/page/ResumesPageContextProvider";
 import useNextAuthSession from "@/hooks/auth/useNextAuthSession";
 import useInsertResumeV2 from "@/hooks/resume/data/v2/useInsertResumeV2";
-import { HomePageActions } from "@/reducers/HomePageReducer";
+import { ResumesPageActions } from "@/reducers/ResumesPageReducer";
 import { Form, Formik, FormikHelpers } from "formik";
 import { useAlert } from "react-alert";
 import * as Yup from "yup";
@@ -20,7 +20,7 @@ const validationSchema = Yup.object().shape({
 
 export default function NewResumeModal(props: ModalProps) {
   const alert = useAlert();
-  const { dispatch } = useHomePageContext();
+  const { dispatch } = useResumesPageContext();
   const { session } = useNextAuthSession();
 
   const insertResume = useInsertResumeV2();
@@ -46,7 +46,7 @@ export default function NewResumeModal(props: ModalProps) {
           contact: NEW_CONTACT_V2({}),
         });
         await insertResume.mutation.mutateAsync(newResume);
-        dispatch(HomePageActions.setShowNewResumeModal(false));
+        dispatch(ResumesPageActions.setShowNewResumeModal(false));
         alert.success(`${values.name} created`);
       }
     } catch {

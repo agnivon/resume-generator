@@ -140,8 +140,8 @@ export function MainComponent() {
   const navbarItems = [
     {
       label: "My Resumes",
-      onClick: () => router.push(Routes.HOME),
-      active: new RegExp(`${Routes.HOME}$`).test(pathname),
+      onClick: () => router.push(Routes.RESUMES),
+      active: new RegExp(`${Routes.RESUMES}$`).test(pathname),
     },
   ];
   return (
