@@ -1,5 +1,5 @@
 import { useResumeTemplateContext } from "@/context/ResumeTemplateContextProvider";
-import { getFontStyle, getStartEndDate } from "@/utils/template.utils";
+import { filterHidden, getFontStyle, getStartEndDate } from "@/utils/template.utils";
 import React from "react";
 import {
   EnvelopeFill,
@@ -461,12 +461,12 @@ const StandardTemplate = React.forwardRef(
         {/* <div className="absolute w-full border border-dashed border-gray-300 top-[28cm] left-0 right-0"></div> */}
         <ContactInformation contact={resume.contact} />
         <Summary summary={resume.summary} />
-        <Experience experiences={resume.experiences} />
-        <Project projects={resume.projects} />
-        <Skills skills={resume.skills} />
-        <Certification certifications={resume.certifications} />
-        <Course courses={resume.courses} />
-        <Education education={resume.education} />
+        <Experience experiences={filterHidden(resume.experiences)} />
+        <Project projects={filterHidden(resume.projects)} />
+        <Skills skills={filterHidden(resume.skills)} />
+        <Certification certifications={filterHidden(resume.certifications)} />
+        <Course courses={filterHidden(resume.courses)} />
+        <Education education={filterHidden(resume.education)} />
       </ResumeTemplateContainer>
     );
   }

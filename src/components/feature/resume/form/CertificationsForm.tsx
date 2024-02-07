@@ -108,7 +108,7 @@ export default function CertificationsForm() {
       />
       <MotionDiv>
         <div className="flex flex-col md:flex-row gap-8 items-start">
-          <div className="w-full md:w-1/4">
+          <div className="w-full md:w-[30%]">
             <div className="text-lg mb-2 font-bold">Your Certifications</div>
             <ListGroup items={listItems} />
             {doCertificationsExist && (
@@ -121,7 +121,7 @@ export default function CertificationsForm() {
               />
             )}
           </div>
-          <div className="w-full md:w-3/4 grid grid-cols-2 items-start gap-x-8 gap-y-2">
+          <div className="w-full md:w-[70%] grid grid-cols-2 items-start gap-x-8 gap-y-2">
             <RenderIf isTrue={!doCertificationsExist}>
               <div className="col-span-2 text-center dark:text-gray-400 text-gray-600">
                 {`To add a certification click on "Add new

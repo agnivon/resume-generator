@@ -32,7 +32,7 @@ const ResumeTemplateContainer = React.forwardRef(
       : "";
 
     return (
-      <div ref={ref}>
+      <div ref={ref} id={"resumePreview"}>
         <div
           className={classNames(
             "resume-template bg-white p-10 shadow-2xl flex flex-col text-gray-700 relative",

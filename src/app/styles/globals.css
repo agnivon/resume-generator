@@ -6,6 +6,7 @@
 
   body {
     width: 100%;
+    overflow-x: hidden;
   }
 
   div,
@@ -62,6 +63,7 @@
       padding: none !important;
       padding: 0 !important;
       print-color-adjust: exact;
+      scale: 1 !important;
     }
 
     .print-initial {

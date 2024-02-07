@@ -15,7 +15,7 @@ const BaseLayout = async ({ children }: { children: React.ReactNode }) => {
     <>
       <AppProvider>
         <MotionDiv
-          className="w-full min-h-screen overflow-y-auto overflow-x-hidden print-initial"
+          className="w-full min-h-screen print-initial"
           id="rootContainer"
         >
           <NProgressBar />

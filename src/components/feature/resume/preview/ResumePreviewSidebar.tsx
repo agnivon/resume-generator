@@ -6,9 +6,8 @@ import {
   FONT_SELECT_OPTIONS,
   PAPER_SIZE_DROPDOWN_OPTIONS,
 } from "@/constants/form.constants";
-import { AccentColorList, TemplateType } from "@/constants/template.constants";
+import { AccentColorList } from "@/constants/template.constants";
 import useUpsertPreviewSettings from "@/hooks/resume/data/useUpsertPreviewSettings";
-import { CompleteResume } from "@/types/resume.types";
 import { ResumePreviewSettings } from "@/types/template.types";
 import { TypeKeys } from "@/types/utility.types";
 import { classNames } from "@/utils";
@@ -20,12 +19,13 @@ import {
   ArrowDownTrayIcon,
   DocumentTextIcon,
 } from "@heroicons/react/24/outline";
+import { ResumeV2 } from "@prisma/client";
 import { RangeSlider } from "flowbite-react";
 import { useFormikContext } from "formik";
 import React, { DOMAttributes } from "react";
 import { useAlert } from "react-alert";
+import PreviewTipsCard from "../tips/PreviewTipsCard";
 import ResumeTemplateModal from "./ResumeTemplateModal";
-import { ResumeV2 } from "@prisma/client";
 
 /* const RESUME_TEMPLATES = [
   TemplateType.STANDARD,
@@ -205,6 +205,9 @@ export default function ResumePreviewSidebar({
           onClick={printResumePdf}
           size={ButtonSize.SMALL}
         />
+        <div className="mb-6">
+          <PreviewTipsCard />
+        </div>
       </div>
     </>
   );

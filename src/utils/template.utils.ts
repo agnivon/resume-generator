@@ -65,3 +65,7 @@ export const getStartEndDate = (start: string, end: string) => {
   );
   return { startDate, endDate };
 };
+
+export const filterHidden = <T extends { hidden: boolean }>(arr: T[]) => {
+  return arr.filter((e) => !e.hidden);
+};

@@ -66,7 +66,7 @@ export default function SummaryForm() {
       )}
       <MotionDiv>
         <div className="flex flex-col md:flex-row gap-8 items-start">
-          <div className="grid grid-cols-2 items-start gap-x-8 gap-y-2 w-full md:w-3/4">
+          <div className="grid grid-cols-2 items-start gap-x-8 gap-y-2 w-full md:w-[70%]">
             <div className="col-span-2">
               <div className="text-lg mb-1 font-bold">Professional Summary</div>
             </div>
@@ -95,7 +95,7 @@ export default function SummaryForm() {
               />
             </div>
           </div>
-          <div className="w-full md:w-1/4 space-y-4">
+          <div className="w-full md:w-[30%] space-y-4">
             {isUserPremium && (
               <Card customClassNames="!p-4 space-y-4">
                 <div className="flex gap-x-2 items-center">

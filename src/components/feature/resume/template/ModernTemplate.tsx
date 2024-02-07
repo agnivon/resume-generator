@@ -4,13 +4,23 @@ import type {
   Course,
   Education,
   Experience,
-  Project
+  Project,
 } from "@/types/resume.types";
 import {
+  filterHidden,
   getFontStyle,
-  getStartEndDate
+  getStartEndDate,
 } from "@/utils/template.utils";
-import { CertificationV2, ContactV2, CourseV2, EducationV2, ExperienceV2, ProjectV2, ResumeV2, SkillV2 } from "@prisma/client";
+import {
+  CertificationV2,
+  ContactV2,
+  CourseV2,
+  EducationV2,
+  ExperienceV2,
+  ProjectV2,
+  ResumeV2,
+  SkillV2,
+} from "@prisma/client";
 import React from "react";
 import {
   EnvelopeFill,
@@ -427,17 +437,17 @@ const Skills = ({ skills }: { skills: SkillV2[] }) => {
 const ModernTemplate = React.forwardRef(
   (props: ResumeTemplateProps, ref: React.Ref<HTMLDivElement> | undefined) => {
     const { resume } = props;
-
+    
     return (
       <ResumeTemplateContainer {...props} ref={ref}>
         <ContactInformation contact={resume.contact} />
         <Summary summary={resume.summary} />
-        <Experience experiences={resume.experiences} />
-        <Project projects={resume.projects} />
-        <Skills skills={resume.skills} />
-        <Certification certifications={resume.certifications} />
-        <Course courses={resume.courses} />
-        <Education education={resume.education} />
+        <Experience experiences={filterHidden(resume.experiences)} />
+        <Project projects={filterHidden(resume.projects)} />
+        <Skills skills={filterHidden(resume.skills)} />
+        <Certification certifications={filterHidden(resume.certifications)} />
+        <Course courses={filterHidden(resume.courses)} />
+        <Education education={filterHidden(resume.education)} />
       </ResumeTemplateContainer>
     );
   }
