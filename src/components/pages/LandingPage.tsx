@@ -14,6 +14,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import BrandLogo from "../feature/brand/BrandLogo";
+import sample_resume_1 from "../../../public/images/sample_resume_1.jpg";
+import sample_resume_2 from "../../../public/images/sample_resume_2.jpg";
+import sample_resume_3 from "../../../public/images/sample_resume_3.jpg";
+import Image from "next/image";
 
 /* const heroSectionResumeAnimationProps = {
   initial: {
@@ -58,21 +62,9 @@ const HeroSection = () => {
           </Link>
         </div>
         <div className="hidden lg:mt-0 lg:flex -space-x-96 lg:col-span-5 rounded-lg overflow-hidden scale-90 shadow-lg dark:shadow-sm-light">
-          <img
-            src="/images/sample_resume_1.jpg"
-            alt="mockup"
-            className="shadow-lg"
-          />
-          <img
-            src="/images/sample_resume_3.jpg"
-            alt="mockup"
-            className="shadow-lg"
-          />
-          <img
-            src="/images/sample_resume_2.jpg"
-            alt="mockup"
-            className="shadow-lg"
-          />
+          <Image src={sample_resume_1} alt="mockup" className="shadow-lg" />
+          <Image src={sample_resume_2} alt="mockup" className="shadow-lg" />
+          <Image src={sample_resume_3} alt="mockup" className="shadow-lg" />
         </div>
       </div>
     </section>

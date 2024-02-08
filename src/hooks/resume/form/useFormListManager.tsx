@@ -1,11 +1,17 @@
 import { ResumeFormValues } from "@/types/form.types";
-import { Bars3Icon, TrashIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  EyeIcon,
+  EyeSlashIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
 import { FormikProps } from "formik";
 import _ from "lodash";
 import React from "react";
 import { DropResult, ResponderProvided } from "react-beautiful-dnd";
 import useDeleteResumeEntity from "../data/useDeleteResumeEntity";
 import useUpsertResumeEntity from "../data/useUpsertResumeEntity";
+import { produce } from "immer";
 
 export default function useFormListManager<T extends { displayOrder: number }>(
   formik: FormikProps<ResumeFormValues>,
@@ -100,12 +106,30 @@ export default function useFormListManager<T extends { displayOrder: number }>(
   };
 
   const getListItemContent = (content: React.ReactNode, idx: number) => {
+    const entities = formik.values.resume[entity];
+    const VisibleIcon = entities[idx].hidden ? EyeSlashIcon : EyeIcon;
+    const onVisibilityChange = () =>
+      formik.setFieldValue(
+        `resume.${entity}`,
+        produce(entities, (draft) => {
+          draft[idx].hidden = !draft[idx].hidden;
+        })
+      );
     return (
       <div className="flex justify-between items-center w-full">
         <div className="flex flex-col w-full text-left overflow-hidden">
           {content}
         </div>
         <div className="ml-1 shrink-0">
+          <VisibleIcon
+            className=" h-5 w-5 shrink-0"
+            onClick={(e) => {
+              e.stopPropagation();
+              onVisibilityChange();
+            }}
+          />
+        </div>
+        <div className="ml-2 shrink-0">
           <TrashIcon
             className="text-red-500 h-5 w-5 shrink-0"
             onClick={(e) => {

@@ -109,7 +109,7 @@ export default function ProjectForm() {
       />
       <MotionDiv>
         <div className="flex flex-col md:flex-row gap-8 items-start">
-          <div className="w-full md:w-1/4">
+          <div className="w-full md:w-[30%]">
             <div className="text-lg mb-2 font-bold">Your Projects</div>
             <ListGroup items={listItems} />
             {doProjectsExist && (
@@ -122,7 +122,7 @@ export default function ProjectForm() {
               />
             )}
           </div>
-          <div className="w-full md:w-3/4 grid grid-cols-2 items-start gap-x-8 gap-y-2">
+          <div className="w-full md:w-[70%] grid grid-cols-2 items-start gap-x-8 gap-y-2">
             <RenderIf isTrue={!doProjectsExist}>
               <div className="col-span-2 text-center dark:text-gray-400 text-gray-600">
                 {`To add a project click on "Add new project" on the left panel`}

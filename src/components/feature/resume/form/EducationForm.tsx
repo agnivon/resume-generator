@@ -116,7 +116,7 @@ export default function EducationForm() {
           </div>
         </div>
         <div className="flex flex-col md:flex-row gap-8 items-start">
-          <div className="w-full md:w-1/4 space-y-6">
+          <div className="w-full md:w-[30%] space-y-6">
             <div>
               <div className="text-lg mb-2 font-bold">Your Education</div>
               <ListGroup items={listItems} />
@@ -132,7 +132,7 @@ export default function EducationForm() {
             </div>
             <ResumeTipsCard tips={EDUCATION_TIPS} />
           </div>
-          <div className="w-full md:w-3/4 grid grid-cols-2 items-start gap-x-8 gap-y-2">
+          <div className="w-full md:w-[70%] grid grid-cols-2 items-start gap-x-8 gap-y-2">
             <RenderIf isTrue={!doesEducationExist}>
               <div className="col-span-2 text-center dark:text-gray-400 text-gray-600">
                 {`To add an education click on "Add new education" on the left

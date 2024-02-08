@@ -6,7 +6,7 @@ import type {
   Experience,
   Project
 } from "@/types/resume.types";
-import { getFontStyle, getStartEndDate } from "@/utils/template.utils";
+import { filterHidden, getFontStyle, getStartEndDate } from "@/utils/template.utils";
 import {
   CertificationV2,
   ContactV2,
@@ -404,12 +404,12 @@ const BoldTemplate = React.forwardRef(
         </div>
         <ContactInformation contact={resume.contact} />
         <Summary summary={resume.summary} />
-        <Experience experiences={resume.experiences} />
-        <Project projects={resume.projects} />
-        <Skills skills={resume.skills} />
-        <Certification certifications={resume.certifications} />
-        <Course courses={resume.courses} />
-        <Education education={resume.education} />
+        <Experience experiences={filterHidden(resume.experiences)} />
+        <Project projects={filterHidden(resume.projects)} />
+        <Skills skills={filterHidden(resume.skills)} />
+        <Certification certifications={filterHidden(resume.certifications)} />
+        <Course courses={filterHidden(resume.courses)} />
+        <Education education={filterHidden(resume.education)} />
       </ResumeTemplateContainer>
     );
   }

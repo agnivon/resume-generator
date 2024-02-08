@@ -17,6 +17,7 @@ export default function useGetResumesV2() {
         return data;
       }),
     staleTime: Infinity,
+    refetchOnMount: false,
   });
 
   const {

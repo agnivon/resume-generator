@@ -1,4 +1,5 @@
 import Image from "next/image";
+import React from "react";
 
 type AvatarProps = {
   name?: string | undefined | null;
@@ -19,7 +20,16 @@ export default function Avatar(props: AvatarProps) {
     showName = true,
   } = props;
   name = name || "Free User";
-  const [firstName, lastName] = name.split(" ");
+
+  const fallback = React.useMemo(
+    () =>
+      name
+        ?.split(" ")
+        .map((n) => n[0])
+        .join(""),
+    [name]
+  );
+
   return (
     <div className="flex gap-4 items-center">
       {imageUrl ? (
@@ -36,8 +46,7 @@ export default function Avatar(props: AvatarProps) {
           style={{ width, height }}
         >
           <span className="font-medium text-gray-600 dark:text-gray-300">
-            {firstName[0]}
-            {lastName && lastName[0]}
+            {fallback}
           </span>
         </div>
       )}
