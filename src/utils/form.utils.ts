@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { FormikErrors, FormikProps, FormikTouched, FormikValues } from "formik";
 
 export const formikLogger = <T>(
@@ -62,4 +63,14 @@ export const validateFormikForm = <T>(
 export const getTextAreaRows = (content: string = "", min: number = 5) => {
   const count = (content.match(/\n/g) || []).length;
   return Math.max(min, count);
+};
+
+export const getToastErrMessage = (err: unknown) => {
+  if (err instanceof AxiosError) {
+    return err.response?.data || err.message;
+  }
+  if (err instanceof Error) {
+    return err.message;
+  }
+  return "Something went wrong";
 };

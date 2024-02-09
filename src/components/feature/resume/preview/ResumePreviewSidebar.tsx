@@ -26,6 +26,7 @@ import React, { DOMAttributes } from "react";
 import { useAlert } from "react-alert";
 import PreviewTipsCard from "../tips/PreviewTipsCard";
 import ResumeTemplateModal from "./ResumeTemplateModal";
+import { getToastErrMessage } from "@/utils/form.utils";
 
 /* const RESUME_TEMPLATES = [
   TemplateType.STANDARD,
@@ -109,8 +110,8 @@ export default function ResumePreviewSidebar({
         previewSettings,
       });
       alert.success("Preview settings saved");
-    } catch {
-      alert.error("Something went wrong");
+    } catch (err) {
+      alert.error(getToastErrMessage(err));
     }
   };
 

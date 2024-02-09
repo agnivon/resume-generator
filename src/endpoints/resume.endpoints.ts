@@ -35,7 +35,9 @@ export const insertCompleteResume = (
     .post<CompleteResume>("/api/resume/v1/complete", resume)
     .then((result) => result.data);
 
-export const insertResumeV2 = (resume: ResumeV2): Promise<ResumeV2> =>
+export const insertResumeV2 = (
+  resume: Omit<ResumeV2, "id">
+): Promise<ResumeV2> =>
   axios.post<ResumeV2>("/api/resume/v2", resume).then((result) => result.data);
 
 export const upsertCompleteResume = (

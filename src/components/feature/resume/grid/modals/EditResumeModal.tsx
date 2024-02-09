@@ -8,14 +8,14 @@ import { SAMPLE_JOB_DESCRIPTION } from "@/constants/form.constants";
 import { useResumesPageContext } from "@/context/page/ResumesPageContextProvider";
 import useUpdateResumeV2ById from "@/hooks/resume/data/v2/useUpdateResumeV2ById";
 import { ResumesPageActions } from "@/reducers/ResumesPageReducer";
+import { getToastErrMessage } from "@/utils/form.utils";
+import { resumeMetadataFormSchema } from "@/validation/schema/form/resume.form.v2.schema";
 import { ResumeV2 } from "@prisma/client";
 import { Form, Formik, FormikHelpers } from "formik";
 import { useAlert } from "react-alert";
 import * as Yup from "yup";
 
-const validationSchema = Yup.object().shape({
-  name: Yup.string().required("Resume Name is required"),
-});
+const validationSchema = Yup.object().shape(resumeMetadataFormSchema);
 
 export default function EditResumeModal(
   props: ModalProps & { resume: ResumeV2 | null }
@@ -42,15 +42,14 @@ export default function EditResumeModal(
   ) => {
     formik.setSubmitting(true);
     try {
-      const editedResume = { ...resume, ...values };
       await updateResume.mutation.mutateAsync({
         id: resume.id,
-        resume: editedResume,
+        resume: values,
       });
       dispatch(ResumesPageActions.setShowEditResumeModal(null));
       alert.success(`Changes saved`);
-    } catch {
-      alert.error("Something went wrong");
+    } catch (err) {
+      alert.error(getToastErrMessage(err));
     }
     formik.setSubmitting(false);
   };
@@ -102,7 +101,7 @@ export default function EditResumeModal(
                       placeholder={SAMPLE_JOB_DESCRIPTION.job.description}
                     />
                   </div>
-                  <div className="col-span-2">
+                  <div className="col-span-2 mt-2">
                     <Button
                       label="Save changes"
                       type="submit"

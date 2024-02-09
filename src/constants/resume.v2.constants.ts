@@ -106,9 +106,10 @@ export const NEW_CONTACT_V2 = (value: Partial<ContactV2>): ContactV2 => {
   };
 };
 
-export const NEW_RESUME_V2 = (value: Partial<ResumeV2>): ResumeV2 => {
+export const NEW_RESUME_V2 = (
+  value: Partial<ResumeV2>
+): Omit<ResumeV2, "id"> => {
   return {
-    id: "",
     name: "",
     userId: "",
     createdOn: Date.now(),

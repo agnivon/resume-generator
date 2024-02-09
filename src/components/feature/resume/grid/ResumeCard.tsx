@@ -2,20 +2,20 @@ import Card from "@/components/global/Card";
 import Dropdown from "@/components/global/Dropdown";
 import { useResumesPageContext } from "@/context/page/ResumesPageContextProvider";
 import useIsGlobalQueryRunning from "@/hooks/query/useIsGlobalQueryRunning";
-import useInsertCompleteResume from "@/hooks/resume/data/useInsertCompleteResume";
+import useInsertResumeV2 from "@/hooks/resume/data/v2/useInsertResumeV2";
 import { ResumesPageActions } from "@/reducers/ResumesPageReducer";
 import { classNames } from "@/utils";
-import { getResumeFromCompleteResume } from "@/utils/resume.utils";
+import { exclude } from "@/utils/object.utils";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 import { ResumePreviewSettings } from "@prisma/client";
 import { MouseEventHandler } from "react";
 import { useAlert } from "react-alert";
 import {
-  TemplateType,
   TemplateFont,
+  TemplateType,
 } from "../../../../constants/template.constants";
 import Template, { ResumeTemplateProps } from "../template/ResumeTemplate";
-import useInsertResumeV2 from "@/hooks/resume/data/v2/useInsertResumeV2";
+import { getToastErrMessage } from "@/utils/form.utils";
 
 type ResumeCardProps = ResumeTemplateProps & {
   previewSetting?: ResumePreviewSettings;
@@ -47,7 +47,7 @@ const ResumeCardFooter = (props: ResumeCardProps) => {
         dispatch(ResumesPageActions.setShowEditResumeModal(resume));
       } else if (value === "Clone") {
         await insertResume.mutation.mutateAsync({
-          ...resume,
+          ...exclude(resume, ["id"]),
           name: `${resume.name} (Copy)`,
           createdOn: Date.now(),
         });
@@ -55,8 +55,8 @@ const ResumeCardFooter = (props: ResumeCardProps) => {
       } else if (value === "Delete") {
         dispatch(ResumesPageActions.setShowDeleteResumeModal(resume));
       }
-    } catch {
-      alert.error("Something went wrong");
+    } catch (err) {
+      alert.error(getToastErrMessage(err));
     }
   };
 

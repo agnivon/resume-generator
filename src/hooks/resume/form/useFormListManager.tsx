@@ -12,6 +12,7 @@ import { DropResult, ResponderProvided } from "react-beautiful-dnd";
 import useDeleteResumeEntity from "../data/useDeleteResumeEntity";
 import useUpsertResumeEntity from "../data/useUpsertResumeEntity";
 import { produce } from "immer";
+import { Tooltip } from "flowbite-react";
 
 export default function useFormListManager<T extends { displayOrder: number }>(
   formik: FormikProps<ResumeFormValues>,
@@ -39,7 +40,11 @@ export default function useFormListManager<T extends { displayOrder: number }>(
 
   const [deleteIdx, setDeleteIdx] = React.useState<number | null>(null);
 
-  const isFormValid = !Boolean(formik.errors?.resume?.[entity]);
+  const formErrors = formik.errors?.resume?.[entity];
+
+  const formTouched = formik.touched?.resume?.[entity];
+
+  const isFormValid = !Boolean(formErrors);
 
   const isMutationPending = upsertEntity.isPending || deleteEntity.isPending;
 
@@ -107,6 +112,7 @@ export default function useFormListManager<T extends { displayOrder: number }>(
 
   const getListItemContent = (content: React.ReactNode, idx: number) => {
     const entities = formik.values.resume[entity];
+    const touchedAndError = formTouched?.[idx] && formErrors?.[idx];
     const VisibleIcon = entities[idx].hidden ? EyeSlashIcon : EyeIcon;
     const onVisibilityChange = () =>
       formik.setFieldValue(
@@ -115,28 +121,38 @@ export default function useFormListManager<T extends { displayOrder: number }>(
           draft[idx].hidden = !draft[idx].hidden;
         })
       );
+
     return (
       <div className="flex justify-between items-center w-full">
-        <div className="flex flex-col w-full text-left overflow-hidden">
-          {content}
-        </div>
-        <div className="ml-1 shrink-0">
-          <VisibleIcon
-            className=" h-5 w-5 shrink-0"
-            onClick={(e) => {
-              e.stopPropagation();
-              onVisibilityChange();
-            }}
-          />
-        </div>
-        <div className="ml-2 shrink-0">
-          <TrashIcon
-            className="text-red-500 h-5 w-5 shrink-0"
-            onClick={(e) => {
-              e.stopPropagation();
-              setDeleteIdx(idx);
-            }}
-          />
+        <div className="flex flex-col text-left overflow-hidden">{content}</div>
+        <div className="flex items-center gap-x-2 ml-1">
+          {touchedAndError && (
+            <div className="shrink-0">
+              <span className="inline-block h-2.5 w-2.5 bg-red-500 rounded-full"></span>
+            </div>
+          )}
+          <div className="shrink-0">
+            <Tooltip content={entities[idx].hidden ? "Show" : "Hide"}>
+              <VisibleIcon
+                className=" h-5 w-5 shrink-0"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onVisibilityChange();
+                }}
+              />
+            </Tooltip>
+          </div>
+          <div className="shrink-0">
+            <Tooltip content={"Delete"}>
+              <TrashIcon
+                className="text-red-500 h-5 w-5 shrink-0"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setDeleteIdx(idx);
+                }}
+              />
+            </Tooltip>
+          </div>
         </div>
       </div>
     );

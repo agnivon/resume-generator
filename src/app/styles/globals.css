@@ -4,6 +4,10 @@
 
 @layer base {
 
+  /* html {
+    scrollbar-gutter: stable;
+  } */
+
   body {
     width: 100%;
     overflow-x: hidden;
@@ -158,16 +162,13 @@
   border-radius: 100px;
   border: 2px solid transparent;
   background-clip: content-box;
+  background-color: rgb(156 163 175);
   cursor: pointer;
 }
 
 ::-webkit-scrollbar-track {
   background-color: #e4e4e4;
   border-radius: 100px;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: rgb(156 163 175);
 }
 
 /* .dark ::-webkit-scrollbar-thumb {

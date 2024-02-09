@@ -16,6 +16,7 @@ import NewResumeModal from "../feature/resume/grid/modals/NewResumeModal";
 import ErrorMessage from "../global/ErrorMessage";
 import LoadingMessage from "../global/LoadingMessage";
 import RenderIf from "../global/RenderIf";
+import { getToastErrMessage } from "@/utils/form.utils";
 
 function PageComponent() {
   const { state, dispatch } = useResumesPageContext();
@@ -40,8 +41,8 @@ function PageComponent() {
         await deleteResume.mutation.mutateAsync(resume.id);
         alert.info(`${resume.name} deleted`);
         dispatch(ResumesPageActions.setShowDeleteResumeModal(null));
-      } catch {
-        alert.error("Something went wrong");
+      } catch (err) {
+        alert.error(getToastErrMessage(err));
       }
     }
   };
@@ -57,12 +58,16 @@ function PageComponent() {
       <RenderIf isTrue={isSuccess}>
         <NewResumeModal
           show={state.showNewResumeModal}
-          onClose={() => dispatch(ResumesPageActions.setShowNewResumeModal(false))}
+          onClose={() =>
+            dispatch(ResumesPageActions.setShowNewResumeModal(false))
+          }
         />
         <EditResumeModal
           show={Boolean(state.showEditResumeModal)}
           resume={state.showEditResumeModal}
-          onClose={() => dispatch(ResumesPageActions.setShowEditResumeModal(null))}
+          onClose={() =>
+            dispatch(ResumesPageActions.setShowEditResumeModal(null))
+          }
         />
         <ConfirmationModal
           show={Boolean(state.showDeleteResumeModal)}

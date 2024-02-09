@@ -1,9 +1,7 @@
+import { insertResumeV2 } from "@/endpoints/resume.endpoints";
 import {
-    insertResumeV2
-} from "@/endpoints/resume.endpoints";
-import {
-    getSetQueryDataForInsertOrUpdateById,
-    getSetQueryDataForInsertOrUpdateInArray,
+  getSetQueryDataForInsertOrUpdateById,
+  getSetQueryDataForInsertOrUpdateInArray,
 } from "@/utils/query.utils";
 import { ResumeV2 } from "@prisma/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -14,7 +12,7 @@ export default function useInsertResumeV2() {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (resume: ResumeV2) => insertResumeV2(resume),
+    mutationFn: (resume: Omit<ResumeV2, "id">) => insertResumeV2(resume),
     onSuccess: (data) => {
       //dispatch(resumeSlice.actions.upsertOneCompleteResume(data));
       queryClient.setQueriesData(

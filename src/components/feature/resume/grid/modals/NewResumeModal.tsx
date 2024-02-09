@@ -5,18 +5,18 @@ import Modal, { ModalProps } from "@/components/global/modal/Modal";
 import ModalBody from "@/components/global/modal/ModalBody";
 import ModalHeader from "@/components/global/modal/ModalHeader";
 import { SAMPLE_JOB_DESCRIPTION } from "@/constants/form.constants";
-import { NEW_RESUME_V2, NEW_CONTACT_V2 } from "@/constants/resume.v2.constants";
+import { NEW_CONTACT_V2, NEW_RESUME_V2 } from "@/constants/resume.v2.constants";
 import { useResumesPageContext } from "@/context/page/ResumesPageContextProvider";
 import useNextAuthSession from "@/hooks/auth/useNextAuthSession";
 import useInsertResumeV2 from "@/hooks/resume/data/v2/useInsertResumeV2";
 import { ResumesPageActions } from "@/reducers/ResumesPageReducer";
+import { getToastErrMessage } from "@/utils/form.utils";
+import { resumeMetadataFormSchema } from "@/validation/schema/form/resume.form.v2.schema";
 import { Form, Formik, FormikHelpers } from "formik";
 import { useAlert } from "react-alert";
 import * as Yup from "yup";
 
-const validationSchema = Yup.object().shape({
-  name: Yup.string().required("Resume Name is required"),
-});
+const validationSchema = Yup.object().shape(resumeMetadataFormSchema);
 
 export default function NewResumeModal(props: ModalProps) {
   const alert = useAlert();
@@ -49,8 +49,8 @@ export default function NewResumeModal(props: ModalProps) {
         dispatch(ResumesPageActions.setShowNewResumeModal(false));
         alert.success(`${values.name} created`);
       }
-    } catch {
-      alert.error("Something went wrong");
+    } catch (err) {
+      alert.error(getToastErrMessage(err));
     }
     formik.setSubmitting(false);
   };
@@ -102,7 +102,7 @@ export default function NewResumeModal(props: ModalProps) {
                       placeholder={SAMPLE_JOB_DESCRIPTION.job.description}
                     />
                   </div>
-                  <div className="col-span-2">
+                  <div className="col-span-2 mt-2">
                     <Button
                       label="Create new resume"
                       type="submit"
