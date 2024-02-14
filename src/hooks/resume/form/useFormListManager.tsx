@@ -112,7 +112,8 @@ export default function useFormListManager<T extends { displayOrder: number }>(
 
   const getListItemContent = (content: React.ReactNode, idx: number) => {
     const entities = formik.values.resume[entity];
-    const touchedAndError = formTouched?.[idx] && formErrors?.[idx];
+    const touchedAndError =
+      formTouched?.[idx] && formErrors?.[idx] && formik.submitCount >= 1;
     const VisibleIcon = entities[idx].hidden ? EyeSlashIcon : EyeIcon;
     const onVisibilityChange = () =>
       formik.setFieldValue(

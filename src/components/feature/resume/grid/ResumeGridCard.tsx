@@ -1,28 +1,27 @@
-import { TemplateSize } from "@/constants/template.constants";
-import ResumeCard, { ResumeCardProps } from "./ResumeCard";
+import Badge, { BadgeColor } from "@/components/global/Badge";
 import Button, {
   ButtonColor,
   ButtonSize,
   ButtonVariant,
 } from "@/components/global/Button";
+import { TemplateSize } from "@/constants/template.constants";
+import { useResumesPageContext } from "@/context/page/ResumesPageContextProvider";
+import useIsGlobalQueryRunning from "@/hooks/query/useIsGlobalQueryRunning";
+import { useAppSelector } from "@/hooks/redux/useAppSelector";
+import useCloneResumeV2 from "@/hooks/resume/data/v2/useCloneResumeV2";
+import { ResumesPageActions } from "@/reducers/ResumesPageReducer";
+import { getToastErrMessage } from "@/utils/form.utils";
 import {
   DocumentDuplicateIcon,
   PencilIcon,
   TrashIcon,
 } from "@heroicons/react/24/solid";
-import { useResumesPageContext } from "@/context/page/ResumesPageContextProvider";
-import useIsGlobalQueryRunning from "@/hooks/query/useIsGlobalQueryRunning";
-import useCloneResumeV2 from "@/hooks/resume/data/v2/useCloneResumeV2";
-import { ResumesPageActions } from "@/reducers/ResumesPageReducer";
-import { getToastErrMessage } from "@/utils/form.utils";
-import { useAlert } from "react-alert";
 import { Tooltip } from "flowbite-react";
-import Badge, { BadgeColor } from "@/components/global/Badge";
-import { useAppSelector } from "@/hooks/redux/useAppSelector";
+import { useAlert } from "react-alert";
+import ResumeCard, { ResumeCardProps } from "./ResumeCard";
 import React from "react";
-import useIsScrollEnd from "@/hooks/ui/useIsScrollEnd";
 
-export default function ResumeGridCard(props: ResumeCardProps) {
+export default React.memo(function ResumeGridCard(props: ResumeCardProps) {
   const { resume } = props;
 
   const alert = useAlert();
@@ -124,4 +123,4 @@ export default function ResumeGridCard(props: ResumeCardProps) {
       </div>
     </div>
   );
-}
+});

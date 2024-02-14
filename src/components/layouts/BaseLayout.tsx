@@ -1,30 +1,36 @@
 import AppProvider from "@/context/global/AppProvider";
-import MotionDiv from "../global/motion/MotionDiv";
+import { Inter } from "next/font/google";
+import Script from "next/script";
 import NProgressBar from "../feature/nprogress/NProgress";
+import MotionDiv from "../global/motion/MotionDiv";
+import { classNames } from "@/utils";
 
-/* const ResponsiveMessage = () => (
-  <div className="flex xl:hidden w-full h-screen overflow-y-auto overflow-x-hidden print:hidden">
-    <main className="h-full w-full flex flex-col items-center justify-center bg-white dark:bg-gray-900 text-black dark:text-white overflow-y-auto print:hidden">
-      This website is supposed to be viewed in a larger window
-    </main>
-  </div>
-); */
+const inter = Inter({ subsets: ["latin"] });
 
 const BaseLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <AppProvider>
-        <MotionDiv
-          className="w-full min-h-screen print-initial"
-          id="rootContainer"
+      <html lang="en">
+        <Script src="/scripts/nprogress.js"></Script>
+        <body
+          className={classNames(
+            inter.className,
+            "bg-white dark:bg-gray-900 text-black dark:text-white"
+          )}
         >
-          <NProgressBar />
-          <div className="min-h-screen w-full bg-white dark:bg-gray-900 text-black dark:text-white overflow-y-auto print-initial print-bg-color-reset">
-            {children}
-          </div>
-        </MotionDiv>
-        {/* <ResponsiveMessage /> */}
-      </AppProvider>
+          <AppProvider>
+            <MotionDiv className="w-full print-initial">
+              <NProgressBar />
+              <div
+                id="rootContainer"
+                className="w-full print-initial print-bg-color-reset"
+              >
+                {children}
+              </div>
+            </MotionDiv>
+          </AppProvider>
+        </body>
+      </html>
     </>
   );
 };

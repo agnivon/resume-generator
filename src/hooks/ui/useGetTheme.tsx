@@ -2,7 +2,7 @@ import { Theme } from "@/types";
 import { SetState } from "@/types/utility.types";
 import React from "react";
 
-export default function useGetTheme(): [Theme, SetState<Theme>] {
+export default function useGetTheme(): [Theme, (theme: Theme) => void] {
   const [theme, setTheme] = React.useState<Theme>("light");
 
   React.useLayoutEffect(() => {
@@ -11,9 +11,18 @@ export default function useGetTheme(): [Theme, SetState<Theme>] {
     ).matches;
 
     if (prefersDark) {
-      setTheme("dark");
+      actualSetTheme("dark");
     }
   }, []);
 
-  return [theme, setTheme];
+  const actualSetTheme = (theme: Theme) => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+    setTheme(theme);
+  };
+
+  return [theme, actualSetTheme];
 }

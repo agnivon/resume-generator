@@ -34,7 +34,7 @@ export async function POST(
             "updatedAt",
             "previewSettings",
           ]),
-          name: resume.name + " (Copy)",
+          //name: resume.name + " (Copy)",
           previewSettings: {
             create: resume.previewSettings
               ? exclude(resume.previewSettings, ["id", "resumeId"])

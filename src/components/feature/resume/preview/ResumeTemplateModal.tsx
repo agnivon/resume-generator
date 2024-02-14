@@ -27,11 +27,11 @@ export default function ResumeTemplateModal(props: ResumeTemplateModalProps) {
       <ModalHeader>Choose a template</ModalHeader>
       <ModalBody>
         <div
-          className="flex items-start gap-x-6"
+          className="flex flex-col items-center gap-x-6"
           onScroll={(e) => e.preventDefault()}
         >
           <div className="max-h-[80vh] hide-scrollbar overflow-y-auto">
-            <div className="grid grid-cols-3 gap-10">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-10">
               {RESUME_TEMPLATES.map((template) => {
                 return (
                   <TemplateCard
