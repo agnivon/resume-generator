@@ -4,14 +4,22 @@
 
 @layer base {
 
+  html {
+    overflow-x: hidden;
+  }
+
   body {
     width: 100%;
     overflow-x: hidden;
   }
 
-  #rootContainer:has(div.rg-modal) {
+  /* html {
+    scrollbar-gutter: stable;
+  } */
+
+  /* html:has(div.rg-modal, div.rg-drawer) {
     overflow-y: hidden;
-  }
+  } */
 
   div,
   input,
@@ -177,10 +185,7 @@
 ::-webkit-scrollbar-track {
   border-radius: 100px;
   background-color: transparent;
-}
-
-#rootContainer {
-  scrollbar-gutter: stable;
+  display: none;
 }
 
 /* .dark ::-webkit-scrollbar-thumb {

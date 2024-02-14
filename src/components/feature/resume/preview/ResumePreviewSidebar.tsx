@@ -251,7 +251,7 @@ export default function ResumePreviewSidebar({
       <div
         className={classNames("group", showAllPanels ? "show-all-panels" : "")}
       >
-        <div className="fixed z-20 inset-y-0 left-0 flex xl:w-1/4 h-full overflow-y-auto bg-gray-50 dark:bg-gray-800">
+        <div className="fixed z-20 inset-y-0 left-0 flex xl:w-1/4 min-h-full overflow-y-auto bg-gray-50 dark:bg-gray-800">
           <div
             className={
               "py-4 pl-6 pr-3 xl:pr-6 w-full max-xl:hidden max-xl:group-[.show-all-panels]:block"
