@@ -42,7 +42,7 @@ export default function NewResumeModal(props: ModalProps) {
     try {
       if (session?.user?.id) {
         const newResume = NEW_RESUME_V2({
-          name: values.name,
+          ...values,
           userId: session?.user?.id,
           contact: NEW_CONTACT_V2({}),
         });
