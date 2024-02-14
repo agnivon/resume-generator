@@ -49,7 +49,7 @@ const ContactInformation = ({ contact }: { contact: ContactV2 | null }) => {
       </div>
       <hr className="border-2 my-4 border-gray-200 w-full" />
       <div
-        className="flex gap-2 justify-center items-center flex-wrap"
+        className="flex gap-2 items-center flex-wrap"
         style={getFontStyle(fontSize, lineHeight, "xs")}
       >
         {location.length > 0 && (

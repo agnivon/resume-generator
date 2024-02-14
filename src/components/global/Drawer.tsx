@@ -2,6 +2,7 @@ import { classNames } from "@/utils";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import MotionDiv from "./motion/MotionDiv";
 import { AnimatePresence } from "framer-motion";
+import React from "react";
 
 export type DrawerProps = {
   show?: boolean;
@@ -27,7 +28,7 @@ const getAnimationProps = (position: "left" | "right") => {
   };
 };
 
-export default function Drawer(props: DrawerProps) {
+export default React.memo(function Drawer(props: DrawerProps) {
   const { show, children, onClose, position = "left", customClasses } = props;
   const positionClasses = getPositionClasses(position);
   const animationProps = getAnimationProps(position);
@@ -65,4 +66,4 @@ export default function Drawer(props: DrawerProps) {
       </AnimatePresence>
     </>
   );
-}
+});

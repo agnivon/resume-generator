@@ -4,13 +4,13 @@
 
 @layer base {
 
-  /* html {
-    scrollbar-gutter: stable;
-  } */
-
   body {
     width: 100%;
     overflow-x: hidden;
+  }
+
+  #rootContainer:has(div.rg-modal) {
+    overflow-y: hidden;
   }
 
   div,
@@ -175,8 +175,12 @@
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #e4e4e4;
   border-radius: 100px;
+  background-color: transparent;
+}
+
+#rootContainer {
+  scrollbar-gutter: stable;
 }
 
 /* .dark ::-webkit-scrollbar-thumb {

@@ -52,7 +52,7 @@ const ContactInformation = ({ contact }: { contact: ContactV2 | null }) => {
         {contact.fullName}
       </div>
       <div
-        className="flex gap-2 justify-center items-center flex-wrap text-gray-500"
+        className="flex gap-2 items-center flex-wrap text-gray-500"
         style={getFontStyle(fontSize, lineHeight, "xs")}
       >
         {location.length > 0 && (

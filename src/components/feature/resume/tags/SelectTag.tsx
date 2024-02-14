@@ -52,7 +52,7 @@ export default function SelectTag() {
                   <Badge
                     key={tag.id}
                     color={tag.color as BadgeColor}
-                    customClassNames="h-7 cursor-pointer transition-all hover:-translate-y-0.5"
+                    customClassNames="h-7 cursor-pointer transition-transform hover:-translate-y-0.5"
                     onClick={() => handleSelect(tag.id)}
                   >
                     <span>{tag.name}</span>
