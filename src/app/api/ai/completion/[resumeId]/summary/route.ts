@@ -50,7 +50,7 @@ export async function POST(
 
       // Ask OpenAI for a streaming completion given the prompt
       const response = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo-1106",
+        model: "gpt-3.5-turbo",
         stream: true,
         temperature: 0.6,
         messages: [{ role: "user", content: prompt }],

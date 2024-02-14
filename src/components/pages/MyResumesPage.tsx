@@ -3,10 +3,10 @@
 import ResumesPageContextProvider, {
   useResumesPageContext,
 } from "@/context/page/ResumesPageContextProvider";
-import useGetPreviewSettings from "@/hooks/resume/data/useGetPreviewSettings";
+import useGetMyResumesPageData from "@/hooks/resume/data/page/useGetMyResumesPageData";
 import useDeleteResumeV2ById from "@/hooks/resume/data/v2/useDeleteResumeV2ById";
-import useGetResumesV2 from "@/hooks/resume/data/v2/useGetResumesV2";
 import { ResumesPageActions } from "@/reducers/ResumesPageReducer";
+import { getToastErrMessage } from "@/utils/form.utils";
 import { ResumeV2 } from "@prisma/client";
 import { useAlert } from "react-alert";
 import ConfirmationModal from "../feature/resume/form/modals/ConfirmationModal";
@@ -16,14 +16,17 @@ import NewResumeModal from "../feature/resume/grid/modals/NewResumeModal";
 import ErrorMessage from "../global/ErrorMessage";
 import LoadingMessage from "../global/LoadingMessage";
 import RenderIf from "../global/RenderIf";
-import { getToastErrMessage } from "@/utils/form.utils";
+import ManageTagsDrawer from "../feature/resume/tags/ManageTagsDrawer";
+import useDeleteResumeTag from "@/hooks/resume/data/useDeleteResumeTag";
 
 function PageComponent() {
   const { state, dispatch } = useResumesPageContext();
 
-  const { query: resumeQuery, data: resumes } = useGetResumesV2();
-  const { query: previewSettingsQuery } = useGetPreviewSettings();
+  const { resumeQuery, previewSettingsQuery } = useGetMyResumesPageData();
   const deleteResume = useDeleteResumeV2ById();
+  const deleteResumeTag = useDeleteResumeTag();
+
+  const resumes = resumeQuery.data || [];
 
   const alert = useAlert();
 
@@ -35,12 +38,25 @@ function PageComponent() {
     !isFetching && resumeQuery.isSuccess && previewSettingsQuery.isSuccess;
 
   const handleDeleteResume = async () => {
-    const resume = state.showDeleteResumeModal;
+    const resume = state.showDeleteResumeConfirmModal;
     if (resume) {
       try {
         await deleteResume.mutation.mutateAsync(resume.id);
         alert.info(`${resume.name} deleted`);
         dispatch(ResumesPageActions.setShowDeleteResumeModal(null));
+      } catch (err) {
+        alert.error(getToastErrMessage(err));
+      }
+    }
+  };
+
+  const handleDeleteResumeTag = async () => {
+    const id = state.showDeleteResumeTagConfirmModal;
+    if (id) {
+      try {
+        await deleteResumeTag.mutation.mutateAsync(id);
+        alert.info(`Tag deleted`);
+        dispatch(ResumesPageActions.setShowDeleteResumeTagConfirmModal(null));
       } catch (err) {
         alert.error(getToastErrMessage(err));
       }
@@ -70,15 +86,33 @@ function PageComponent() {
           }
         />
         <ConfirmationModal
-          show={Boolean(state.showDeleteResumeModal)}
+          show={Boolean(state.showDeleteResumeConfirmModal)}
           onClose={() =>
             dispatch(ResumesPageActions.setShowDeleteResumeModal(null))
           }
           message={"All data will be lost permanently. Do you want to proceed?"}
           onConfirm={handleDeleteResume}
         />
+        <ConfirmationModal
+          show={Boolean(state.showDeleteResumeTagConfirmModal)}
+          onClose={() =>
+            dispatch(
+              ResumesPageActions.setShowDeleteResumeTagConfirmModal(null)
+            )
+          }
+          message={
+            "The tag will be deleted permanently and removed from all resumes. Do you want to proceed?"
+          }
+          onConfirm={handleDeleteResumeTag}
+        />
+        <ManageTagsDrawer
+          show={state.showManageTagsDrawer}
+          onClose={() =>
+            dispatch(ResumesPageActions.setShowManageTagsDrawer(false))
+          }
+        />
         <div className="w-full flex-grow">
-          <div className="h-full flex flex-col p-10">
+          <div className="h-full flex flex-col py-10 px-10">
             <ResumeGrid resumes={resumes as ResumeV2[]} />
           </div>
         </div>

@@ -19,6 +19,7 @@ export type ResumeTemplateProps = {
   lineHeight?: number;
   accentColor?: string;
   responsive?: boolean;
+  selectableText?: boolean;
   showDivider?: boolean;
 };
 

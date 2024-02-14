@@ -1,6 +1,7 @@
 import { getResumeV2ById } from "@/endpoints/resume.endpoints";
 import { useQuery } from "@tanstack/react-query";
 import { useAppDispatch } from "../../../redux/useAppDispatch";
+import resumeSlice from "@/redux/slices/resumeSlice";
 
 export default function useGetResumeV2ById(id: string) {
   const dispatch = useAppDispatch();
@@ -10,7 +11,7 @@ export default function useGetResumeV2ById(id: string) {
     queryFn: () =>
       getResumeV2ById(id).then((data) => {
         if (data) {
-          //dispatch(resumeSlice.actions.upsertOneCompleteResume(data));
+          dispatch(resumeSlice.actions.upsertOneResumeV2(data));
         }
         return data;
       }),

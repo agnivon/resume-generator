@@ -64,9 +64,16 @@ const PageComponent = () => {
               <div className="w-8 h-screen xl:w-1/4 print:hidden">
                 <ResumePreviewSidebar resume={resume} onBack={handleBack} />
               </div>
-              <div className="w-full xl:w-3/4 flex flex-col items-center p-10 print:block print:p-0">
+              <div className="w-full xl:w-3/4 flex flex-col items-center p-10 pt-5 print:block print:p-0">
                 <CloseButton onClose={handleBack} />
-                <ResumeTemplate resume={resume} responsive={true} {...values.previewSettings} />
+                <div className="text-2xl mb-5 text-center print:hidden font-semibold text-gray-500 dark:text-gray-400">
+                  {resume.name}
+                </div>
+                <ResumeTemplate
+                  resume={resume}
+                  responsive={true}
+                  {...values.previewSettings}
+                />
               </div>
             </MotionDiv>
           </>

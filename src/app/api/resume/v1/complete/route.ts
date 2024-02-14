@@ -3,7 +3,7 @@ import { CompleteResume } from "@/types/resume.types";
 import { exclude } from "@/utils/object.utils";
 import { getUniqueCompleteResume } from "@/utils/prisma.utils";
 import { getNextAuthServerSession, isAuthenticated } from "@/utils/session.utils";
-import { CompleteResumeSchema } from "@/validation/schema/resume.schema";
+import { CompleteResumeSchema } from "@/validation/schema/payload/resume.schema";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {

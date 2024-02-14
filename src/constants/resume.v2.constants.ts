@@ -112,7 +112,6 @@ export const NEW_RESUME_V2 = (
   return {
     name: "",
     userId: "",
-    createdOn: Date.now(),
     contact: null,
     experiences: [],
     projects: [],
@@ -126,6 +125,9 @@ export const NEW_RESUME_V2 = (
     jobTitle: "",
     companyName: "",
     jobDescription: "",
+    tags: [],
+    createdAt: new Date(),
+    updatedAt: null,
     ...value,
   };
 };

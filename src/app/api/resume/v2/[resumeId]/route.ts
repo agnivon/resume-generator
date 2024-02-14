@@ -5,7 +5,7 @@ import {
   getNextAuthServerSession,
   isAuthenticated,
 } from "@/utils/session.utils";
-import { ResumeV2PartialSchema } from "@/validation/schema/resume.v2.schema";
+import { ResumeV2PartialSchema } from "@/validation/schema/payload/resume.v2.schema";
 import { ResumeV2 } from "@prisma/client";
 import { NextResponse } from "next/server";
 
@@ -67,9 +67,15 @@ export async function DELETE(
 
   if (isAuthenticated(session)) {
     try {
+      // await prisma.resumePreviewSettings.delete({
+      //   where: {
+      //     resumeId: params.resumeId,
+      //   },
+      // });
       const deletedResume = await prisma.resumeV2.delete({
         where: { id: params.resumeId, userId: session.user.id },
       });
+
       return NextResponse.json<ResumeV2>(deletedResume);
     } catch (err) {
       const { status, message } = getErrorMessage(err);

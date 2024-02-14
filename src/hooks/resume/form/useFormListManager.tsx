@@ -123,37 +123,44 @@ export default function useFormListManager<T extends { displayOrder: number }>(
       );
 
     return (
-      <div className="flex justify-between items-center w-full">
-        <div className="flex flex-col text-left overflow-hidden">{content}</div>
-        <div className="flex items-center gap-x-2 ml-1">
-          {touchedAndError && (
-            <div className="shrink-0">
-              <span className="inline-block h-2.5 w-2.5 bg-red-500 rounded-full"></span>
-            </div>
-          )}
-          <div className="shrink-0">
-            <Tooltip content={entities[idx].hidden ? "Show" : "Hide"}>
-              <VisibleIcon
-                className=" h-5 w-5 shrink-0"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onVisibilityChange();
-                }}
-              />
-            </Tooltip>
+      <div className="flex flex-col gap-1 w-full">
+        <div className="flex justify-between items-center w-full">
+          <div className="flex flex-col text-left overflow-hidden">
+            {content}
           </div>
-          <div className="shrink-0">
-            <Tooltip content={"Delete"}>
-              <TrashIcon
-                className="text-red-500 h-5 w-5 shrink-0"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setDeleteIdx(idx);
-                }}
-              />
-            </Tooltip>
+          <div className="flex items-center gap-x-2 ml-1">
+            <div className="shrink-0">
+              <Tooltip content={entities[idx].hidden ? "Show" : "Hide"}>
+                <VisibleIcon
+                  className=" h-5 w-5 shrink-0"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onVisibilityChange();
+                  }}
+                />
+              </Tooltip>
+            </div>
+            <div className="shrink-0">
+              <Tooltip content={"Delete"}>
+                <TrashIcon
+                  className="text-red-500 h-5 w-5 shrink-0"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setDeleteIdx(idx);
+                  }}
+                />
+              </Tooltip>
+            </div>
           </div>
         </div>
+        {touchedAndError && (
+          <div className="shrink-0">
+            <span className="inline-block h-2 w-2 bg-red-500 rounded-full"></span>{" "}
+            <span className="text-red-500 text-sm">
+              This section has errors
+            </span>
+          </div>
+        )}
       </div>
     );
   };

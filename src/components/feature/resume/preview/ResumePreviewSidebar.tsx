@@ -11,6 +11,7 @@ import useUpsertPreviewSettings from "@/hooks/resume/data/useUpsertPreviewSettin
 import { ResumePreviewSettings } from "@/types/template.types";
 import { TypeKeys } from "@/types/utility.types";
 import { classNames } from "@/utils";
+import { getToastErrMessage } from "@/utils/form.utils";
 import {
   ChevronDoubleLeftIcon,
   ChevronLeftIcon,
@@ -26,7 +27,7 @@ import React, { DOMAttributes } from "react";
 import { useAlert } from "react-alert";
 import PreviewTipsCard from "../tips/PreviewTipsCard";
 import ResumeTemplateModal from "./ResumeTemplateModal";
-import { getToastErrMessage } from "@/utils/form.utils";
+import _ from "lodash";
 
 /* const RESUME_TEMPLATES = [
   TemplateType.STANDARD,
@@ -74,6 +75,7 @@ export default function ResumePreviewSidebar({
   onBack,
 }: {
   resume: ResumeV2;
+  //previewSettings: ResumePreviewSettings
   onBack: DOMAttributes<HTMLDivElement>["onClick"];
 }) {
   const formik = useFormikContext<{ previewSettings: ResumePreviewSettings }>();
@@ -91,6 +93,11 @@ export default function ResumePreviewSidebar({
     React.useState<"settings" /*  | "template" */>("settings");
 
   const { values, setFieldValue } = formik;
+
+  const valuesChanged = React.useMemo(
+    () => !_.isEqualWith(formik.values, formik.initialValues),
+    [formik.values, formik.initialValues]
+  );
 
   const accentColorDropdownOptions = AccentColorList.map((color) => ({
     key: color.name,
@@ -193,7 +200,14 @@ export default function ResumePreviewSidebar({
           }}
         />
         <Button
-          label="Save Settings"
+          label={
+            <>
+              {valuesChanged && (
+                <span className="w-2 h-2 bg-blue-500 rounded-full mr-1"></span>
+              )}
+              <span>Save Settings</span>
+            </>
+          }
           color={ButtonColor.LIGHT}
           onClick={savePreviewSettings}
           size={ButtonSize.SMALL}

@@ -40,22 +40,25 @@ const ContactInformation = ({ contact }: { contact: ContactV2 | null }) => {
     accentColor,
   } = useResumeTemplateContext();
   if (!contact) return <></>;
+  const location = [contact.city, contact.state, contact.country].filter(
+    Boolean
+  );
   return (
     <div className="w-fit min-w-[75%]">
       <div
-        className="mb-1 font-semibold"
+        className="mb-2 font-semibold"
         style={getFontStyle(fontSize, lineHeight, "3xl", accentColor)}
       >
         {contact.fullName}
       </div>
       <div
-        className="flex gap-x-2 text-gray-500"
+        className="flex gap-2 justify-center items-center flex-wrap text-gray-500"
         style={getFontStyle(fontSize, lineHeight, "xs")}
       >
-        {(contact.city || contact.state || contact.country) && (
+        {location.length > 0 && (
           <span className="inline-flex gap-x-0.5 items-center">
             <GeoAltFill className="h-2.5 w-2.5" />
-            <span>{`${contact.city}, ${contact.state}, ${contact.country}`}</span>
+            <span>{location.join(", ")}</span>
           </span>
         )}
         {contact.email && (
@@ -138,7 +141,7 @@ const Experience = ({ experiences }: { experiences: ExperienceV2[] }) => {
               return (
                 <div
                   key={`${exp.role}-${exp.companyName}`}
-                  className="print-break-avoid"
+                  /*className="print-break-avoid"*/
                 >
                   <div
                     className="font-semibold leading-none mt-1"
@@ -196,7 +199,7 @@ const Project = ({ projects }: { projects: ProjectV2[] }) => {
               return (
                 <div
                   key={`${proj.title}-${proj.organization}`}
-                  className="print-break-avoid"
+                  /*className="print-break-avoid"*/
                 >
                   <div
                     className="font-semibold mt-1"
@@ -250,7 +253,7 @@ const Education = ({ education }: { education: EducationV2[] }) => {
               return (
                 <div
                   key={`${edu.major}-${edu.institution}`}
-                  className="print-break-avoid"
+                  /*className="print-break-avoid"*/
                 >
                   <div
                     className="font-semibold mt-1"
@@ -313,7 +316,7 @@ const Certification = ({
               return (
                 <div
                   key={`${cert.name}-${cert.institution}`}
-                  className="print-break-avoid"
+                  /*className="print-break-avoid"*/
                 >
                   <div
                     className="font-semibold mt-1"
@@ -367,7 +370,7 @@ const Course = ({ courses }: { courses: CourseV2[] }) => {
               return (
                 <div
                   key={`${course.name}-${course.institution}`}
-                  className="print-break-avoid"
+                  /*className="print-break-avoid"*/
                 >
                   <div
                     className="font-semibold mt-1"
@@ -437,7 +440,7 @@ const Skills = ({ skills }: { skills: SkillV2[] }) => {
 const ModernTemplate = React.forwardRef(
   (props: ResumeTemplateProps, ref: React.Ref<HTMLDivElement> | undefined) => {
     const { resume } = props;
-    
+
     return (
       <ResumeTemplateContainer {...props} ref={ref}>
         <ContactInformation contact={resume.contact} />

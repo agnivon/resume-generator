@@ -8,7 +8,7 @@ import {
   ResumeSchema,
   CompleteResumeSchema,
   SkillSchema,
-} from "@/validation/schema/resume.schema";
+} from "@/validation/schema/payload/resume.schema";
 import { InferType } from "yup";
 import { TypeKeys } from "./utility.types";
 

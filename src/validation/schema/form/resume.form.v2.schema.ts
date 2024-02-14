@@ -2,6 +2,7 @@ import { START_END_DATE_FORMAT } from "@/constants/date.constants";
 import {
   DESCRIPTION_LENGTH,
   JOB_DESCRIPTION,
+  RESUME_TAG_NAME_LENGTH,
   SKILL_LENGTH,
   SUMMARY_LENGTH,
 } from "@/constants/schema.constants";
@@ -178,7 +179,12 @@ export const resumeMetadataFormSchema = {
   jobDescription: Yup.string()
     .max(JOB_DESCRIPTION, `Max ${JOB_DESCRIPTION} characters allowed`)
     .default(""),
+  tags: Yup.array(Yup.string().defined().max(RESUME_TAG_NAME_LENGTH)).default([]).max(25),
 };
+
+export const ResumeMetadataFormSchema = Yup.object().shape(
+  resumeMetadataFormSchema
+);
 
 export const resumeFormSchema = {
   summary: Yup.string()

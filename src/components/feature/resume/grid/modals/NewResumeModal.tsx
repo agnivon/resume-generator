@@ -11,26 +11,27 @@ import useNextAuthSession from "@/hooks/auth/useNextAuthSession";
 import useInsertResumeV2 from "@/hooks/resume/data/v2/useInsertResumeV2";
 import { ResumesPageActions } from "@/reducers/ResumesPageReducer";
 import { getToastErrMessage } from "@/utils/form.utils";
-import { resumeMetadataFormSchema } from "@/validation/schema/form/resume.form.v2.schema";
+import { ResumeMetadataFormSchema } from "@/validation/schema/form/resume.form.v2.schema";
 import { Form, Formik, FormikHelpers } from "formik";
 import { useAlert } from "react-alert";
-import * as Yup from "yup";
+import NewEditResumeModalForm from "./NewEditResumeModalForm";
+import { InferType } from "yup";
 
-const validationSchema = Yup.object().shape(resumeMetadataFormSchema);
-
+const validationSchema = ResumeMetadataFormSchema;
 export default function NewResumeModal(props: ModalProps) {
   const alert = useAlert();
   const { dispatch } = useResumesPageContext();
   const { session } = useNextAuthSession();
 
   const insertResume = useInsertResumeV2();
-  const initialValues = {
+  const initialValues: InferType<typeof ResumeMetadataFormSchema> = {
     name: "",
     domain: "",
     experienceLevel: "",
     jobTitle: "",
     companyName: "",
     jobDescription: "",
+    tags: [],
   };
 
   const handleSubmit = async (
@@ -64,56 +65,8 @@ export default function NewResumeModal(props: ModalProps) {
           validationSchema={validationSchema}
           validateOnMount={true}
         >
-          {(formik) => {
-            return (
-              <Form>
-                <div className="grid grid-cols-2 items-start gap-x-4">
-                  <FormikInput
-                    name="name"
-                    label="Resume Name *"
-                    placeholder="Emily Thompson"
-                  />
-                  <FormikInput
-                    name="domain"
-                    label="Domain"
-                    placeholder="Software Engineering"
-                  />
-                  <FormikInput
-                    name="experienceLevel"
-                    label="Experience Level"
-                    placeholder="Mid-Senior Level"
-                  />
-                  <FormikInput
-                    name="companyName"
-                    label="Company Name"
-                    placeholder={SAMPLE_JOB_DESCRIPTION.company.name}
-                  />
-                  <div className="col-span-2">
-                    <FormikInput
-                      name="jobTitle"
-                      label="Job Title"
-                      placeholder={SAMPLE_JOB_DESCRIPTION.job.title}
-                    />
-                  </div>
-                  <div className="col-span-2">
-                    <FormikTextArea
-                      name="jobDescription"
-                      label="Job Description"
-                      placeholder={SAMPLE_JOB_DESCRIPTION.job.description}
-                    />
-                  </div>
-                  <div className="col-span-2 mt-2">
-                    <Button
-                      label="Create new resume"
-                      type="submit"
-                      disabled={!formik.isValid}
-                      processing={formik.isSubmitting}
-                      customClassNames="w-full"
-                    />
-                  </div>
-                </div>
-              </Form>
-            );
+          {() => {
+            return <NewEditResumeModalForm type="create" />;
           }}
         </Formik>
       </ModalBody>

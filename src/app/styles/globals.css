@@ -64,7 +64,6 @@
 
     .resume-template {
       box-shadow: none !important;
-      padding: none !important;
       padding: 0 !important;
       print-color-adjust: exact;
       scale: 1 !important;
@@ -82,9 +81,18 @@
       page-break-inside: avoid;
     }
 
+    /* .rt-markdown>ul>li {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    } */
+
     .print-bg-color-reset {
       background-color: initial;
     }
+  }
+
+  #resumeGridTagFilter>[data-testid="flowbite-tooltip-target"] {
+    @apply max-sm:w-full w-fit;
   }
 
 }

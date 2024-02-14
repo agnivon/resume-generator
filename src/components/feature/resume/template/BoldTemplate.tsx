@@ -4,9 +4,13 @@ import type {
   Course,
   Education,
   Experience,
-  Project
+  Project,
 } from "@/types/resume.types";
-import { filterHidden, getFontStyle, getStartEndDate } from "@/utils/template.utils";
+import {
+  filterHidden,
+  getFontStyle,
+  getStartEndDate,
+} from "@/utils/template.utils";
 import {
   CertificationV2,
   ContactV2,
@@ -32,6 +36,9 @@ import ResumeTemplateContainer from "./container/ResumeTemplateContainer";
 const ContactInformation = ({ contact }: { contact: ContactV2 | null }) => {
   const { fontSize, lineHeight } = useResumeTemplateContext();
   if (!contact) return <></>;
+  const location = [contact.city, contact.state, contact.country].filter(
+    Boolean
+  );
   return (
     <div className="w-fit min-w-[75%]">
       <div
@@ -42,13 +49,13 @@ const ContactInformation = ({ contact }: { contact: ContactV2 | null }) => {
       </div>
       <hr className="border-2 my-4 border-gray-200 w-full" />
       <div
-        className="flex gap-x-2"
+        className="flex gap-2 justify-center items-center flex-wrap"
         style={getFontStyle(fontSize, lineHeight, "xs")}
       >
-        {(contact.city || contact.state || contact.country) && (
+        {location.length > 0 && (
           <span className="inline-flex gap-x-0.5 items-center">
             <GeoAltFill className="h-2.5 w-2.5" />
-            <span>{`${contact.city}, ${contact.state}, ${contact.country}`}</span>
+            <span>{location.join(", ")}</span>
           </span>
         )}
         {contact.email && (
@@ -131,7 +138,7 @@ const Experience = ({ experiences }: { experiences: ExperienceV2[] }) => {
               return (
                 <div
                   key={`${exp.role}-${exp.companyName}`}
-                  className="print-break-avoid"
+                  /*className="print-break-avoid"*/
                 >
                   <div
                     className="font-bold leading-none mt-1"
@@ -181,7 +188,7 @@ const Project = ({ projects }: { projects: ProjectV2[] }) => {
               return (
                 <div
                   key={`${proj.title}-${proj.organization}`}
-                  className="print-break-avoid"
+                  /*className="print-break-avoid"*/
                 >
                   <div
                     className="font-bold mt-1"
@@ -195,7 +202,7 @@ const Project = ({ projects }: { projects: ProjectV2[] }) => {
                     className="my-1"
                     style={getFontStyle(fontSize, lineHeight, "sm")}
                   >
-                    <div className="">
+                    <div className="rt-markdown">
                       <Markdown>{proj.description}</Markdown>
                     </div>
                   </div>
@@ -227,7 +234,7 @@ const Education = ({ education }: { education: EducationV2[] }) => {
               return (
                 <div
                   key={`${edu.major}-${edu.institution}`}
-                  className="print-break-avoid"
+                  /*className="print-break-avoid"*/
                 >
                   <div
                     className="font-bold mt-1"
@@ -284,7 +291,7 @@ const Certification = ({
               return (
                 <div
                   key={`${cert.name}-${cert.institution}`}
-                  className="print-break-avoid"
+                  /*className="print-break-avoid"*/
                 >
                   <div
                     className="font-bold mt-1"
@@ -330,7 +337,7 @@ const Course = ({ courses }: { courses: CourseV2[] }) => {
               return (
                 <div
                   key={`${course.name}-${course.institution}`}
-                  className="print-break-avoid"
+                  /*className="print-break-avoid"*/
                 >
                   <div
                     className="font-bold mt-1"

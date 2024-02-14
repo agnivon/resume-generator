@@ -1,4 +1,8 @@
-import { JOB_DESCRIPTION, SUMMARY_LENGTH } from "@/constants/schema.constants";
+import {
+  JOB_DESCRIPTION,
+  RESUME_TAG_NAME_LENGTH,
+  SUMMARY_LENGTH,
+} from "@/constants/schema.constants";
 import * as Yup from "yup";
 import {
   CertificationFormSchema,
@@ -8,7 +12,7 @@ import {
   ExperienceFormSchema,
   ProjectFormSchema,
   SkillFormSchema,
-} from "./form/resume.form.v2.schema";
+} from "../form/resume.form.v2.schema";
 
 export const NewContactSchema = Yup.object().shape({
   fullName: Yup.string().default("").max(100),
@@ -29,7 +33,6 @@ export const NewResumeV2Schema = Yup.object().shape({
   jobTitle: Yup.string().default("").max(100),
   companyName: Yup.string().default("").max(100),
   jobDescription: Yup.string().default("").max(JOB_DESCRIPTION),
-  createdOn: Yup.number().default(Date.now()).positive(),
   summary: Yup.string().max(SUMMARY_LENGTH).default(""),
   contact: NewContactSchema.nullable(),
   experiences: Yup.array(ExperienceFormSchema).defined(),
@@ -38,6 +41,9 @@ export const NewResumeV2Schema = Yup.object().shape({
   certifications: Yup.array(CertificationFormSchema).defined(),
   courses: Yup.array(CourseFormSchema).defined(),
   skills: Yup.array(SkillFormSchema).defined(),
+  tags: Yup.array(Yup.string().defined().max(RESUME_TAG_NAME_LENGTH))
+    .defined()
+    .max(25),
 });
 
 export const ResumeV2PartialSchema = Yup.object().shape({
@@ -49,7 +55,6 @@ export const ResumeV2PartialSchema = Yup.object().shape({
   jobTitle: Yup.string().max(100),
   companyName: Yup.string().max(100),
   jobDescription: Yup.string().max(JOB_DESCRIPTION),
-  createdOn: Yup.number().positive(),
   summary: Yup.string().max(SUMMARY_LENGTH),
   contact: ContactFormSchema.default(undefined),
   experiences: Yup.array(ExperienceFormSchema),
@@ -58,4 +63,5 @@ export const ResumeV2PartialSchema = Yup.object().shape({
   certifications: Yup.array(CertificationFormSchema),
   courses: Yup.array(CourseFormSchema),
   skills: Yup.array(SkillFormSchema),
+  tags: Yup.array(Yup.string().defined().max(RESUME_TAG_NAME_LENGTH)).max(25),
 });

@@ -1,12 +1,12 @@
 import Modal, { ModalProps, ModalSize } from "@/components/global/modal/Modal";
 import ModalBody from "@/components/global/modal/ModalBody";
 import ModalHeader from "@/components/global/modal/ModalHeader";
-import { TemplateSize, TemplateType } from "@/constants/template.constants";
-import { TemplateCard } from "./ResumeTemplateDrawer";
-import ResumeTemplate from "../template/ResumeTemplate";
+import { TemplateType } from "@/constants/template.constants";
 import { useResumePageContext } from "@/context/page/ResumePageContextProvider";
-import { useFormikContext } from "formik";
 import { ResumePreviewSettings } from "@/types/template.types";
+import { useFormikContext } from "formik";
+import ResumeTemplate from "../template/ResumeTemplate";
+import { TemplateCard } from "./TemplateCard";
 
 const RESUME_TEMPLATES = [
   TemplateType.STANDARD,
@@ -30,8 +30,8 @@ export default function ResumeTemplateModal(props: ResumeTemplateModalProps) {
           className="flex items-start gap-x-6"
           onScroll={(e) => e.preventDefault()}
         >
-          <div className="h-[80vh] hide-scrollbar overflow-y-auto">
-            <div className="grid grid-cols-2 gap-5">
+          <div className="max-h-[80vh] hide-scrollbar overflow-y-auto">
+            <div className="grid grid-cols-3 gap-10">
               {RESUME_TEMPLATES.map((template) => {
                 return (
                   <TemplateCard
@@ -44,9 +44,9 @@ export default function ResumeTemplateModal(props: ResumeTemplateModalProps) {
               })}
             </div>
           </div>
-          <div className="overflow-y-auto p-6 rounded-lg h-[80vh] hide-scrollbar border dark:border-gray-600 max-xl:hidden">
+          {/* <div className="overflow-y-auto p-6 rounded-lg h-[80vh] hide-scrollbar border dark:border-gray-600 max-xl:hidden">
             <ResumeTemplate resume={value.resume} {...values.previewSettings} />
-          </div>
+          </div> */}
         </div>
       </ModalBody>
     </Modal>

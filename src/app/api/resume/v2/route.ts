@@ -5,7 +5,7 @@ import {
   getNextAuthServerSession,
   isAuthenticated,
 } from "@/utils/session.utils";
-import { NewResumeV2Schema } from "@/validation/schema/resume.v2.schema";
+import { NewResumeV2Schema } from "@/validation/schema/payload/resume.v2.schema";
 import { ResumeV2 } from "@prisma/client";
 import { NextResponse } from "next/server";
 
