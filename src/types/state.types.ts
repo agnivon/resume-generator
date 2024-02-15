@@ -16,6 +16,8 @@ export type ResumesPageFilter = {
 
 export type ResumePageState = {
   currentTab: ResumeFormTab;
+  showResumeTemplateModal: boolean;
+  showResumePreviewDrawer: boolean;
 };
 
 export type SidebarState = {

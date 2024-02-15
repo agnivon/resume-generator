@@ -34,7 +34,7 @@ const ResumeTemplateContainer = React.forwardRef(
         ref={ref}
         //id={"resumePreview"}
         className={classNames(
-          "resume-template bg-white shadow-2xl text-gray-700",
+          "resume-template bg-white shadow-2xl text-gray-700 z-5",
           !thumbnail ? "p-10" : "",
           !selectableText ? "select-none" : ""
         )}

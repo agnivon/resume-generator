@@ -6,12 +6,13 @@
 
   html {
     overflow-x: hidden;
+    scrollbar-gutter: stable;
   }
 
-  body {
+  /* body {
     width: 100%;
     overflow-x: hidden;
-  }
+  } */
 
   /* html {
     scrollbar-gutter: stable;
@@ -72,7 +73,9 @@
 
     .resume-template {
       box-shadow: none !important;
-      padding: 0 !important;
+      padding-top: 0 !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
       print-color-adjust: exact;
       scale: 1 !important;
     }

@@ -69,20 +69,18 @@ export default function EditTag(props: EditTagProps) {
   const handleSaveTag = async () => {
     try {
       if (name) {
-        const updatedTag = await saveTagMutation.mutateAsync({
-          id: tag.id,
-          tag: {
-            name,
-            color: BADGE_COLORS[colorIndex],
-          },
-        });
-        // formik.setFieldValue(
-        //   "tags",
-        //   produce(formik.values.tags, (draft) => {
-        //     draft.unshift(tag.id);
-        //   })
-        // );
-        handleCancel(updatedTag.name, updatedTag.color);
+        if (name !== tag.name || BADGE_COLORS[colorIndex] !== tag.color) {
+          const updatedTag = await saveTagMutation.mutateAsync({
+            id: tag.id,
+            tag: {
+              name,
+              color: BADGE_COLORS[colorIndex],
+            },
+          });
+          handleCancel(updatedTag.name, updatedTag.color);
+        } else {
+          handleCancel();
+        }
       } else {
         throw new Error("Values missing");
       }
@@ -141,6 +139,9 @@ export default function EditTag(props: EditTagProps) {
               if (e.key === "Enter") {
                 e.preventDefault();
                 handleSaveTag();
+              } else if (e.key === "Escape") {
+                e.preventDefault();
+                handleCancel();
               }
             }}
             style={{ width: `${name.length}ex` }}

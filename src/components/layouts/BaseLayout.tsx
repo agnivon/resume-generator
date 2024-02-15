@@ -15,7 +15,7 @@ const BaseLayout = async ({ children }: { children: React.ReactNode }) => {
         <body
           className={classNames(
             inter.className,
-            "bg-white dark:bg-gray-900 text-black dark:text-white"
+            "w-full overflow-x-hidden bg-white dark:bg-gray-900 text-black dark:text-white"
           )}
         >
           <AppProvider>

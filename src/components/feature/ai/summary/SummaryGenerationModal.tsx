@@ -12,7 +12,7 @@ import Textarea from "@/components/global/forms/Textarea";
 import FormikCheckbox from "@/components/global/forms/formik/FormikCheckbox";
 import FormikInput from "@/components/global/forms/formik/FormikInput";
 import FormikTextArea from "@/components/global/forms/formik/FormikTextArea";
-import Modal, { ModalProps } from "@/components/global/modal/Modal";
+import Modal, { ModalProps, ModalSize } from "@/components/global/modal/Modal";
 import ModalBody from "@/components/global/modal/ModalBody";
 import ModalHeader from "@/components/global/modal/ModalHeader";
 import MotionDiv from "@/components/global/motion/MotionDiv";
@@ -80,7 +80,7 @@ export default function SummaryGenerationModal(
   };
 
   return (
-    <Modal dismissible={true} {...rest}>
+    <Modal dismissible={true} size={ModalSize.EXTRA_LARGE} {...rest}>
       <Formik initialValues={initialValues} onSubmit={handleGenerate}>
         {(formik) => {
           //formikLogger(formik, "Summary Generation Modal");

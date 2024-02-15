@@ -117,6 +117,9 @@ export default function NewTag({
               if (e.key === "Enter") {
                 e.preventDefault();
                 handleCreateTag();
+              } else if(e.key === "Escape") {
+                e.preventDefault();
+                handleCancel();
               }
             }}
             style={{ width: `${name.length}ex` }}
