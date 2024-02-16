@@ -1,7 +1,7 @@
 import { Skill } from "@/types/resume.types";
 import { exclude } from "@/utils/object.utils";
 import { getNextAuthServerSession, isAuthenticated } from "@/utils/session.utils";
-import { SkillSchema } from "@/validation/schema/resume.schema";
+import { SkillSchema } from "@/validation/schema/payload/resume.schema";
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import * as Yup from "yup";

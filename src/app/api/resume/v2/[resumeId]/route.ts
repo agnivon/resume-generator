@@ -1,9 +1,11 @@
 import prisma from "@/clients/prismaClient";
 import { exclude } from "@/utils/object.utils";
+import { getErrorMessage } from "@/utils/response.utils";
 import {
   getNextAuthServerSession,
   isAuthenticated,
 } from "@/utils/session.utils";
+import { ResumeV2PartialSchema } from "@/validation/schema/payload/resume.v2.schema";
 import { ResumeV2 } from "@prisma/client";
 import { NextResponse } from "next/server";
 
@@ -20,7 +22,8 @@ export async function GET(
       });
       return NextResponse.json<ResumeV2>(resume);
     } catch (err) {
-      return new NextResponse("Internal Server Error", { status: 500 });
+      const { status, message } = getErrorMessage(err);
+      return new NextResponse(message, { status });
     }
   } else {
     return new NextResponse("Forbidden", { status: 401 });
@@ -35,7 +38,11 @@ export async function PUT(
 
   if (isAuthenticated(session)) {
     try {
-      const resume: Partial<ResumeV2> = await request.json();
+      const payload = await request.json();
+      //console.log(payload);
+      const resume: Partial<ResumeV2> = await ResumeV2PartialSchema.validate(
+        payload
+      );
 
       const updatedResume = await prisma.resumeV2.update({
         where: { id: params.resumeId, userId: session.user.id },
@@ -43,7 +50,9 @@ export async function PUT(
       });
       return NextResponse.json<ResumeV2>(updatedResume);
     } catch (err) {
-      return new NextResponse("Internal Server Error", { status: 500 });
+      console.log(err);
+      const { status, message } = getErrorMessage(err);
+      return new NextResponse(message, { status });
     }
   } else {
     return new NextResponse("Forbidden", { status: 401 });
@@ -58,12 +67,19 @@ export async function DELETE(
 
   if (isAuthenticated(session)) {
     try {
+      // await prisma.resumePreviewSettings.delete({
+      //   where: {
+      //     resumeId: params.resumeId,
+      //   },
+      // });
       const deletedResume = await prisma.resumeV2.delete({
         where: { id: params.resumeId, userId: session.user.id },
       });
+
       return NextResponse.json<ResumeV2>(deletedResume);
     } catch (err) {
-      return new NextResponse("Internal Server Error", { status: 500 });
+      const { status, message } = getErrorMessage(err);
+      return new NextResponse(message, { status });
     }
   } else {
     return new NextResponse("Forbidden", { status: 401 });

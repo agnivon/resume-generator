@@ -4,7 +4,7 @@ import { exclude } from "@/utils/object.utils";
 import { getNextAuthServerSession, isAuthenticated } from "@/utils/session.utils";
 import {
   ContactSchema
-} from "@/validation/schema/resume.schema";
+} from "@/validation/schema/payload/resume.schema";
 import { NextResponse } from "next/server";
 
 

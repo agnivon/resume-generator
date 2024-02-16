@@ -5,32 +5,33 @@ import Modal, { ModalProps } from "@/components/global/modal/Modal";
 import ModalBody from "@/components/global/modal/ModalBody";
 import ModalHeader from "@/components/global/modal/ModalHeader";
 import { SAMPLE_JOB_DESCRIPTION } from "@/constants/form.constants";
-import { NEW_RESUME_V2, NEW_CONTACT_V2 } from "@/constants/resume.v2.constants";
+import { NEW_CONTACT_V2, NEW_RESUME_V2 } from "@/constants/resume.v2.constants";
 import { useResumesPageContext } from "@/context/page/ResumesPageContextProvider";
 import useNextAuthSession from "@/hooks/auth/useNextAuthSession";
 import useInsertResumeV2 from "@/hooks/resume/data/v2/useInsertResumeV2";
 import { ResumesPageActions } from "@/reducers/ResumesPageReducer";
+import { getToastErrMessage } from "@/utils/form.utils";
+import { ResumeMetadataFormSchema } from "@/validation/schema/form/resume.form.v2.schema";
 import { Form, Formik, FormikHelpers } from "formik";
 import { useAlert } from "react-alert";
-import * as Yup from "yup";
+import NewEditResumeModalForm from "./NewEditResumeModalForm";
+import { InferType } from "yup";
 
-const validationSchema = Yup.object().shape({
-  name: Yup.string().required("Resume Name is required"),
-});
-
+const validationSchema = ResumeMetadataFormSchema;
 export default function NewResumeModal(props: ModalProps) {
   const alert = useAlert();
   const { dispatch } = useResumesPageContext();
   const { session } = useNextAuthSession();
 
   const insertResume = useInsertResumeV2();
-  const initialValues = {
+  const initialValues: InferType<typeof ResumeMetadataFormSchema> = {
     name: "",
     domain: "",
     experienceLevel: "",
     jobTitle: "",
     companyName: "",
     jobDescription: "",
+    tags: [],
   };
 
   const handleSubmit = async (
@@ -41,7 +42,7 @@ export default function NewResumeModal(props: ModalProps) {
     try {
       if (session?.user?.id) {
         const newResume = NEW_RESUME_V2({
-          name: values.name,
+          ...values,
           userId: session?.user?.id,
           contact: NEW_CONTACT_V2({}),
         });
@@ -49,8 +50,8 @@ export default function NewResumeModal(props: ModalProps) {
         dispatch(ResumesPageActions.setShowNewResumeModal(false));
         alert.success(`${values.name} created`);
       }
-    } catch {
-      alert.error("Something went wrong");
+    } catch (err) {
+      alert.error(getToastErrMessage(err));
     }
     formik.setSubmitting(false);
   };
@@ -64,56 +65,8 @@ export default function NewResumeModal(props: ModalProps) {
           validationSchema={validationSchema}
           validateOnMount={true}
         >
-          {(formik) => {
-            return (
-              <Form>
-                <div className="grid grid-cols-2 items-start gap-x-4">
-                  <FormikInput
-                    name="name"
-                    label="Resume Name *"
-                    placeholder="Emily Thompson"
-                  />
-                  <FormikInput
-                    name="domain"
-                    label="Domain"
-                    placeholder="Software Engineering"
-                  />
-                  <FormikInput
-                    name="experienceLevel"
-                    label="Experience Level"
-                    placeholder="Mid-Senior Level"
-                  />
-                  <FormikInput
-                    name="companyName"
-                    label="Company Name"
-                    placeholder={SAMPLE_JOB_DESCRIPTION.company.name}
-                  />
-                  <div className="col-span-2">
-                    <FormikInput
-                      name="jobTitle"
-                      label="Job Title"
-                      placeholder={SAMPLE_JOB_DESCRIPTION.job.title}
-                    />
-                  </div>
-                  <div className="col-span-2">
-                    <FormikTextArea
-                      name="jobDescription"
-                      label="Job Description"
-                      placeholder={SAMPLE_JOB_DESCRIPTION.job.description}
-                    />
-                  </div>
-                  <div className="col-span-2">
-                    <Button
-                      label="Create new resume"
-                      type="submit"
-                      disabled={!formik.isValid}
-                      processing={formik.isSubmitting}
-                      customClassNames="w-full"
-                    />
-                  </div>
-                </div>
-              </Form>
-            );
+          {() => {
+            return <NewEditResumeModalForm type="create" />;
           }}
         </Formik>
       </ModalBody>

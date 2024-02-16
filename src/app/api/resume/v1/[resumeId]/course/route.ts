@@ -2,7 +2,7 @@ import prisma from "@/clients/prismaClient";
 import { Course } from "@/types/resume.types";
 import { exclude } from "@/utils/object.utils";
 import { getNextAuthServerSession, isAuthenticated } from "@/utils/session.utils";
-import { CourseSchema } from "@/validation/schema/resume.schema";
+import { CourseSchema } from "@/validation/schema/payload/resume.schema";
 import { NextRequest, NextResponse } from "next/server";
 import * as Yup from "yup";
 

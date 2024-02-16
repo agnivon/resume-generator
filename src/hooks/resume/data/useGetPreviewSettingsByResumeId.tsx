@@ -1,7 +1,6 @@
 import { getPreviewSettingsByResumeId } from "@/endpoints/resume.endpoints";
 import { useAppDispatch } from "@/hooks/redux/useAppDispatch";
 import resumeSlice from "@/redux/slices/resumeSlice";
-import { exclude } from "@/utils/object.utils";
 import { useQuery } from "@tanstack/react-query";
 
 export default function useGetPreviewSettingsByResumeId(id: string) {

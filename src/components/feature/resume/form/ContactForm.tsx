@@ -58,7 +58,7 @@ export default function ContactForm() {
           <FormikInput
             label="Phone Number *"
             name="resume.contact.phone"
-            placeholder="+91-9434309778"
+            placeholder="+91-0000000000"
           />
         </div>
         <div className="col-span-1">

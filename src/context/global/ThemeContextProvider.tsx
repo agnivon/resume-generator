@@ -2,12 +2,11 @@
 
 import useGetTheme from "@/hooks/ui/useGetTheme";
 import { Theme } from "@/types";
-import { SetState } from "@/types/utility.types";
 import React, { useContext } from "react";
 
 type ThemeContextValue = {
   theme: Theme;
-  setTheme: SetState<Theme>;
+  setTheme: (theme: Theme) => void;
 };
 
 const ThemeContext = React.createContext<ThemeContextValue>({
@@ -20,7 +19,7 @@ const ThemeContextProvider = ({ children }: { children?: React.ReactNode }) => {
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
-      <div className={theme}>{children}</div>
+      {children}
     </ThemeContext.Provider>
   );
 };

@@ -124,3 +124,8 @@ const completeResumeSchema = {
 };
 
 export const CompleteResumeSchema = Yup.object().shape(completeResumeSchema);
+
+export const ResumeTagSchema = Yup.object().shape({
+  name: Yup.string().required().max(50),
+  color: Yup.string().default("blue").max(15),
+});

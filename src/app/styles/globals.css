@@ -4,10 +4,23 @@
 
 @layer base {
 
-  body {
+  html {
+    overflow-x: hidden;
+    scrollbar-gutter: stable;
+  }
+
+  /* body {
     width: 100%;
     overflow-x: hidden;
-  }
+  } */
+
+  /* html {
+    scrollbar-gutter: stable;
+  } */
+
+  /* html:has(div.rg-modal, div.rg-drawer) {
+    overflow-y: hidden;
+  } */
 
   div,
   input,
@@ -60,8 +73,9 @@
 
     .resume-template {
       box-shadow: none !important;
-      padding: none !important;
-      padding: 0 !important;
+      padding-top: 0 !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
       print-color-adjust: exact;
       scale: 1 !important;
     }
@@ -78,9 +92,18 @@
       page-break-inside: avoid;
     }
 
+    /* .rt-markdown>ul>li {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    } */
+
     .print-bg-color-reset {
       background-color: initial;
     }
+  }
+
+  #resumeGridTagFilter>[data-testid="flowbite-tooltip-target"] {
+    @apply max-sm:w-full w-fit;
   }
 
 }
@@ -158,16 +181,14 @@
   border-radius: 100px;
   border: 2px solid transparent;
   background-clip: content-box;
+  background-color: rgb(156 163 175);
   cursor: pointer;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #e4e4e4;
   border-radius: 100px;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: rgb(156 163 175);
+  background-color: transparent;
+  display: none;
 }
 
 /* .dark ::-webkit-scrollbar-thumb {

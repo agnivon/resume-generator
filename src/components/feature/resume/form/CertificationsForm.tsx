@@ -2,18 +2,17 @@ import Button, { ButtonColor, ButtonSize } from "@/components/global/Button";
 import ListGroup, { ListItem } from "@/components/global/ListGroup";
 import RenderIf from "@/components/global/RenderIf";
 import FormikInput from "@/components/global/forms/formik/FormikInput";
-import { NEW_CERTIFICATION } from "@/constants/resume.constants";
+import FormikTextArea from "@/components/global/forms/formik/FormikTextArea";
+import MotionDiv from "@/components/global/motion/MotionDiv";
+import { NEW_CERTIFICATION_V2 } from "@/constants/resume.v2.constants";
 import useFormListManager from "@/hooks/resume/form/useFormListManager";
 import { ResumeFormValues } from "@/types/form.types";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { useFormikContext } from "formik";
 import _ from "lodash";
-import ConfirmationModal from "./modals/ConfirmationModal";
 import React from "react";
+import ConfirmationModal from "./modals/ConfirmationModal";
 import ListItemSequenceChangeModal from "./modals/ListItemSequenceChangeModal";
-import FormikTextArea from "@/components/global/forms/formik/FormikTextArea";
-import MotionDiv from "@/components/global/motion/MotionDiv";
-import { NEW_CERTIFICATION_V2 } from "@/constants/resume.v2.constants";
 
 export default function CertificationsForm() {
   const formik = useFormikContext<ResumeFormValues>();

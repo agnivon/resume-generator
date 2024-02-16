@@ -2,22 +2,21 @@ import Card from "@/components/global/Card";
 import Dropdown from "@/components/global/Dropdown";
 import { useResumesPageContext } from "@/context/page/ResumesPageContextProvider";
 import useIsGlobalQueryRunning from "@/hooks/query/useIsGlobalQueryRunning";
-import useInsertCompleteResume from "@/hooks/resume/data/useInsertCompleteResume";
+import useCloneResumeV2 from "@/hooks/resume/data/v2/useCloneResumeV2";
 import { ResumesPageActions } from "@/reducers/ResumesPageReducer";
 import { classNames } from "@/utils";
-import { getResumeFromCompleteResume } from "@/utils/resume.utils";
+import { getToastErrMessage } from "@/utils/form.utils";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 import { ResumePreviewSettings } from "@prisma/client";
 import { MouseEventHandler } from "react";
 import { useAlert } from "react-alert";
 import {
-  TemplateType,
   TemplateFont,
+  TemplateType,
 } from "../../../../constants/template.constants";
 import Template, { ResumeTemplateProps } from "../template/ResumeTemplate";
-import useInsertResumeV2 from "@/hooks/resume/data/v2/useInsertResumeV2";
 
-type ResumeCardProps = ResumeTemplateProps & {
+export type ResumeCardProps = ResumeTemplateProps & {
   previewSetting?: ResumePreviewSettings;
   showFooter?: boolean;
   sizeClass?: string;
@@ -38,7 +37,7 @@ const ResumeCardFooter = (props: ResumeCardProps) => {
 
   const alert = useAlert();
   const { dispatch } = useResumesPageContext();
-  const insertResume = useInsertResumeV2();
+  const insertResume = useCloneResumeV2();
   const { globalRunning } = useIsGlobalQueryRunning();
 
   const handleOnChange = async (value: string | number | null) => {
@@ -46,17 +45,13 @@ const ResumeCardFooter = (props: ResumeCardProps) => {
       if (value === "Edit") {
         dispatch(ResumesPageActions.setShowEditResumeModal(resume));
       } else if (value === "Clone") {
-        await insertResume.mutation.mutateAsync({
-          ...resume,
-          name: `${resume.name} (Copy)`,
-          createdOn: Date.now(),
-        });
+        await insertResume.mutation.mutateAsync(resume.id);
         alert.success(`${resume.name} cloned`);
       } else if (value === "Delete") {
         dispatch(ResumesPageActions.setShowDeleteResumeModal(resume));
       }
-    } catch {
-      alert.error("Something went wrong");
+    } catch (err) {
+      alert.error(getToastErrMessage(err));
     }
   };
 
@@ -118,6 +113,7 @@ export default function ResumeCard(props: ResumeCardProps) {
             <Template
               thumbnail={true}
               scale={0.233}
+              selectableText={false}
               {...previewSettingProps}
               {...templateProps}
             />

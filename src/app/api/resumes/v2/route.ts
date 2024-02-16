@@ -13,10 +13,11 @@ export async function GET(_request: Request) {
     try {
       const resumes = await prisma.resumeV2.findMany({
         where: { userId: session.user.id },
-        orderBy: { createdOn: "desc" },
+        orderBy: { createdAt: "desc" },
       });
       return NextResponse.json<ResumeV2[]>(resumes);
     } catch (err) {
+      console.log(err);
       return new NextResponse("Internal Server Error", { status: 500 });
     }
   } else {

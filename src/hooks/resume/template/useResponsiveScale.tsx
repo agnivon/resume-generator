@@ -20,6 +20,7 @@ export default function useResponsiveScale(
       window.addEventListener("resize", handleResize);
     } else {
       window.removeEventListener("resize", handleResize);
+      setScale(initScale);
     }
     return () => window.removeEventListener("resize", handleResize);
   }, [initScale, responsive]);

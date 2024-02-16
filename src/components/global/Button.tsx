@@ -79,6 +79,20 @@ const COLOR_CLASSES: { [index: string]: { [index: string]: string } } = {
   [ButtonVariant.GRADIENT_MONO]: {
     [ButtonColor.BLUE]:
       "text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-blue-300 dark:focus:ring-blue-800",
+    [ButtonColor.GREEN]:
+      "text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-green-300 dark:focus:ring-green-800",
+    [ButtonColor.TEAL]:
+      "text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-teal-300 dark:focus:ring-teal-800",
+    [ButtonColor.LIME]:
+      "text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-lime-300 dark:focus:ring-lime-800",
+    [ButtonColor.RED]:
+      "text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-red-300 dark:focus:ring-red-800",
+    [ButtonColor.CYAN]:
+      "text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-cyan-300 dark:focus:ring-cyan-800",
+    [ButtonColor.PINK]:
+      "text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-pink-300 dark:focus:ring-pink-800",
+    [ButtonColor.PURPLE]:
+      "text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-purple-300 dark:focus:ring-purple-800",
   },
   [ButtonVariant.GRADIENT_DUO]: {
     [ButtonColor.GREEN_TO_BLUE]:
@@ -95,7 +109,7 @@ const COLOR_CLASSES: { [index: string]: { [index: string]: string } } = {
 };
 
 const DISABLED_COLOR_CLASSES =
-  "disabled:text-gray-700 disabled:bg-gray-300 disabled:hover:bg-gray-300 disabled:dark:bg-gray-400 disabled:hover:dark:bg-gray-400 disabled:bi-none disabled:hover:bi-none";
+  "disabled:text-gray-700 disabled:dark:text-gray-100 disabled:bg-gray-300 disabled:hover:bg-gray-300 disabled:dark:bg-gray-600 disabled:hover:dark:bg-gray-600 disabled:bi-none disabled:hover:bi-none";
 
 const Button = (props: ButtonProps) => {
   const {
@@ -111,6 +125,7 @@ const Button = (props: ButtonProps) => {
     processing,
     customClassNames,
     customIconClassNames: iconClassNames,
+    ...rest
   } = props;
 
   const pilledClasses = pilled ? "rounded-full" : "rounded-lg";
@@ -128,6 +143,7 @@ const Button = (props: ButtonProps) => {
       )}
       disabled={disabled || processing}
       onClick={onClick}
+      {...rest}
     >
       {processing && (
         <Spinner
@@ -137,7 +153,13 @@ const Button = (props: ButtonProps) => {
         />
       )}
       {Icon && (
-        <Icon className={classNames("w-5 h-5 mr-2 -ml-1", iconClassNames)} />
+        <Icon
+          className={classNames(
+            "w-5 h-5",
+            label ? "-ml-1 mr-2" : "",
+            iconClassNames
+          )}
+        />
       )}
       {label}
     </button>

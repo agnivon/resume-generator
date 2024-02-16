@@ -47,18 +47,14 @@ export default function ResumeTipsCard({ tips }: ResumeTipsCardProps) {
         </div>
         <div /* style={{ maxHeight: maxCharacters * 0.8 }} */>
           {tips.map((tip, idx) => {
-            return (
-              <>
-                {idx === currentTip && (
-                  <MotionDiv key={tip.heading}>
-                    <div className="text-sm text-blue-800 dark:text-blue-400">
-                      <p className="font-bold mb-2">{tip.heading}</p>
-                      <p>{tip.content}</p>
-                    </div>
-                  </MotionDiv>
-                )}
-              </>
-            );
+            return idx === currentTip ? (
+              <MotionDiv key={tip.heading}>
+                <div className="text-sm text-blue-800 dark:text-blue-400">
+                  <p className="font-bold mb-2">{tip.heading}</p>
+                  <p>{tip.content}</p>
+                </div>
+              </MotionDiv>
+            ) : null;
           })}
         </div>
       </div>

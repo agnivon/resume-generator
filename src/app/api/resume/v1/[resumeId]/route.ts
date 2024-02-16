@@ -2,7 +2,7 @@ import prisma from "@/clients/prismaClient";
 import { Resume } from "@/types/resume.types";
 import { exclude } from "@/utils/object.utils";
 import { getNextAuthServerSession, isAuthenticated } from "@/utils/session.utils";
-import { ResumeSchema } from "@/validation/schema/resume.schema";
+import { ResumeSchema } from "@/validation/schema/payload/resume.schema";
 import { NextResponse } from "next/server";
 
 export async function PATCH(

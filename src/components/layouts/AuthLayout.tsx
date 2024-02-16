@@ -55,7 +55,7 @@ export default async function AuthLayout({
         <Navbar />
         <div className="flex">
           <Sidebar />
-          <main className="min-h-screen w-full flex flex-col print-initial overflow-y-auto">
+          <main className="min-h-screen w-full flex flex-col print-initial overflow-y-auto overflow-x-hidden">
             {children}
           </main>
         </div>

@@ -3,7 +3,7 @@ import { ResumeFormTab } from "@/constants/state.constants";
 import { useResumePageContext } from "@/context/page/ResumePageContextProvider";
 import { ResumeFormValues } from "@/types/form.types";
 import { ResumePreviewSettings } from "@/types/template.types";
-import { formikLogger } from "@/utils/form.utils";
+import { formikLogger, getToastErrMessage } from "@/utils/form.utils";
 import { getResumeFormSchema } from "@/validation/schema/form/resume.form.v2.schema";
 import { ResumeV2 } from "@prisma/client";
 import { Form, Formik, FormikHelpers } from "formik";
@@ -52,11 +52,11 @@ export default function ResumeForm(props: ResumeFormProps) {
     try {
       await updateResume.mutation.mutateAsync({
         id: resume.id,
-        resume: values.resume,
+        resume: { [currentTab]: values.resume[currentTab] },
       });
       alert.success("Details saved");
-    } catch {
-      alert.error("Something went wrong");
+    } catch (err) {
+      alert.error(getToastErrMessage(err));
     }
     formik.setSubmitting(false);
   };

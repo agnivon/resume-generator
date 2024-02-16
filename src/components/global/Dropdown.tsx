@@ -28,6 +28,7 @@ type DropdownProps<T extends DropdownItem> = {
   dropdownButtonProps?: ButtonProps;
   customMenuClassNames?: string;
   customMenuButtonClassNames?: string;
+  customUlClassNames?: string;
   showDownArrow?: boolean;
 };
 
@@ -62,6 +63,7 @@ export default function Dropdown<T extends DropdownItem>(
     dropdownButtonProps,
     customMenuClassNames,
     customMenuButtonClassNames,
+    customUlClassNames,
     showDownArrow = true,
   } = props;
 
@@ -93,7 +95,14 @@ export default function Dropdown<T extends DropdownItem>(
         label={
           <div className="flex justify-between w-full">
             {selectedValueRenderer(selectedItem)}
-            {showDownArrow && <ChevronDownIcon className="w-5 h-5 ml-2.5" />}
+            {showDownArrow && (
+              <ChevronDownIcon
+                className={classNames(
+                  "w-5 h-5 ml-2.5 transition-all",
+                  show ? "rotate-180" : ""
+                )}
+              />
+            )}
           </div>
         }
         onClick={() => setShow((show) => !show)}
@@ -122,7 +131,12 @@ export default function Dropdown<T extends DropdownItem>(
                     {dropdownHeader}
                   </div>
                 )}
-                <ul className="py-2 text-sm text-gray-700 dark:text-gray-200 max-h-60 overflow-y-auto">
+                <ul
+                  className={classNames(
+                    "py-2 text-sm text-gray-700 dark:text-gray-200 max-h-60 overflow-y-auto",
+                    customUlClassNames
+                  )}
+                >
                   {items.map((item) => {
                     const { key, value } = item;
                     return (

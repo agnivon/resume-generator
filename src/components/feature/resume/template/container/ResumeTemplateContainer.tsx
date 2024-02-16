@@ -14,34 +14,43 @@ const ResumeTemplateContainer = React.forwardRef(
       paperSize = TemplateSize.LETTER,
       font = TemplateFont.MERRIWEATHER,
       thumbnail,
-      responsive,
+      responsive = false,
+      selectableText = true,
       children,
     } = props;
 
-    const scale = useResponsiveScale(
-      props.scale,
-      props.scale === 1 || props.scale === undefined
-    );
+    const scale = useResponsiveScale(props.scale, responsive);
 
     const sizeClass = getSizeClass(paperSize, thumbnail);
 
     const fontClass = getFontClass(font);
 
     const thumbnailClass = thumbnail
-      ? "transform origin-top-left overflow-hidden shrink-0"
+      ? "transform origin-top-left overflow-hidden shrink-0 p-10"
       : "";
 
     return (
-      <div ref={ref} id={"resumePreview"}>
+      <div
+        ref={ref}
+        //id={"resumePreview"}
+        className={classNames(
+          "resume-template bg-white shadow-2xl text-gray-700 z-5",
+          !thumbnail ? "p-10" : "",
+          !selectableText ? "select-none" : ""
+        )}
+        style={{
+          scale: !thumbnail ? scale : undefined,
+        }}
+      >
         <div
           className={classNames(
-            "resume-template bg-white p-10 shadow-2xl flex flex-col text-gray-700 relative",
+            "flex flex-col relative",
             sizeClass,
             fontClass,
             thumbnailClass
           )}
           style={{
-            scale,
+            scale: thumbnail ? scale : undefined,
           }}
         >
           {children}

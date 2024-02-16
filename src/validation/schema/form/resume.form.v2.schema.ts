@@ -1,6 +1,8 @@
 import { START_END_DATE_FORMAT } from "@/constants/date.constants";
 import {
   DESCRIPTION_LENGTH,
+  JOB_DESCRIPTION,
+  RESUME_TAG_NAME_LENGTH,
   SKILL_LENGTH,
   SUMMARY_LENGTH,
 } from "@/constants/schema.constants";
@@ -23,13 +25,13 @@ export const ContactFormSchema = Yup.object().shape({
   phone: Yup.string()
     .required("This field is required")
     .max(20, "Max 20 characters allowed"),
-  linkedinUrl: Yup.string().ensure().max(100, "Max 100 characters allowed"),
-  personalUrl: Yup.string().ensure().max(100, "Max 100 characters allowed"),
+  linkedinUrl: Yup.string().default("").max(100, "Max 100 characters allowed"),
+  personalUrl: Yup.string().default("").max(100, "Max 100 characters allowed"),
   country: Yup.string()
     .required("This field is required")
     .max(100, "Max 100 characters allowed"),
-  state: Yup.string().ensure().max(100, "Max 100 characters allowed"),
-  city: Yup.string().ensure().max(100, "Max 100 characters allowed"),
+  state: Yup.string().default("").max(100, "Max 100 characters allowed"),
+  city: Yup.string().default("").max(100, "Max 100 characters allowed"),
 });
 
 export const ExperienceFormSchema = Yup.object().shape({
@@ -54,14 +56,16 @@ export const ExperienceFormSchema = Yup.object().shape({
     .max(25),
   endDate: Yup.string()
     .max(25)
-    .ensure()
+    .default("")
     .when("currentlyWorking", {
       is: false,
       then: (schema) => schema.required("This field is required"),
     }),
-  companyLocation: Yup.string().ensure().max(100, "Max 100 characters allowed"),
+  companyLocation: Yup.string()
+    .default("")
+    .max(100, "Max 100 characters allowed"),
   description: Yup.string()
-    .ensure()
+    .default("")
     .max(DESCRIPTION_LENGTH, `Max ${DESCRIPTION_LENGTH} characters allowed`),
   currentlyWorking: Yup.boolean().default(false),
   ...commonFields,
@@ -89,14 +93,14 @@ export const ProjectFormSchema = Yup.object().shape({
     .max(25),
   endDate: Yup.string()
     .max(25)
-    .ensure()
+    .default("")
     .when("currentlyWorking", {
       is: false,
       then: (schema) => schema.required("This field is required"),
     }),
-  url: Yup.string().ensure().max(100, "Max 100 characters allowed"),
+  url: Yup.string().default("").max(100, "Max 100 characters allowed"),
   description: Yup.string()
-    .ensure()
+    .default("")
     .max(DESCRIPTION_LENGTH, `Max ${DESCRIPTION_LENGTH} characters allowed`),
   currentlyWorking: Yup.boolean().default(false),
   ...commonFields,
@@ -112,10 +116,12 @@ export const EducationFormSchema = Yup.object().shape({
   location: Yup.string()
     .required("This field is required")
     .max(100, "Max 100 characters allowed"),
-  year: Yup.string().ensure().max(4, "Max 4 characters allowed"),
-  minor: Yup.string().ensure().max(100, "Max 100 characters allowed"),
-  gpa: Yup.string().ensure().max(5, "Max 5 characters allowed"),
-  additionalInfo: Yup.string().ensure().max(250, "Max 250 characters allowed"),
+  year: Yup.string().default("").max(4, "Max 4 characters allowed"),
+  minor: Yup.string().default("").max(100, "Max 100 characters allowed"),
+  gpa: Yup.string().default("").max(5, "Max 5 characters allowed"),
+  additionalInfo: Yup.string()
+    .default("")
+    .max(250, "Max 250 characters allowed"),
   ...commonFields,
 });
 
@@ -129,7 +135,7 @@ export const CertificationFormSchema = Yup.object().shape({
   year: Yup.string()
     .required("This field is required")
     .max(4, "Max 4 characters allowed"),
-  relevance: Yup.string().ensure().max(250, "Max 250 characters allowed"),
+  relevance: Yup.string().default("").max(250, "Max 250 characters allowed"),
   ...commonFields,
 });
 
@@ -143,8 +149,8 @@ export const CourseFormSchema = Yup.object().shape({
   year: Yup.string()
     .required("This field is required")
     .max(4, "Max 4 characters allowed"),
-  skills: Yup.string().ensure().max(100, "Max 100 characters allowed"),
-  applications: Yup.string().ensure().max(250, "Max 250 characters allowed"),
+  skills: Yup.string().default("").max(100, "Max 100 characters allowed"),
+  applications: Yup.string().default("").max(250, "Max 250 characters allowed"),
   ...commonFields,
 });
 
@@ -155,13 +161,32 @@ export const SkillFormSchema = Yup.object().shape({
   ...commonFields,
 });
 
-const resumeFormSchema = {
-  id: Yup.string().required("Id is required"),
-  userId: Yup.string().required(),
-  name: Yup.string().required("Resume name is required"),
-  createdOn: Yup.number()
+export const resumeMetadataFormSchema = {
+  //id: Yup.string().required("Id is required"),
+  //userId: Yup.string().required(),
+  name: Yup.string()
+    .required("Resume name is required")
+    .max(50, "Max 50 characters allowed"),
+  /* createdOn: Yup.number()
     .default(Date.now())
-    .positive("Please enter a valid value"),
+    .positive("Please enter a valid value"), */
+  domain: Yup.string().default("").max(50, "Max 50 characters allowed"),
+  experienceLevel: Yup.string()
+    .max(50, "Max 50 characters allowed")
+    .default(""),
+  jobTitle: Yup.string().max(100, "Max 100 characters allowed").default(""),
+  companyName: Yup.string().max(100, "Max 100 characters allowed").default(""),
+  jobDescription: Yup.string()
+    .max(JOB_DESCRIPTION, `Max ${JOB_DESCRIPTION} characters allowed`)
+    .default(""),
+  tags: Yup.array(Yup.string().defined().max(RESUME_TAG_NAME_LENGTH)).default([]).max(25),
+};
+
+export const ResumeMetadataFormSchema = Yup.object().shape(
+  resumeMetadataFormSchema
+);
+
+export const resumeFormSchema = {
   summary: Yup.string()
     .required("Resume summary is required")
     .max(SUMMARY_LENGTH, `Max ${SUMMARY_LENGTH} characters allowed`),

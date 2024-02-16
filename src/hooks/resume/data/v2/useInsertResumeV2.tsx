@@ -1,22 +1,21 @@
+import { insertResumeV2 } from "@/endpoints/resume.endpoints";
 import {
-    insertResumeV2
-} from "@/endpoints/resume.endpoints";
-import {
-    getSetQueryDataForInsertOrUpdateById,
-    getSetQueryDataForInsertOrUpdateInArray,
+  getSetQueryDataForInsertOrUpdateById,
+  getSetQueryDataForInsertOrUpdateInArray,
 } from "@/utils/query.utils";
 import { ResumeV2 } from "@prisma/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAppDispatch } from "../../../redux/useAppDispatch";
+import resumeSlice from "@/redux/slices/resumeSlice";
 
 export default function useInsertResumeV2() {
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (resume: ResumeV2) => insertResumeV2(resume),
+    mutationFn: (resume: Omit<ResumeV2, "id">) => insertResumeV2(resume),
     onSuccess: (data) => {
-      //dispatch(resumeSlice.actions.upsertOneCompleteResume(data));
+      dispatch(resumeSlice.actions.upsertOneResumeV2(data));
       queryClient.setQueriesData(
         { queryKey: ["resumesV2"], exact: true },
         getSetQueryDataForInsertOrUpdateInArray(data)

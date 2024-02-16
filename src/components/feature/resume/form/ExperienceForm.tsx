@@ -62,7 +62,7 @@ export default function ExperienceForm() {
         label: exp.role,
         content: getListItemContent(
           <>
-            <div className="font-semibold line-clamp-2">
+            <div className="font-semibold line-clamp-2 space-x-1">
               {exp.role || "Some Role"}
             </div>
             <div className="text-sm line-clamp-2">

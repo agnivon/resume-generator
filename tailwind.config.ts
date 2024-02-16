@@ -13,6 +13,17 @@ const config: Config = {
       "source-sans": ["SourceSans3", "sans-serif"],
       "dejavu-serif": ["DejaVuSerif", "sans-serif"],
     },
+    extend: {
+      keyframes: {
+        vibrate: {
+          from: { transform: "rotate(-2deg)" },
+          to: { transform: "rotate(2deg)" },
+        },
+      },
+      animation: {
+        vibrate: "vibrate 0.15s linear infinite",
+      },
+    },
   },
   plugins: [require("flowbite/plugin")],
   darkMode: "class",

@@ -20,10 +20,17 @@ import {
   PayloadAction,
 } from "@reduxjs/toolkit";
 import { RootState } from "../store";
+import { ResumeTag, ResumeV2 } from "@prisma/client";
 
 const resumeAdapter = createEntityAdapter<Resume>({
   selectId: (resume) => resume.id,
   sortComparer: (a, b) => a.createdOn - b.createdOn,
+});
+
+const resumeV2Adapter = createEntityAdapter<ResumeV2>({
+  selectId: (resume) => resume.id,
+  sortComparer: (a, b) =>
+    new Date(a.createdAt).valueOf() - new Date(b.createdAt).valueOf(),
 });
 
 const contactAdapter = createEntityAdapter<Contact>({
@@ -60,12 +67,19 @@ const skillAdapter = createEntityAdapter<Skill>({
   sortComparer: (a, b) => a.displayOrder - b.displayOrder,
 });
 
+const resumeTagsAdapter = createEntityAdapter<ResumeTag>({
+  selectId: (tag) => tag.id,
+  sortComparer: (a, b) =>
+    new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf(),
+});
+
 const previewSettingsAdapter = createEntityAdapter<ResumePreviewSettings>({
   selectId: (settings) => settings.resumeId,
 });
 
 const initialState = {
   resumes: resumeAdapter.getInitialState(),
+  resumeV2s: resumeV2Adapter.getInitialState(),
   contacts: contactAdapter.getInitialState(),
   experiences: experienceAdapter.getInitialState(),
   projects: projectAdapter.getInitialState(),
@@ -73,6 +87,7 @@ const initialState = {
   certifications: certificationAdapter.getInitialState(),
   courses: courseAdapter.getInitialState(),
   skills: skillAdapter.getInitialState(),
+  tags: resumeTagsAdapter.getInitialState(),
   previewSettings: previewSettingsAdapter.getInitialState(),
 };
 
@@ -236,6 +251,22 @@ export const resumeSlice = createSlice({
     deleteOneResume: (state, action: PayloadAction<string>) => {
       resumeAdapter.removeOne(state.resumes, action.payload);
     },
+    // Resume V2
+    upsertOneResumeV2: (state, action: PayloadAction<ResumeV2>) => {
+      resumeV2Adapter.upsertOne(state.resumeV2s, action.payload);
+    },
+    updateOneResumeV2: (
+      state,
+      action: PayloadAction<{ id: string; changes: Partial<ResumeV2> }>
+    ) => {
+      resumeV2Adapter.updateOne(state.resumeV2s, action.payload);
+    },
+    upsertManyResumeV2s: (state, action: PayloadAction<ResumeV2[]>) => {
+      resumeV2Adapter.upsertMany(state.resumeV2s, action.payload);
+    },
+    deleteOneResumeV2: (state, action: PayloadAction<string>) => {
+      resumeV2Adapter.removeOne(state.resumeV2s, action.payload);
+    },
     // UpsertOne, UpsertMany, and DeleteOne for Contact
     upsertOneContact: (state, action: PayloadAction<Contact>) => {
       contactAdapter.upsertOne(state.contacts, action.payload);
@@ -314,6 +345,16 @@ export const resumeSlice = createSlice({
     deleteOneSkill: (state, action: PayloadAction<string>) => {
       skillAdapter.removeOne(state.skills, action.payload);
     },
+    // Resume Tag
+    upsertOneResumeTag: (state, action: PayloadAction<ResumeTag>) => {
+      resumeTagsAdapter.upsertOne(state.tags, action.payload);
+    },
+    upsertManyResumeTags: (state, action: PayloadAction<ResumeTag[]>) => {
+      resumeTagsAdapter.upsertMany(state.tags, action.payload);
+    },
+    deleteOneResumeTag: (state, action: PayloadAction<string>) => {
+      resumeTagsAdapter.removeOne(state.tags, action.payload);
+    },
     upsertOnePreviewSetting: (
       state,
       action: PayloadAction<ResumePreviewSettings>
@@ -326,11 +367,16 @@ export const resumeSlice = createSlice({
     ) => {
       previewSettingsAdapter.upsertMany(state.previewSettings, action.payload);
     },
+    deleteOnePreviewSetting: (state, action: PayloadAction<string>) => {
+      previewSettingsAdapter.removeOne(state.previewSettings, action.payload);
+    },
   },
 });
 
 export const selectPreviewSettingByResumeId =
   (id: string) => (state: RootState) =>
     state.resume.previewSettings.entities[id];
+
+export const resumeTagSelectors = resumeTagsAdapter.getSelectors();
 
 export default resumeSlice;

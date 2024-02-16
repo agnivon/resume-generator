@@ -1,10 +1,12 @@
 import { CompleteResume } from "@/types/resume.types";
+import { ResumeV2 } from "@prisma/client";
 
-export const SAMPLE_RESUME_1: CompleteResume = {
-  id: "6548e703b26f38ef1227a485",
-  userId: "snoffice2012@gmail.com",
+export const SAMPLE_RESUME_1: ResumeV2 = {
+  id: "",
+  userId: "",
   name: "Padma Lahiri",
-  createdOn: 1699276544114,
+  createdAt: new Date(0),
+  updatedAt: null,
   domain: "",
   experienceLevel: "",
   jobTitle: "",
@@ -13,7 +15,6 @@ export const SAMPLE_RESUME_1: CompleteResume = {
   summary:
     "Experienced Software Developer with over 10 years of experience. Certified in Adobe development and well-versed in various programming languages, with a speciality in UI/UX design.",
   contact: {
-    id: "6548e7c2b26f38ef1227a489",
     fullName: "Padma Lahiri",
     email: "padmalahiri@email.com",
     phone: "+91-93855-55592",
@@ -22,11 +23,9 @@ export const SAMPLE_RESUME_1: CompleteResume = {
     country: "India",
     state: "Maharashtra",
     city: "Mumbai",
-    resumeId: "6548e703b26f38ef1227a485",
   },
   experiences: [
     {
-      id: "654a5b0b6292f17dd57911ce",
       role: "Software Developer",
       companyName: "XYZ Tech Solutions",
       startDate: "1st November 2022",
@@ -35,12 +34,10 @@ export const SAMPLE_RESUME_1: CompleteResume = {
       description:
         "- Developed and maintained web applications using technologies like React, Node.js, and MongoDB.\n- Collaborated with cross-functional teams to design and implement new features, resulting in a 20% increase in user engagement.\n- Integrated AWS Lambda functions to automate data processing tasks, reducing processing time by 30%.",
       currentlyWorking: true,
-      resumeId: "6548e703b26f38ef1227a485",
       hidden: false,
       displayOrder: 0,
     },
     {
-      id: "654a0b7b22e1bca1e0c3d24d",
       role: "Lead Software Developer",
       companyName: "Archibald Tech Solutions",
       startDate: "1st November 2016",
@@ -49,12 +46,10 @@ export const SAMPLE_RESUME_1: CompleteResume = {
       description:
         "- Complete over 100 projects in the past seven years to ensure customer satisfaction\n- Scale up the company's e-commerce capabilities to allow customers to purchase accessories and schedule appointments online\n- Streamline the UX design for over 50 new applications\n- Recommend adjustments to our current algorithms to increase engagement online\n- Collaborate with Web Designers to create new ideas for applications and web services",
       currentlyWorking: false,
-      resumeId: "6548e703b26f38ef1227a485",
       hidden: false,
       displayOrder: 1,
     },
     {
-      id: "654a0d5f22e1bca1e0c3d250",
       role: "Software Developer",
       companyName: "Anand Tech",
       startDate: "1st May 2011",
@@ -63,14 +58,12 @@ export const SAMPLE_RESUME_1: CompleteResume = {
       description:
         "- Monitored engagement and algorithms to track and improve customer engagement with our website\n- Programmed the new website to have improved UX functions\n- Troubleshoot errors that appear in existing programs",
       currentlyWorking: false,
-      resumeId: "6548e703b26f38ef1227a485",
       hidden: false,
       displayOrder: 2,
     },
   ],
   projects: [
     {
-      id: "654a2150aab5901e682bf64e",
       title: "E-commerce Website",
       organization: "XYZ Tech Solutions",
       startDate: "1st June 2022",
@@ -79,12 +72,10 @@ export const SAMPLE_RESUME_1: CompleteResume = {
       description:
         "- Built a full-stack e-commerce platform using MERN stack, integrating with PayPal API for secure payment processing.",
       currentlyWorking: true,
-      resumeId: "6548e703b26f38ef1227a485",
       hidden: false,
       displayOrder: 1,
     },
     {
-      id: "654a2150aab5901e682bf64f",
       title: "Inventory Management System",
       organization: "XYZ Tech Solutions",
       startDate: "1st June 2021",
@@ -93,14 +84,12 @@ export const SAMPLE_RESUME_1: CompleteResume = {
       description:
         "- Designed and implemented a Java-based inventory management system, improving tracking and reducing errors by 15%.",
       currentlyWorking: false,
-      resumeId: "6548e703b26f38ef1227a485",
       hidden: false,
       displayOrder: 2,
     },
   ],
   education: [
     {
-      id: "654a0e8522e1bca1e0c3d257",
       major: "Bachelor of Science in computer science",
       institution: "Valley Tech University",
       location: "Mumbai",
@@ -108,49 +97,45 @@ export const SAMPLE_RESUME_1: CompleteResume = {
       minor: "",
       gpa: "",
       additionalInfo: "",
-      resumeId: "6548e703b26f38ef1227a485",
+
       hidden: false,
       displayOrder: 1,
     },
   ],
   certifications: [
     {
-      id: "654a0ecf22e1bca1e0c3d25b",
       name: "Adobe Certified Expert",
       institution: "Adobe",
       year: "2021",
       relevance: "",
-      resumeId: "6548e703b26f38ef1227a485",
+
       hidden: false,
       displayOrder: 0,
     },
     {
-      id: "654a0f7b22e1bca1e0c3d263",
       name: "AWS Certified Developer – Associate",
       institution: "Amazon Web Services",
       year: "2021",
       relevance: "",
-      resumeId: "6548e703b26f38ef1227a485",
+
       hidden: false,
       displayOrder: 1,
     },
     {
-      id: "654a10df22e1bca1e0c3d26b",
       name: "Microsoft Certified: Azure Developer Associate",
       institution: "Microsoft",
       year: "2020",
       relevance: "",
-      resumeId: "6548e703b26f38ef1227a485",
+
       hidden: false,
       displayOrder: 2,
     },
     {
-      id: "654ba5a8b2e4dd07641723c1",
       name: "CompTIA Security+ Certification",
       institution: "CompTIA",
       year: "2019",
       relevance: "",
-      resumeId: "6548e703b26f38ef1227a485",
+
       hidden: false,
       displayOrder: 4,
     },
@@ -158,12 +143,12 @@ export const SAMPLE_RESUME_1: CompleteResume = {
   courses: [],
   skills: [
     {
-      id: "654a0df922e1bca1e0c3d254",
       skill:
         "Adobe programs | UI and UX development | Web design | Attention to detail | Collaboration | Written and verbal communication",
-      resumeId: "6548e703b26f38ef1227a485",
+
       hidden: false,
       displayOrder: 1,
     },
   ],
+  tags: [],
 };

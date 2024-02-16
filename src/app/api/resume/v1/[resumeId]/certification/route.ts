@@ -5,7 +5,7 @@ import {
   getNextAuthServerSession,
   isAuthenticated,
 } from "@/utils/session.utils";
-import { CertificationSchema } from "@/validation/schema/resume.schema";
+import { CertificationSchema } from "@/validation/schema/payload/resume.schema";
 import { NextRequest, NextResponse } from "next/server";
 import * as Yup from "yup";
 

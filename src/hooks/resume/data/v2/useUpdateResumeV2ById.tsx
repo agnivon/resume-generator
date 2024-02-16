@@ -6,6 +6,7 @@ import {
 import { ResumeV2 } from "@prisma/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAppDispatch } from "../../../redux/useAppDispatch";
+import resumeSlice from "@/redux/slices/resumeSlice";
 
 export default function useUpdateResumeV2ById() {
   const dispatch = useAppDispatch();
@@ -15,7 +16,7 @@ export default function useUpdateResumeV2ById() {
     mutationFn: ({ id, resume }: { id: string; resume: Partial<ResumeV2> }) =>
       updateResumeV2(id, resume),
     onSuccess: (data) => {
-      //dispatch(resumeSlice.actions.upsertOneCompleteResume(data));
+      dispatch(resumeSlice.actions.upsertOneResumeV2(data));
       queryClient.setQueriesData(
         { queryKey: ["resumesV2"], exact: true },
         getSetQueryDataForInsertOrUpdateInArray(data)

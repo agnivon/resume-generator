@@ -19,20 +19,23 @@ export type ResumeTemplateProps = {
   lineHeight?: number;
   accentColor?: string;
   responsive?: boolean;
+  selectableText?: boolean;
   showDivider?: boolean;
 };
 
-export default React.forwardRef(function Template(
-  props: ResumeTemplateProps,
-  ref: React.Ref<HTMLDivElement> | undefined
-) {
-  const { template = TemplateType.STANDARD } = props;
+export default React.memo(
+  React.forwardRef(function Template(
+    props: ResumeTemplateProps,
+    ref: React.Ref<HTMLDivElement> | undefined
+  ) {
+    const { template = TemplateType.STANDARD } = props;
 
-  const ResumeTemplateComponent = getResumeTemplate(template);
+    const ResumeTemplateComponent = getResumeTemplate(template);
 
-  return (
-    <ResumeTemplateContextProvider value={props}>
-      <ResumeTemplateComponent {...props} ref={ref} />
-    </ResumeTemplateContextProvider>
-  );
-});
+    return (
+      <ResumeTemplateContextProvider value={props}>
+        <ResumeTemplateComponent {...props} ref={ref} />
+      </ResumeTemplateContextProvider>
+    );
+  })
+);
