@@ -20,11 +20,15 @@ import { getTextAreaRows } from "@/utils/form.utils";
 import ResumeTipsCard from "../tips/ResumeTipsCard";
 import { EXPERIENCE_TIPS } from "@/constants/tips.constants";
 import { NEW_EXPERIENCE_V2 } from "@/constants/resume.v2.constants";
+import DescriptionHelperText from "./DescriptionHelperText";
 
 export default function ExperienceForm() {
   const formik = useFormikContext<ResumeFormValues>();
 
   const {
+    doEntitiesExist,
+    selectedEntity,
+    selectedEntityName,
     selectedItemIdx,
     changeIdx,
     setChangeIdx,
@@ -47,14 +51,6 @@ export default function ExperienceForm() {
 
   const [showListSequenceChangeModal, setShowListSequenceChangeModal] =
     React.useState<boolean>(false);
-
-  const doExperiencesExist = formik.values.resume.experiences.length > 0;
-
-  const selectedExperience = _.isNumber(selectedItemIdx)
-    ? formik.values.resume.experiences[selectedItemIdx]
-    : null;
-
-  const selectedExpName = `resume.experiences.${selectedItemIdx}`;
 
   const listItems = (
     formik.values.resume.experiences.map((exp, idx) => {
@@ -131,7 +127,7 @@ export default function ExperienceForm() {
             <div>
               <div className="text-lg font-bold mb-2">Your Experiences</div>
               <ListGroup items={listItems} />
-              {doExperiencesExist && (
+              {doEntitiesExist && (
                 <Button
                   label="Change sequence"
                   onClick={() => setShowListSequenceChangeModal(true)}
@@ -144,13 +140,13 @@ export default function ExperienceForm() {
             <ResumeTipsCard tips={EXPERIENCE_TIPS} />
           </div>
           <div className="w-full md:w-[70%] grid grid-cols-2 items-start gap-x-8 gap-y-2">
-            <RenderIf isTrue={!doExperiencesExist}>
+            <RenderIf isTrue={!doEntitiesExist}>
               <div className="col-span-2 text-center dark:text-gray-400 text-gray-600">
                 {`To add an experience click on "Add new experience" on the left
                 panel`}
               </div>
             </RenderIf>
-            <RenderIf isTrue={doExperiencesExist}>
+            <RenderIf isTrue={doEntitiesExist}>
               <RenderIf isTrue={selectedItemIdx === null}>
                 <div className="col-span-2 text-center">
                   Select an experience from the side panel to view and edit the
@@ -161,14 +157,14 @@ export default function ExperienceForm() {
                 <div className="col-span-2">
                   <FormikInput
                     label="What was your role at the company? *"
-                    name={`${selectedExpName}.role`}
+                    name={`${selectedEntityName}.role`}
                     placeholder="Software Engineer"
                   />
                 </div>
                 <div className="col-span-2">
                   <FormikInput
                     label="For which company did you work? *"
-                    name={`${selectedExpName}.companyName`}
+                    name={`${selectedEntityName}.companyName`}
                     placeholder="Google"
                   />
                 </div>
@@ -178,23 +174,23 @@ export default function ExperienceForm() {
                     <div className="col-span-2 md:col-span-1">
                       <FormikDatepicker
                         //type="month"
-                        name={`${selectedExpName}.startDate`}
+                        name={`${selectedEntityName}.startDate`}
                         placeholder="Start Date"
                         format={START_END_DATE_FORMAT}
                       />
                     </div>
                     <div className="col-span-2 md:col-span-1">
                       <FormikDatepicker
-                        name={`${selectedExpName}.endDate`}
+                        name={`${selectedEntityName}.endDate`}
                         //type="month"
                         placeholder="End Date"
-                        disabled={Boolean(selectedExperience?.currentlyWorking)}
+                        disabled={Boolean(selectedEntity?.currentlyWorking)}
                         format={START_END_DATE_FORMAT}
                       />
                     </div>
                     <div className="col-span-2 md:col-span-1">
                       <FormikSwitch
-                        name={`${selectedExpName}.currentlyWorking`}
+                        name={`${selectedEntityName}.currentlyWorking`}
                         label="Currently working here"
                         containerClassNames="mt-1 shrink-0"
                       />
@@ -204,17 +200,22 @@ export default function ExperienceForm() {
                 <div className="col-span-2">
                   <FormikInput
                     label="Where was the company located?"
-                    name={`${selectedExpName}.companyLocation`}
+                    name={`${selectedEntityName}.companyLocation`}
                     placeholder="New York, NY"
                   />
                 </div>
                 <div className="col-span-2">
                   <FormikTextArea
                     label="What did you do at the company?"
-                    name={`${selectedExpName}.description`}
+                    name={`${selectedEntityName}.description`}
                     placeholder="Led the development of a critical component in Google's Search infrastructure, resulting in a 20% reduction in response times for complex search queries."
-                    helperText="Markdown supported"
-                    rows={getTextAreaRows(selectedExperience?.description)}
+                    helperText={
+                      <DescriptionHelperText
+                        text={"Markdown supported"}
+                        name={`${selectedEntityName}.description`}
+                      />
+                    }
+                    rows={getTextAreaRows(selectedEntity?.description)}
                   />
                 </div>
                 <div className="col-span-2">

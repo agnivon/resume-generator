@@ -1,5 +1,4 @@
 import { Theme } from "@/types";
-import { SetState } from "@/types/utility.types";
 import React from "react";
 
 export default function useGetTheme(): [Theme, (theme: Theme) => void] {

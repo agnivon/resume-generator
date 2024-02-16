@@ -2,10 +2,6 @@ import Modal, { ModalProps, ModalSize } from "@/components/global/modal/Modal";
 import ModalBody from "@/components/global/modal/ModalBody";
 import ModalHeader from "@/components/global/modal/ModalHeader";
 import { TemplateType } from "@/constants/template.constants";
-import { useResumePageContext } from "@/context/page/ResumePageContextProvider";
-import { ResumePreviewSettings } from "@/types/template.types";
-import { useFormikContext } from "formik";
-import ResumeTemplate from "../template/ResumeTemplate";
 import { TemplateCard } from "./TemplateCard";
 
 const RESUME_TEMPLATES = [
@@ -17,10 +13,6 @@ const RESUME_TEMPLATES = [
 type ResumeTemplateModalProps = ModalProps;
 
 export default function ResumeTemplateModal(props: ResumeTemplateModalProps) {
-  const { value } = useResumePageContext();
-  const { values } = useFormikContext<{
-    previewSettings: ResumePreviewSettings;
-  }>();
 
   return (
     <Modal dismissible={true} size={ModalSize.EXTRA_LARGE} {...props}>

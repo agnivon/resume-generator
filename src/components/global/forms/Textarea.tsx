@@ -6,7 +6,7 @@ import { ComponentProps } from "react";
 export type TextareaProps = ComponentProps<"textarea"> & {
   label?: string | undefined;
   size?: TextareaSize;
-  helperText?: string;
+  helperText?: React.ReactNode;
   errorText?: string;
   containerClassNames?: string | undefined;
   textAreaClassNames?: string | undefined;

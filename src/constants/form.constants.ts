@@ -1,6 +1,6 @@
 import { TemplateFont, TemplateSize } from "./template.constants";
 
-const MONTHS = [
+export const MONTHS = [
   "January",
   "February",
   "March",

@@ -17,11 +17,11 @@ export type DropdownItem = {
 };
 
 type DropdownProps<T extends DropdownItem> = {
-  value: DropdownItemValue;
+  value: T["value"];
   items: T[];
   disabled?: boolean;
   dropdownHeader?: React.ReactNode;
-  onChange?: (value: DropdownItemValue) => void;
+  onChange?: (value: T["value"]) => void;
   selectedValueRenderer?: (item: T | undefined) => React.ReactNode;
   contentRenderer?: (item: T) => React.ReactNode;
   ButtonComponent?: (props: ButtonProps) => React.JSX.Element;

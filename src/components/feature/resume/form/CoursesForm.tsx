@@ -4,21 +4,23 @@ import RenderIf from "@/components/global/RenderIf";
 import FormikInput from "@/components/global/forms/formik/FormikInput";
 import FormikTextArea from "@/components/global/forms/formik/FormikTextArea";
 import MotionDiv from "@/components/global/motion/MotionDiv";
-import { NEW_COURSE } from "@/constants/resume.constants";
+import { NEW_COURSE_V2 } from "@/constants/resume.v2.constants";
 import useFormListManager from "@/hooks/resume/form/useFormListManager";
 import { ResumeFormValues } from "@/types/form.types";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { useFormikContext } from "formik";
 import _ from "lodash";
 import React from "react";
+import DescriptionHelperText from "./DescriptionHelperText";
 import ConfirmationModal from "./modals/ConfirmationModal";
 import ListItemSequenceChangeModal from "./modals/ListItemSequenceChangeModal";
-import { NEW_COURSE_V2 } from "@/constants/resume.v2.constants";
 
 export default function CoursesForm() {
   const formik = useFormikContext<ResumeFormValues>();
 
   const {
+    doEntitiesExist,
+    selectedEntityName,
     selectedItemIdx,
     changeIdx,
     setChangeIdx,
@@ -36,10 +38,6 @@ export default function CoursesForm() {
 
   const [showListSequenceChangeModal, setShowListSequenceChangeModal] =
     React.useState<boolean>(false);
-
-  const doCoursesExist = formik.values.resume.courses.length > 0;
-
-  const selectedCourseName = `resume.courses.${selectedItemIdx}`;
 
   const listItems = (
     formik.values.resume.courses.map((course, idx) => {
@@ -106,7 +104,7 @@ export default function CoursesForm() {
           <div className="w-full md:w-[30%]">
             <div className="text-lg mb-2 font-bold">Your Courses</div>
             <ListGroup items={listItems} />
-            {doCoursesExist && (
+            {doEntitiesExist && (
               <Button
                 label="Change sequence"
                 onClick={() => setShowListSequenceChangeModal(true)}
@@ -117,12 +115,12 @@ export default function CoursesForm() {
             )}
           </div>
           <div className="w-full md:w-[70%] grid grid-cols-2 items-start gap-x-8 gap-y-2">
-            <RenderIf isTrue={!doCoursesExist}>
+            <RenderIf isTrue={!doEntitiesExist}>
               <div className="col-span-2 text-center dark:text-gray-400 text-gray-600">
                 {`To add a course click on "Add new course" on the left panel`}
               </div>
             </RenderIf>
-            <RenderIf isTrue={doCoursesExist}>
+            <RenderIf isTrue={doEntitiesExist}>
               <RenderIf isTrue={selectedItemIdx === null}>
                 <div className="col-span-2 text-center">
                   Select a course from the side panel to view and edit the
@@ -133,37 +131,42 @@ export default function CoursesForm() {
                 <div className="col-span-2">
                   <FormikInput
                     label="What was the name of your course? *"
-                    name={`${selectedCourseName}.name`}
+                    name={`${selectedEntityName}.name`}
                     placeholder="Introduction to Blockchain"
                   />
                 </div>
                 <div className="col-span-2">
                   <FormikInput
                     label="Where did you take your course? *"
-                    name={`${selectedCourseName}.institution`}
+                    name={`${selectedEntityName}.institution`}
                     placeholder="NPTEL"
                   />
                 </div>
                 <div className="col-span-2">
                   <FormikInput
                     label="When did you take your course? *"
-                    name={`${selectedCourseName}.year`}
+                    name={`${selectedEntityName}.year`}
                     placeholder="2023"
                   />
                 </div>
                 <div className="col-span-2">
                   <FormikInput
                     label="What skill did you use?"
-                    name={`${selectedCourseName}.skills`}
+                    name={`${selectedEntityName}.skills`}
                     placeholder="Blockchain Design"
                   />
                 </div>
                 <div className="col-span-2">
                   <FormikTextArea
                     label="How was that skill applied?"
-                    name={`${selectedCourseName}.applications`}
+                    name={`${selectedEntityName}.applications`}
                     placeholder="Created Bitcoin V2"
-                    helperText="Markdown supported"
+                    helperText={
+                      <DescriptionHelperText
+                        text={"Markdown supported"}
+                        name={`${selectedEntityName}.applications`}
+                      />
+                    }
                   />
                 </div>
                 <div className="col-span-2">

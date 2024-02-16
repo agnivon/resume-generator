@@ -44,6 +44,14 @@ export default function useFormListManager<T extends { displayOrder: number }>(
 
   const formTouched = formik.touched?.resume?.[entity];
 
+  const doEntitiesExist = formik.values.resume[entity].length > 0;
+
+  const selectedEntity = _.isNumber(selectedItemIdx)
+    ? (formik.values.resume[entity][selectedItemIdx] as unknown as T)
+    : null;
+
+  const selectedEntityName = `resume.${entity}.${selectedItemIdx}`;
+
   const isFormValid = !Boolean(formErrors);
 
   const isMutationPending = upsertEntity.isPending || deleteEntity.isPending;
@@ -215,6 +223,9 @@ export default function useFormListManager<T extends { displayOrder: number }>(
   }; */
 
   return {
+    doEntitiesExist,
+    selectedEntity,
+    selectedEntityName,
     selectedItemIdx,
     setSelectedItemIdx,
     changeIdx,

@@ -41,9 +41,9 @@ export default function ResumePreviewSidebar({
     <>
       <div
         //className={classNames("group", showAllPanels ? "show-all-panels" : "")}
-        className="max-xl:hidden print:hidden w-1/5"
+        className="max-xl:hidden print:hidden w-1/4 3xl:w-1/5"
       >
-        <div className="fixed z-20 inset-y-0 left-0 flex w-1/5 min-h-full overflow-y-auto bg-gray-50 dark:bg-gray-800">
+        <div className="fixed z-20 inset-y-0 left-0 flex w-1/4 3xl:w-1/5 min-h-full overflow-y-auto bg-gray-50 dark:bg-gray-800">
           <div className={"py-4 px-3 2xl:px-6 w-full"}>
             <PreviewExitButton />
             <PreviewSettingsPanel resume={resume} />

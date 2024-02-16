@@ -1,13 +1,14 @@
 import { SAMPLE_RESUME_1 } from "@/constants/sample.resumes";
 import {
   TemplateAccentColors,
+  TemplateFont,
   TemplateSize,
   TemplateType,
 } from "@/constants/template.constants";
-import { ResumePreviewSettings } from "@/types/template.types";
+import { useResumePageContext } from "@/context/page/ResumePageContextProvider";
+import { usePreviewSettingForm } from "@/hooks/resume/preview/usePreviewSettingForm";
 import { classNames } from "@/utils";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
-import { useFormikContext } from "formik";
 import ResumeCard from "../grid/ResumeCard";
 
 export const TemplateCard = ({
@@ -19,8 +20,10 @@ export const TemplateCard = ({
   sizeClass?: string;
   thumbnailScale?: number;
 }) => {
-  const formik = useFormikContext<{ previewSettings: ResumePreviewSettings }>();
-  const selectedTemplate = formik.values.previewSettings.template;
+  const { value } = useResumePageContext();
+  const { previewSettingsForm: previewSettings, handleValueChanged } =
+    usePreviewSettingForm(value.resume.id);
+  const selectedTemplate = previewSettings.template;
   const isTemplateSelected = template === selectedTemplate;
   return (
     <>
@@ -29,9 +32,7 @@ export const TemplateCard = ({
         className={classNames(
           "flex flex-col justify-center items-center gap-y-2 group cursor-pointer"
         )}
-        onClick={() =>
-          formik.setFieldValue("previewSettings.template", template)
-        }
+        onClick={() => handleValueChanged({ template })}
       >
         <div
           className={classNames(
@@ -56,8 +57,8 @@ export const TemplateCard = ({
             scale={thumbnailScale}
             sizeClass={sizeClass}
             showFooter={false}
-            font={formik.values.previewSettings.font}
-            fontSize={formik.values.previewSettings.fontSize}
+            font={previewSettings.font as TemplateFont}
+            fontSize={previewSettings.fontSize}
             accentColor={TemplateAccentColors[template][0].color}
           />
         </div>

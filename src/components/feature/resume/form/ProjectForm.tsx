@@ -18,11 +18,15 @@ import _ from "lodash";
 import React from "react";
 import ConfirmationModal from "./modals/ConfirmationModal";
 import ListItemSequenceChangeModal from "./modals/ListItemSequenceChangeModal";
+import DescriptionHelperText from "./DescriptionHelperText";
 
 export default function ProjectForm() {
   const formik = useFormikContext<ResumeFormValues>();
 
   const {
+    doEntitiesExist,
+    selectedEntity,
+    selectedEntityName,
     selectedItemIdx,
     changeIdx,
     setChangeIdx,
@@ -40,14 +44,6 @@ export default function ProjectForm() {
 
   const [showListSequenceChangeModal, setShowListSequenceChangeModal] =
     React.useState<boolean>(false);
-
-  const doProjectsExist = formik.values.resume.projects.length > 0;
-
-  const selectedProject = _.isNumber(selectedItemIdx)
-    ? formik.values.resume.projects[selectedItemIdx]
-    : null;
-
-  const selectedProjName = `resume.projects.${selectedItemIdx}`;
 
   const listItems = (
     formik.values.resume.projects.map((proj, idx) => {
@@ -112,7 +108,7 @@ export default function ProjectForm() {
           <div className="w-full md:w-[30%]">
             <div className="text-lg mb-2 font-bold">Your Projects</div>
             <ListGroup items={listItems} />
-            {doProjectsExist && (
+            {doEntitiesExist && (
               <Button
                 label="Change sequence"
                 onClick={() => setShowListSequenceChangeModal(true)}
@@ -123,12 +119,12 @@ export default function ProjectForm() {
             )}
           </div>
           <div className="w-full md:w-[70%] grid grid-cols-2 items-start gap-x-8 gap-y-2">
-            <RenderIf isTrue={!doProjectsExist}>
+            <RenderIf isTrue={!doEntitiesExist}>
               <div className="col-span-2 text-center dark:text-gray-400 text-gray-600">
                 {`To add a project click on "Add new project" on the left panel`}
               </div>
             </RenderIf>
-            <RenderIf isTrue={doProjectsExist}>
+            <RenderIf isTrue={doEntitiesExist}>
               <RenderIf isTrue={selectedItemIdx === null}>
                 <div className="col-span-2 text-center">
                   Select an project from the side panel to view and edit the
@@ -139,14 +135,14 @@ export default function ProjectForm() {
                 <div className="col-span-2">
                   <FormikInput
                     label="Project Title *"
-                    name={`${selectedProjName}.title`}
+                    name={`${selectedEntityName}.title`}
                     placeholder="Automated Code Review System for Enhanced Software Quality Assurance"
                   />
                 </div>
                 <div className="col-span-2">
                   <FormikInput
                     label="In which organization did you do your project? *"
-                    name={`${selectedProjName}.organization`}
+                    name={`${selectedEntityName}.organization`}
                     placeholder="Amazon"
                   />
                 </div>
@@ -155,19 +151,19 @@ export default function ProjectForm() {
                   <div className="flex items-center gap-x-4">
                     <FormikDatepicker
                       //type="month"
-                      name={`${selectedProjName}.startDate`}
+                      name={`${selectedEntityName}.startDate`}
                       placeholder="Select Date"
                       format={START_END_DATE_FORMAT}
                     />
                     <FormikDatepicker
-                      name={`${selectedProjName}.endDate`}
+                      name={`${selectedEntityName}.endDate`}
                       //type="month"
                       placeholder="Select Date"
-                      disabled={Boolean(selectedProject?.currentlyWorking)}
+                      disabled={Boolean(selectedEntity?.currentlyWorking)}
                       format={START_END_DATE_FORMAT}
                     />
                     <FormikSwitch
-                      name={`${selectedProjName}.currentlyWorking`}
+                      name={`${selectedEntityName}.currentlyWorking`}
                       label="Currently working on it"
                       containerClassNames="mt-1"
                     />
@@ -176,17 +172,22 @@ export default function ProjectForm() {
                 <div className="col-span-2">
                   <FormikInput
                     label="Project URL"
-                    name={`${selectedProjName}.url`}
+                    name={`${selectedEntityName}.url`}
                     placeholder="https://www.resumegenerator.com"
                   />
                 </div>
                 <div className="col-span-2">
                   <FormikTextArea
                     label="Project Description"
-                    name={`${selectedProjName}.description`}
+                    name={`${selectedEntityName}.description`}
                     placeholder="Implemented static code analysis techniques to identify and rectify potential bugs, vulnerabilities, and style violations, ensuring adherence to industry best practices."
-                    helperText="Markdown supported"
-                    rows={getTextAreaRows(selectedProject?.description)}
+                    helperText={
+                      <DescriptionHelperText
+                        text={"Markdown supported"}
+                        name={`${selectedEntityName}.description`}
+                      />
+                    }
+                    rows={getTextAreaRows(selectedEntity?.description)}
                   />
                 </div>
                 <div className="col-span-2">

@@ -3,7 +3,8 @@ import ListGroup, { ListItem } from "@/components/global/ListGroup";
 import RenderIf from "@/components/global/RenderIf";
 import FormikTextArea from "@/components/global/forms/formik/FormikTextArea";
 import MotionDiv from "@/components/global/motion/MotionDiv";
-import { NEW_SKILL } from "@/constants/resume.constants";
+import { NEW_SKILL_V2 } from "@/constants/resume.v2.constants";
+import { SKILL_LENGTH } from "@/constants/schema.constants";
 import useFormListManager from "@/hooks/resume/form/useFormListManager";
 import { ResumeFormValues } from "@/types/form.types";
 import { getTextAreaRows } from "@/utils/form.utils";
@@ -11,14 +12,17 @@ import { PlusIcon } from "@heroicons/react/24/solid";
 import { useFormikContext } from "formik";
 import _ from "lodash";
 import React from "react";
+import DescriptionHelperText from "./DescriptionHelperText";
 import ConfirmationModal from "./modals/ConfirmationModal";
 import ListItemSequenceChangeModal from "./modals/ListItemSequenceChangeModal";
-import { NEW_SKILL_V2 } from "@/constants/resume.v2.constants";
 
 export default function SkillsForm() {
   const formik = useFormikContext<ResumeFormValues>();
 
   const {
+    doEntitiesExist,
+    selectedEntity,
+    selectedEntityName,
     selectedItemIdx,
     changeIdx,
     setChangeIdx,
@@ -36,14 +40,6 @@ export default function SkillsForm() {
 
   const [showListSequenceChangeModal, setShowListSequenceChangeModal] =
     React.useState<boolean>(false);
-
-  const doSkillsExist = formik.values.resume.skills.length > 0;
-
-  const selectedSkill = _.isNumber(selectedItemIdx)
-    ? formik.values.resume.skills[selectedItemIdx]
-    : null;
-
-  const selectedSkillName = `resume.skills.${selectedItemIdx}`;
 
   const listItems = (
     formik.values.resume.skills.map((skill, idx) => {
@@ -111,12 +107,12 @@ export default function SkillsForm() {
             />
           </div>
           <div className="w-full md:w-[70%] grid grid-cols-2 items-start gap-x-8 gap-y-2">
-            <RenderIf isTrue={!doSkillsExist}>
+            <RenderIf isTrue={!doEntitiesExist}>
               <div className="col-span-2 text-center dark:text-gray-400 text-gray-600">
                 {`To add a skill click on "Add new skill" on the left panel`}
               </div>
             </RenderIf>
-            <RenderIf isTrue={doSkillsExist}>
+            <RenderIf isTrue={doEntitiesExist}>
               <RenderIf isTrue={selectedItemIdx === null}>
                 <div className="col-span-2 text-center">
                   Select a skill from the side panel to view and edit the
@@ -127,10 +123,16 @@ export default function SkillsForm() {
                 <div className="col-span-2">
                   <FormikTextArea
                     label="Enter your skills *"
-                    name={`${selectedSkillName}.skill`}
+                    name={`${selectedEntityName}.skill`}
                     placeholder="HTML, CSS, Javascript"
-                    helperText="Markdown supported"
-                    rows={getTextAreaRows(selectedSkill?.skill)}
+                    helperText={
+                      <DescriptionHelperText
+                        text={"Markdown supported"}
+                        name={`${selectedEntityName}.skill`}
+                        limit={SKILL_LENGTH}
+                      />
+                    }
+                    rows={getTextAreaRows(selectedEntity?.skill)}
                   />
                 </div>
                 <div className="col-span-2">

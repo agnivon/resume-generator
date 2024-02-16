@@ -2,6 +2,7 @@ import { ButtonSize, ButtonColor } from "@/components/global/Button";
 import Dropdown from "@/components/global/Dropdown";
 import FormikSwitch from "@/components/global/forms/formik/FormikSwitch";
 import {
+  MONTHS,
   MONTHS_DROPDOWN_OPTIONS,
   YEARS_DROPDOWN_OPTIONS,
 } from "@/constants/form.constants";
@@ -29,7 +30,7 @@ export default function DurationFields<T extends EntityWithDuration>(
   return (
     <>
       <Dropdown
-        value={selectedEntity?.startMonth || ""}
+        value={selectedEntity?.startMonth as (typeof MONTHS)[number]}
         onChange={(value) => {
           formik.setFieldValue(`${selectedEntityName}.startMonth`, value);
         }}
@@ -51,7 +52,7 @@ export default function DurationFields<T extends EntityWithDuration>(
         }}
       />
       <Dropdown
-        value={selectedEntity?.endMonth || ""}
+        value={selectedEntity?.endMonth as (typeof MONTHS)[number]}
         onChange={(value) => {
           formik.setFieldValue(`${selectedEntityName}.endMonth`, value);
         }}

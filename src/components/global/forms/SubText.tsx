@@ -8,7 +8,7 @@ export default function SubText({
   helperText?: React.ReactNode;
 }) {
   return (
-    <p
+    <div
       className={classNames(
         "mt-2 text-sm min-h-[1.25rem]",
         errorText
@@ -19,6 +19,6 @@ export default function SubText({
       )}
     >
       {errorText || helperText}
-    </p>
+    </div>
   );
 }

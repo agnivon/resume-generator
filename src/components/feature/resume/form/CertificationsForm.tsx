@@ -13,11 +13,14 @@ import _ from "lodash";
 import React from "react";
 import ConfirmationModal from "./modals/ConfirmationModal";
 import ListItemSequenceChangeModal from "./modals/ListItemSequenceChangeModal";
+import DescriptionHelperText from "./DescriptionHelperText";
 
 export default function CertificationsForm() {
   const formik = useFormikContext<ResumeFormValues>();
 
   const {
+    doEntitiesExist,
+    selectedEntityName,
     selectedItemIdx,
     changeIdx,
     setChangeIdx,
@@ -40,10 +43,6 @@ export default function CertificationsForm() {
 
   const [showListSequenceChangeModal, setShowListSequenceChangeModal] =
     React.useState<boolean>(false);
-
-  const doCertificationsExist = formik.values.resume.certifications.length > 0;
-
-  const selectedCertName = `resume.certifications.${selectedItemIdx}`;
 
   const listItems = (
     formik.values.resume.certifications.map((cert, idx) => {
@@ -110,7 +109,7 @@ export default function CertificationsForm() {
           <div className="w-full md:w-[30%]">
             <div className="text-lg mb-2 font-bold">Your Certifications</div>
             <ListGroup items={listItems} />
-            {doCertificationsExist && (
+            {doEntitiesExist && (
               <Button
                 label="Change sequence"
                 onClick={() => setShowListSequenceChangeModal(true)}
@@ -121,13 +120,13 @@ export default function CertificationsForm() {
             )}
           </div>
           <div className="w-full md:w-[70%] grid grid-cols-2 items-start gap-x-8 gap-y-2">
-            <RenderIf isTrue={!doCertificationsExist}>
+            <RenderIf isTrue={!doEntitiesExist}>
               <div className="col-span-2 text-center dark:text-gray-400 text-gray-600">
                 {`To add a certification click on "Add new
                 certification" on the left panel`}
               </div>
             </RenderIf>
-            <RenderIf isTrue={doCertificationsExist}>
+            <RenderIf isTrue={doEntitiesExist}>
               <RenderIf isTrue={selectedItemIdx === null}>
                 <div className="col-span-2 text-center">
                   Select a certification from the side panel to view and edit
@@ -138,30 +137,35 @@ export default function CertificationsForm() {
                 <div className="col-span-2">
                   <FormikInput
                     label="What was the name of your certification? *"
-                    name={`${selectedCertName}.name`}
+                    name={`${selectedEntityName}.name`}
                     placeholder="AWS Cloud Practitioner"
                   />
                 </div>
                 <div className="col-span-2">
                   <FormikInput
                     label="Where did you get your certificate? *"
-                    name={`${selectedCertName}.institution`}
+                    name={`${selectedEntityName}.institution`}
                     placeholder="Amazon Web Services"
                   />
                 </div>
                 <div className="col-span-2">
                   <FormikInput
                     label="When did you get your certificate? *"
-                    name={`${selectedCertName}.year`}
+                    name={`${selectedEntityName}.year`}
                     placeholder="2023"
                   />
                 </div>
                 <div className="col-span-2">
                   <FormikTextArea
                     label="How is the certificate relevant?"
-                    name={`${selectedCertName}.relevance`}
+                    name={`${selectedEntityName}.relevance`}
                     placeholder="Certified in all popular cloud services"
-                    helperText="Markdown supported"
+                    helperText={
+                      <DescriptionHelperText
+                        text={"Markdown supported"}
+                        name={`${selectedEntityName}.relevance`}
+                      />
+                    }
                   />
                 </div>
                 <div className="col-span-2">
