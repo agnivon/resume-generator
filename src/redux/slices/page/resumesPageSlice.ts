@@ -19,7 +19,9 @@ export const resumesPageSlice = createSlice({
       state.filter.tags.unshift(action.payload);
     },
     removeTagFromFilter(state, action: PayloadAction<string>) {
-      state.filter.tags.unshift(action.payload);
+      state.filter.tags = state.filter.tags.filter(
+        (id) => id !== action.payload
+      );
     },
     setTagFilter(state, action: PayloadAction<string[]>) {
       state.filter.tags = action.payload;

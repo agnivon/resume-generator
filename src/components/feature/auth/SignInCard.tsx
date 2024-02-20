@@ -4,7 +4,7 @@ import Button, { ButtonColor } from "@/components/global/Button";
 import Card from "@/components/global/Card";
 import { Routes } from "@/constants/routes.constants";
 import { getProviders, signIn } from "next-auth/react";
-import { Github, Google } from "react-bootstrap-icons";
+import { Facebook, Github, Google } from "react-bootstrap-icons";
 import BrandLogo from "../brand/BrandLogo";
 
 export default function SignInCard(_props: {
@@ -15,10 +15,10 @@ export default function SignInCard(_props: {
     <>
       <div>
         <Card>
-          <div className="flex justify-center">
+          <div className="flex justify-center mb-2">
             <BrandLogo iconDimensions={40} textClasses="text-2xl" />
           </div>
-          <div className="w-full space-y-6">
+          <div className="flex flex-col gap-6">
             {/* {providers &&
               Object.values(providers)?.map((provider) => {
                 return (
@@ -41,7 +41,17 @@ export default function SignInCard(_props: {
               color={ButtonColor.LIGHT}
               //size={ButtonSize.LARGE}
               Icon={Google}
-              customClassNames="w-full"
+              //customClassNames="w-full"
+            />
+            <Button
+              label={<>Sign in with Facebook</>}
+              onClick={() =>
+                signIn("facebook", { callbackUrl: Routes.RESUMES })
+              }
+              color={ButtonColor.LIGHT}
+              //size={ButtonSize.LARGE}
+              Icon={Facebook}
+              //customClassNames="w-full"
             />
             <Button
               label={<>Sign in with Github</>}
@@ -49,8 +59,9 @@ export default function SignInCard(_props: {
               color={ButtonColor.LIGHT}
               //size={ButtonSize.LARGE}
               Icon={Github}
-              customClassNames="w-full"
+              //customClassNames="w-full"
             />
+
             {/* <div>
               <Input
                 label="Email"
