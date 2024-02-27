@@ -13,22 +13,17 @@ import useDeleteResumeEntity from "../data/useDeleteResumeEntity";
 import useUpsertResumeEntity from "../data/useUpsertResumeEntity";
 import { produce } from "immer";
 import { Tooltip } from "flowbite-react";
+import { ResumeEntityArrayKeysV2 } from "@/types/resume.v2.types";
 
 export default function useFormListManager<T extends { displayOrder: number }>(
   formik: FormikProps<ResumeFormValues>,
-  entity:
-    | "experiences"
-    | "projects"
-    | "education"
-    | "certifications"
-    | "courses"
-    | "skills",
+  entity: ResumeEntityArrayKeysV2,
   path: string,
   NEW_FUNC: (value: Partial<T>) => T
 ) {
-  const upsertEntity = useUpsertResumeEntity(path, entity);
+  //const upsertEntity = useUpsertResumeEntity(path, entity);
 
-  const deleteEntity = useDeleteResumeEntity(path, entity);
+  //const deleteEntity = useDeleteResumeEntity(path, entity);
 
   //const alert = useAlert();
 
@@ -54,7 +49,7 @@ export default function useFormListManager<T extends { displayOrder: number }>(
 
   const isFormValid = !Boolean(formErrors);
 
-  const isMutationPending = upsertEntity.isPending || deleteEntity.isPending;
+  //const isMutationPending = upsertEntity.isPending || deleteEntity.isPending;
 
   const handleAddNewItem = () => {
     const existingItems = formik.values.resume[entity];
@@ -233,7 +228,7 @@ export default function useFormListManager<T extends { displayOrder: number }>(
     deleteIdx,
     setDeleteIdx,
     isFormValid,
-    isMutationPending,
+    //isMutationPending,
     handleAddNewItem,
     handleDeleteItem,
     handleListItemClicked,

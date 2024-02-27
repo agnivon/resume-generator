@@ -245,6 +245,7 @@ model ResumeV2 {
   certifications  CertificationV2[]
   courses         CourseV2[]
   skills          SkillV2[]
+  customSections  CustomSection[]
   tags            String[]               @default([])
   previewSettings ResumePreviewSettings?
 
@@ -319,6 +320,13 @@ type CourseV2 {
 
 type SkillV2 {
   skill        String
+  hidden       Boolean @default(false)
+  displayOrder Int     @default(0)
+}
+
+type CustomSection {
+  name         String
+  content      String
   hidden       Boolean @default(false)
   displayOrder Int     @default(0)
 }

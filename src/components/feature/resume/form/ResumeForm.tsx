@@ -19,6 +19,7 @@ import ResumeFormTabs from "./ResumeFormTabs";
 import SkillsForm from "./SkillsForm";
 import SummaryForm from "./SummaryForm";
 import useUpdateResumeV2ById from "@/hooks/resume/data/v2/useUpdateResumeV2ById";
+import CustomSectionsForm from "./CustomSectionsForm";
 
 type ResumeFormProps = {
   resume: ResumeV2;
@@ -96,6 +97,9 @@ export default function ResumeForm(props: ResumeFormProps) {
                 </RenderIf>
                 <RenderIf isTrue={currentTab === ResumeFormTab.SKILLS}>
                   <SkillsForm />
+                </RenderIf>
+                <RenderIf isTrue={currentTab === ResumeFormTab.CUSTOM_SECTIONS}>
+                  <CustomSectionsForm />
                 </RenderIf>
                 <RenderIf isTrue={currentTab === ResumeFormTab.SUMMARY}>
                   <SummaryForm />

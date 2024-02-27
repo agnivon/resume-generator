@@ -26,7 +26,6 @@ export default function CoursesForm() {
     setChangeIdx,
     deleteIdx,
     setDeleteIdx,
-    isMutationPending,
     handleAddNewItem,
     handleDeleteItem,
     handleListItemClicked,
@@ -174,7 +173,7 @@ export default function CoursesForm() {
                     label="Save Courses"
                     type="submit"
                     //disabled=\{!formik\.isValid\}
-                    processing={formik.isSubmitting || isMutationPending}
+                    processing={formik.isSubmitting}
                     customClassNames="w-full"
                   />
                 </div>

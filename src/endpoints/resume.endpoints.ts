@@ -2,9 +2,9 @@ import {
   CompleteResume,
   Contact,
   Resume,
-  ResumeEntity,
-  ResumeEntityArray,
+  ResumeEntity
 } from "@/types/resume.types";
+import { ResumeEntityArrayV2 } from "@/types/resume.v2.types";
 import { ResumeTagSchema } from "@/validation/schema/payload/resume.schema";
 import { ResumePreviewSettings, ResumeTag, ResumeV2 } from "@prisma/client";
 import axios from "axios";
@@ -92,7 +92,7 @@ export const upsertContact = (
     .put<Contact>(`/api/resume/v1/${resumeId}/contact`, contact)
     .then((result) => result.data);
 
-export const upsertResumeEntityById = <T extends ResumeEntityArray>(
+export const upsertResumeEntityById = <T extends ResumeEntityArrayV2>(
   resumeId: string,
   entities: T,
   path: string

@@ -1,25 +1,31 @@
 import Button, { ButtonColor, ButtonSize } from "@/components/global/Button";
 import ListGroup, { ListItem } from "@/components/global/ListGroup";
 import RenderIf from "@/components/global/RenderIf";
-import FormikInput from "@/components/global/forms/formik/FormikInput";
 import FormikTextArea from "@/components/global/forms/formik/FormikTextArea";
 import MotionDiv from "@/components/global/motion/MotionDiv";
-import { NEW_CERTIFICATION_V2 } from "@/constants/resume.v2.constants";
+import {
+  NEW_CUSTOM_SECTION,
+  NEW_SKILL_V2,
+} from "@/constants/resume.v2.constants";
+import { SKILL_LENGTH } from "@/constants/schema.constants";
 import useFormListManager from "@/hooks/resume/form/useFormListManager";
 import { ResumeFormValues } from "@/types/form.types";
+import { getTextAreaRows } from "@/utils/form.utils";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { useFormikContext } from "formik";
 import _ from "lodash";
 import React from "react";
+import DescriptionHelperText from "./DescriptionHelperText";
 import ConfirmationModal from "./modals/ConfirmationModal";
 import ListItemSequenceChangeModal from "./modals/ListItemSequenceChangeModal";
-import DescriptionHelperText from "./DescriptionHelperText";
+import FormikInput from "@/components/global/forms/formik/FormikInput";
 
-export default function CertificationsForm() {
+export default function CustomSectionsForm() {
   const formik = useFormikContext<ResumeFormValues>();
 
   const {
     doEntitiesExist,
+    selectedEntity,
     selectedEntityName,
     selectedItemIdx,
     changeIdx,
@@ -35,25 +41,25 @@ export default function CertificationsForm() {
     getDraggableListItemContent,
   } = useFormListManager(
     formik,
-    "certifications",
-    "certification",
-    NEW_CERTIFICATION_V2
+    "customSections",
+    "customSection",
+    NEW_CUSTOM_SECTION
   );
 
   const [showListSequenceChangeModal, setShowListSequenceChangeModal] =
     React.useState<boolean>(false);
 
   const listItems = (
-    formik.values.resume.certifications.map((cert, idx) => {
+    formik.values.resume.customSections.map((section, idx) => {
       return {
-        label: cert.name,
+        label: section.name,
         content: getListItemContent(
           <>
             <div className="font-semibold line-clamp-2">
-              {cert.name || "Some Name"}
+              {section.name || "Some Name"}
             </div>
             <div className="text-sm line-clamp-2">
-              {cert.institution || "Some Institution"}
+              {section.content || "Some Content"}
             </div>
           </>,
           idx
@@ -64,8 +70,8 @@ export default function CertificationsForm() {
     }) as ListItem[]
   ).concat([
     {
-      label: "Add new certification",
-      content: <>{"Add new certification"}</>,
+      label: "Add new section",
+      content: <>{"Add new section"}</>,
       Icon: PlusIcon,
       onClick: handleAddNewItem,
     },
@@ -89,14 +95,13 @@ export default function CertificationsForm() {
       <ListItemSequenceChangeModal
         show={showListSequenceChangeModal}
         onClose={() => setShowListSequenceChangeModal(false)}
-        items={formik.values.resume.certifications}
-        idExtractor={(cert) => cert.name}
-        itemRenderer={(cert) =>
+        items={formik.values.resume.customSections}
+        idExtractor={(section) => section.name}
+        itemRenderer={(section) =>
           getDraggableListItemContent(
             <>
-              <div className="font-semibold">{cert.name || "Some Title"}</div>
-              <div className="text-sm">
-                {cert.institution || "Some Institution"}
+              <div className="font-semibold">
+                {section.name || "Some Section"}
               </div>
             </>
           )
@@ -106,70 +111,55 @@ export default function CertificationsForm() {
       <MotionDiv>
         <div className="flex flex-col md:flex-row gap-8 items-start">
           <div className="w-full md:w-[30%]">
-            <div className="text-lg mb-2 font-bold">Your Certifications</div>
+            <div className="text-lg mb-2 font-bold">Custom Sections</div>
             <ListGroup items={listItems} />
-            {doEntitiesExist && (
-              <Button
-                label="Change sequence"
-                onClick={() => setShowListSequenceChangeModal(true)}
-                color={ButtonColor.ALT}
-                size={ButtonSize.SMALL}
-                customClassNames="mt-4 w-full"
-              />
-            )}
+            <Button
+              label="Change sequence"
+              onClick={() => setShowListSequenceChangeModal(true)}
+              color={ButtonColor.ALT}
+              size={ButtonSize.SMALL}
+              customClassNames="mt-4 w-full"
+            />
           </div>
           <div className="w-full md:w-[70%] grid grid-cols-2 items-start gap-x-8 gap-y-2">
             <RenderIf isTrue={!doEntitiesExist}>
               <div className="col-span-2 text-center dark:text-gray-400 text-gray-600">
-                {`To add a certification click on "Add new
-                certification" on the left panel`}
+                {`To add a section click on "Add new section" on the left panel`}
               </div>
             </RenderIf>
             <RenderIf isTrue={doEntitiesExist}>
               <RenderIf isTrue={selectedItemIdx === null}>
                 <div className="col-span-2 text-center">
-                  Select a certification from the side panel to view and edit
-                  the details
+                  Select a section from the side panel to view and edit the
+                  details
                 </div>
               </RenderIf>
               <RenderIf isTrue={selectedItemIdx !== null}>
                 <div className="col-span-2">
                   <FormikInput
-                    label="What was the name of your certification? *"
+                    label="Enter section name *"
                     name={`${selectedEntityName}.name`}
-                    placeholder="AWS Cloud Practitioner"
-                  />
-                </div>
-                <div className="col-span-2">
-                  <FormikInput
-                    label="Where did you get your certificate? *"
-                    name={`${selectedEntityName}.institution`}
-                    placeholder="Amazon Web Services"
-                  />
-                </div>
-                <div className="col-span-2">
-                  <FormikInput
-                    label="When did you get your certificate? *"
-                    name={`${selectedEntityName}.year`}
-                    placeholder="2023"
+                    placeholder="Languages"
                   />
                 </div>
                 <div className="col-span-2">
                   <FormikTextArea
-                    label="How is the certificate relevant?"
-                    name={`${selectedEntityName}.relevance`}
-                    placeholder="Certified in all popular cloud services"
+                    label="Enter content *"
+                    name={`${selectedEntityName}.content`}
+                    placeholder="Hindi, English, Kannada, French, Spanish, Japanese"
                     helperText={
                       <DescriptionHelperText
                         text={"Markdown supported"}
-                        name={`${selectedEntityName}.relevance`}
+                        name={`${selectedEntityName}.content`}
+                        limit={2000}
                       />
                     }
+                    rows={getTextAreaRows(selectedEntity?.content)}
                   />
                 </div>
                 <div className="col-span-2">
                   <Button
-                    label="Save Certifications"
+                    label="Save Custom Sections"
                     type="submit"
                     //disabled=\{!formik\.isValid\}
                     processing={formik.isSubmitting}

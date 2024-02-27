@@ -17,6 +17,6 @@ export default function FormikCharactersRemaining(
   return (
     <div
       className={classNames("text-sm", overLimit ? "text-red-500" : "")}
-    >{`${field.value.length}/${limit} characters`}</div>
+    >{`${limit - field.value.length}/${limit} characters`}</div>
   );
 }

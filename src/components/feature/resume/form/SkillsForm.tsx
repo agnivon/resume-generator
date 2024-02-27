@@ -28,7 +28,6 @@ export default function SkillsForm() {
     setChangeIdx,
     deleteIdx,
     setDeleteIdx,
-    isMutationPending,
     handleAddNewItem,
     handleDeleteItem,
     handleListItemClicked,
@@ -140,7 +139,7 @@ export default function SkillsForm() {
                     label="Save Skills"
                     type="submit"
                     //disabled=\{!formik\.isValid\}
-                    processing={formik.isSubmitting || isMutationPending}
+                    processing={formik.isSubmitting}
                     customClassNames="w-full"
                   />
                 </div>

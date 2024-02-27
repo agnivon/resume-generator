@@ -32,7 +32,6 @@ export default function ProjectForm() {
     setChangeIdx,
     deleteIdx,
     setDeleteIdx,
-    isMutationPending,
     handleAddNewItem,
     handleDeleteItem,
     handleListItemClicked,
@@ -195,7 +194,7 @@ export default function ProjectForm() {
                     label="Save Projects"
                     type="submit"
                     //disabled=\{!formik\.isValid\}
-                    processing={formik.isSubmitting || isMutationPending}
+                    processing={formik.isSubmitting}
                     customClassNames="w-full"
                   />
                 </div>

@@ -34,7 +34,6 @@ export default function ExperienceForm() {
     setChangeIdx,
     deleteIdx,
     setDeleteIdx,
-    isMutationPending,
     handleAddNewItem,
     handleDeleteItem,
     handleListItemClicked,
@@ -223,7 +222,7 @@ export default function ExperienceForm() {
                     label="Save Experiences"
                     type="submit"
                     //disabled=\{!formik\.isValid\}
-                    processing={formik.isSubmitting || isMutationPending}
+                    processing={formik.isSubmitting}
                     customClassNames="w-full"
                   />
                 </div>
