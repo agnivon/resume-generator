@@ -18,9 +18,12 @@ import LoadingMessage from "../global/LoadingMessage";
 import RenderIf from "../global/RenderIf";
 import ManageTagsDrawer from "../feature/resume/tags/ManageTagsDrawer";
 import useDeleteResumeTag from "@/hooks/resume/data/useDeleteResumeTag";
+import { useAppDispatch } from "@/hooks/redux/useAppDispatch";
+import resumesPageSlice from "@/redux/slices/page/resumesPageSlice";
 
 function PageComponent() {
   const { state, dispatch } = useResumesPageContext();
+  const reduxDispatch = useAppDispatch();
 
   const { resumeQuery, previewSettingsQuery } = useGetMyResumesPageData();
   const deleteResume = useDeleteResumeV2ById();
@@ -56,6 +59,7 @@ function PageComponent() {
       try {
         await deleteResumeTag.mutation.mutateAsync(id);
         alert.info(`Tag deleted`);
+        reduxDispatch(resumesPageSlice.actions.removeTagFromFilter(id));
         dispatch(ResumesPageActions.setShowDeleteResumeTagConfirmModal(null));
       } catch (err) {
         alert.error(getToastErrMessage(err));

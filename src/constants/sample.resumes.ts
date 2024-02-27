@@ -150,5 +150,6 @@ export const SAMPLE_RESUME_1: ResumeV2 = {
       displayOrder: 1,
     },
   ],
+  customSections: [],
   tags: [],
 };

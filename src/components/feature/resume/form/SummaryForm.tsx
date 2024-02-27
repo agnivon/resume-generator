@@ -15,6 +15,7 @@ import React from "react";
 import SummaryGenerationModal from "../../ai/summary/SummaryGenerationModal";
 import ResumeTipsCard from "../tips/ResumeTipsCard";
 import { useAuthLayoutContext } from "@/context/layout/AuthLayoutContextProvider";
+import DescriptionHelperText from "./DescriptionHelperText";
 
 export default function SummaryForm() {
   const formik = useFormikContext<ResumeFormValues>();
@@ -83,6 +84,12 @@ export default function SummaryForm() {
                 label="Write a professional summary *"
                 name={`resume.summary`}
                 placeholder="Dedicated and results-driven Software Engineer with over five years of experience in full-stack web development and a proven track record of delivering high-quality software solutions."
+                helperText={
+                  <DescriptionHelperText
+                    text={"Markdown supported"}
+                    name={`resume.summary`}
+                  />
+                }
               />
             </div>
             <div className="col-span-2">

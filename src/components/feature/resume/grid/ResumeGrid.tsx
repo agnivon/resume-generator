@@ -1,13 +1,12 @@
 import { Routes } from "@/constants/routes.constants";
+import { useResumesPageContext } from "@/context/page/ResumesPageContextProvider";
 import { useAppSelector } from "@/hooks/redux/useAppSelector";
+import useFilterResumesPageV2 from "@/hooks/resume/filter/useFilterResumesPageV2";
 import { ResumeV2 } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import NewResumeButton from "./NewResumeButton";
 import NewResumeCard from "./NewResumeCard";
 import ResumeGridCard from "./ResumeGridCard";
 import ResumeGridToolbar from "./ResumeGridToolbar";
-import useFilterResumePageV2 from "@/hooks/resume/filter/useFilterResumePageV2";
-import { useResumesPageContext } from "@/context/page/ResumesPageContextProvider";
 
 type ResumeGridProps = {
   resumes: ResumeV2[];
@@ -21,7 +20,7 @@ export default function ResumeGrid(props: ResumeGridProps) {
     (state) => state.resume.previewSettings.entities
   );
 
-  const filteredResumes = useFilterResumePageV2(resumes, state.filter);
+  const filteredResumes = useFilterResumesPageV2(resumes);
 
   const handleResumeCardClicked = (resumeId: string) => {
     router.push(Routes.GET_RESUME_WITH_ID(resumeId));

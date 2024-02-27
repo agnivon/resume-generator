@@ -2,7 +2,7 @@ import { Routes } from "@/constants/routes.constants";
 import { classNames } from "@/utils";
 import Image from "next/image";
 import Link from "next/link";
-import FlowbiteLogoSvg from "../../../../public/images/logo.svg";
+import RGLogoSvg from "../../../../public/images/resume-generator.png";
 
 type BrandLogoProps = {
   iconDimensions?: number | `${number}`;
@@ -24,7 +24,7 @@ export default function BrandLogo(props: BrandLogoProps) {
       className={classNames("flex items-center pl-1 mb-5", containerClasses)}
     >
       <Image
-        src={FlowbiteLogoSvg}
+        src={RGLogoSvg}
         className="mr-3 w-auto h-auto"
         alt="Flowbite Logo"
         height={iconDimensions}

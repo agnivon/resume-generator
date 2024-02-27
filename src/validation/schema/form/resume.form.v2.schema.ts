@@ -161,6 +161,16 @@ export const SkillFormSchema = Yup.object().shape({
   ...commonFields,
 });
 
+export const CustomSectionFormSchema = Yup.object().shape({
+  name: Yup.string()
+    .required("This field is required")
+    .max(50, `Max ${50} characters allowed`),
+  content: Yup.string()
+    .required("This field is required")
+    .max(2000, `Max ${2000} characters allowed`),
+  ...commonFields,
+});
+
 export const resumeMetadataFormSchema = {
   //id: Yup.string().required("Id is required"),
   //userId: Yup.string().required(),
@@ -179,7 +189,9 @@ export const resumeMetadataFormSchema = {
   jobDescription: Yup.string()
     .max(JOB_DESCRIPTION, `Max ${JOB_DESCRIPTION} characters allowed`)
     .default(""),
-  tags: Yup.array(Yup.string().defined().max(RESUME_TAG_NAME_LENGTH)).default([]).max(25),
+  tags: Yup.array(Yup.string().defined().max(RESUME_TAG_NAME_LENGTH))
+    .default([])
+    .max(25),
 };
 
 export const ResumeMetadataFormSchema = Yup.object().shape(
@@ -197,6 +209,7 @@ export const resumeFormSchema = {
   certifications: Yup.array(CertificationFormSchema).defined(),
   courses: Yup.array(CourseFormSchema).defined(),
   skills: Yup.array(SkillFormSchema).defined(),
+  customSections: Yup.array(CustomSectionFormSchema).defined(),
 };
 
 export const getResumeFormSchema = (tab: ResumeFormTab) =>

@@ -15,6 +15,7 @@ import {
   CertificationV2,
   ContactV2,
   CourseV2,
+  CustomSection,
   EducationV2,
   ExperienceV2,
   ProjectV2,
@@ -101,7 +102,7 @@ const Summary = ({ summary }: { summary: ResumeV2["summary"] }) => {
   const { fontSize, lineHeight } = useResumeTemplateContext();
 
   return (
-    <div>
+    <>
       {summary && (
         <div className="my-4">
           <div
@@ -111,11 +112,11 @@ const Summary = ({ summary }: { summary: ResumeV2["summary"] }) => {
             PROFESSIONAL SUMMARY
           </div>
           <div style={getFontStyle(fontSize, lineHeight, "sm")}>
-            <p className="">{summary}</p>
+            <Markdown>{summary}</Markdown>
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
@@ -123,7 +124,7 @@ const Experience = ({ experiences }: { experiences: ExperienceV2[] }) => {
   const { fontSize, lineHeight, accentColor } = useResumeTemplateContext();
 
   return (
-    <div>
+    <>
       {experiences.length > 0 && (
         <div className="my-2">
           <div
@@ -173,7 +174,7 @@ const Experience = ({ experiences }: { experiences: ExperienceV2[] }) => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
@@ -181,7 +182,7 @@ const Project = ({ projects }: { projects: ProjectV2[] }) => {
   const { fontSize, lineHeight, accentColor } = useResumeTemplateContext();
 
   return (
-    <div>
+    <>
       {projects.length > 0 && (
         <div className="my-2">
           <div
@@ -231,7 +232,7 @@ const Project = ({ projects }: { projects: ProjectV2[] }) => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
@@ -239,7 +240,7 @@ const Education = ({ education }: { education: EducationV2[] }) => {
   const { fontSize, lineHeight, accentColor } = useResumeTemplateContext();
 
   return (
-    <div>
+    <>
       {education.length > 0 && (
         <div className="my-2">
           <div
@@ -290,7 +291,7 @@ const Education = ({ education }: { education: EducationV2[] }) => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
@@ -302,7 +303,7 @@ const Certification = ({
   const { fontSize, lineHeight, accentColor } = useResumeTemplateContext();
 
   return (
-    <div>
+    <>
       {certifications.length > 0 && (
         <div className="my-2">
           <div
@@ -348,7 +349,7 @@ const Certification = ({
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
@@ -356,7 +357,7 @@ const Course = ({ courses }: { courses: CourseV2[] }) => {
   const { fontSize = 1, lineHeight, accentColor } = useResumeTemplateContext();
 
   return (
-    <div>
+    <>
       {courses.length > 0 && (
         <div className="my-2">
           <div
@@ -402,7 +403,7 @@ const Course = ({ courses }: { courses: CourseV2[] }) => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
@@ -410,9 +411,9 @@ const Skills = ({ skills }: { skills: SkillV2[] }) => {
   const { fontSize, lineHeight } = useResumeTemplateContext();
 
   return (
-    <div>
+    <>
       {skills.length > 0 && (
-        <div className="my-2 print-break-avoid">
+        <div className="my-2">
           <div
             className="font-semibold"
             style={getFontStyle(fontSize, lineHeight, "lg")}
@@ -433,7 +434,42 @@ const Skills = ({ skills }: { skills: SkillV2[] }) => {
           </div>
         </div>
       )}
-    </div>
+    </>
+  );
+};
+
+const CustomSections = ({
+  customSections,
+}: {
+  customSections: CustomSection[];
+}) => {
+  const { fontSize = 1, lineHeight = 1 } = useResumeTemplateContext();
+
+  return (
+    <>
+      {customSections.length > 0 && (
+        <>
+          {customSections.map((section) => {
+            return (
+              <div className="my-2" key={section.name}>
+                <div
+                  className="font-semibold uppercase mb-1"
+                  style={getFontStyle(fontSize, lineHeight, "lg")}
+                >
+                  {section.name}
+                </div>
+                <div
+                  className="space-y-1"
+                  style={getFontStyle(fontSize, lineHeight, "sm")}
+                >
+                  <Markdown>{section.content}</Markdown>
+                </div>
+              </div>
+            );
+          })}
+        </>
+      )}
+    </>
   );
 };
 
@@ -451,6 +487,7 @@ const ModernTemplate = React.forwardRef(
         <Certification certifications={filterHidden(resume.certifications)} />
         <Course courses={filterHidden(resume.courses)} />
         <Education education={filterHidden(resume.education)} />
+        <CustomSections customSections={filterHidden(resume.customSections)} />
       </ResumeTemplateContainer>
     );
   }

@@ -2,6 +2,7 @@ import {
   CertificationV2,
   ContactV2,
   CourseV2,
+  CustomSection,
   EducationV2,
   ExperienceV2,
   ProjectV2,
@@ -92,6 +93,18 @@ export const NEW_SKILL_V2 = (value: Partial<SkillV2>): SkillV2 => {
   };
 };
 
+export const NEW_CUSTOM_SECTION = (
+  value: Partial<CustomSection>
+): CustomSection => {
+  return {
+    name: "",
+    content: "",
+    hidden: false,
+    displayOrder: 0,
+    ...value,
+  };
+};
+
 export const NEW_CONTACT_V2 = (value: Partial<ContactV2>): ContactV2 => {
   return {
     fullName: "",
@@ -119,6 +132,7 @@ export const NEW_RESUME_V2 = (
     certifications: [],
     courses: [],
     skills: [],
+    customSections: [],
     summary: "",
     domain: "",
     experienceLevel: "",

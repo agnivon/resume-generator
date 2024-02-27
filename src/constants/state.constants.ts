@@ -6,5 +6,6 @@ export enum ResumeFormTab {
   CERTIFICATIONS = "certifications",
   COURSEWORK = "courses",
   SKILLS = "skills",
+  CUSTOM_SECTIONS = "customSections",
   SUMMARY = "summary",
 }

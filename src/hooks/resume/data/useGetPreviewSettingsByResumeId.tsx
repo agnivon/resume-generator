@@ -16,6 +16,7 @@ export default function useGetPreviewSettingsByResumeId(id: string) {
         return null;
       }),
     staleTime: Infinity,
+    //gcTime: Infinity,
   });
 
   const {

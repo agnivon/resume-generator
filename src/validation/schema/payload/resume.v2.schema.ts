@@ -8,6 +8,7 @@ import {
   CertificationFormSchema,
   ContactFormSchema,
   CourseFormSchema,
+  CustomSectionFormSchema,
   EducationFormSchema,
   ExperienceFormSchema,
   ProjectFormSchema,
@@ -41,6 +42,7 @@ export const NewResumeV2Schema = Yup.object().shape({
   certifications: Yup.array(CertificationFormSchema).defined(),
   courses: Yup.array(CourseFormSchema).defined(),
   skills: Yup.array(SkillFormSchema).defined(),
+  customSections: Yup.array(CustomSectionFormSchema).defined(),
   tags: Yup.array(Yup.string().defined().max(RESUME_TAG_NAME_LENGTH))
     .defined()
     .max(25),
@@ -63,5 +65,6 @@ export const ResumeV2PartialSchema = Yup.object().shape({
   certifications: Yup.array(CertificationFormSchema),
   courses: Yup.array(CourseFormSchema),
   skills: Yup.array(SkillFormSchema),
+  customSections: Yup.array(CustomSectionFormSchema),
   tags: Yup.array(Yup.string().defined().max(RESUME_TAG_NAME_LENGTH)).max(25),
 });

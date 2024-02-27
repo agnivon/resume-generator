@@ -93,7 +93,7 @@ const UserDropdown = () => {
   return (
     <div className="mt-1">
       <Dropdown
-        value={null}
+        value={""}
         ButtonComponent={({ onClick }: ButtonProps) => (
           <button onClick={onClick}>
             <Avatar

@@ -198,9 +198,9 @@ export const CompleteResumeFormSchema = Yup.object().shape({
   resume: Yup.object().shape(completeResumeFormSchema),
 });
 
-export const getResumeFormSchema = (tab: ResumeFormTab) =>
+/* export const getResumeFormSchema = (tab: ResumeFormTab) =>
   Yup.object().shape({
     resume: Yup.object().shape({
       [tab]: completeResumeFormSchema[tab],
     }),
-  });
+  }); */

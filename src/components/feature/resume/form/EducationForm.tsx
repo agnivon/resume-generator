@@ -16,17 +16,19 @@ import ResumeTipsCard from "../tips/ResumeTipsCard";
 import ConfirmationModal from "./modals/ConfirmationModal";
 import ListItemSequenceChangeModal from "./modals/ListItemSequenceChangeModal";
 import { NEW_EDUCATION_V2 } from "@/constants/resume.v2.constants";
+import DescriptionHelperText from "./DescriptionHelperText";
 
 export default function EducationForm() {
   const formik = useFormikContext<ResumeFormValues>();
 
   const {
+    doEntitiesExist,
+    selectedEntityName,
     selectedItemIdx,
     changeIdx,
     setChangeIdx,
     deleteIdx,
     setDeleteIdx,
-    isMutationPending,
     handleAddNewItem,
     handleDeleteItem,
     handleListItemClicked,
@@ -38,10 +40,6 @@ export default function EducationForm() {
 
   const [showListSequenceChangeModal, setShowListSequenceChangeModal] =
     React.useState<boolean>(false);
-
-  const doesEducationExist = formik.values.resume.education.length > 0;
-
-  const selectedEduName = `resume.education.${selectedItemIdx}`;
 
   const listItems = (
     formik.values.resume.education.map((edu, idx) => {
@@ -120,7 +118,7 @@ export default function EducationForm() {
             <div>
               <div className="text-lg mb-2 font-bold">Your Education</div>
               <ListGroup items={listItems} />
-              {doesEducationExist && (
+              {doEntitiesExist && (
                 <Button
                   label="Change sequence"
                   onClick={() => setShowListSequenceChangeModal(true)}
@@ -133,13 +131,13 @@ export default function EducationForm() {
             <ResumeTipsCard tips={EDUCATION_TIPS} />
           </div>
           <div className="w-full md:w-[70%] grid grid-cols-2 items-start gap-x-8 gap-y-2">
-            <RenderIf isTrue={!doesEducationExist}>
+            <RenderIf isTrue={!doEntitiesExist}>
               <div className="col-span-2 text-center dark:text-gray-400 text-gray-600">
                 {`To add an education click on "Add new education" on the left
                 panel`}
               </div>
             </RenderIf>
-            <RenderIf isTrue={doesEducationExist}>
+            <RenderIf isTrue={doEntitiesExist}>
               <RenderIf isTrue={selectedItemIdx === null}>
                 <div className="col-span-2 text-center">
                   Select an education from the side panel to view and edit the
@@ -150,51 +148,56 @@ export default function EducationForm() {
                 <div className="col-span-2">
                   <FormikInput
                     label="What is your degree or major? *"
-                    name={`${selectedEduName}.major`}
+                    name={`${selectedEntityName}.major`}
                     placeholder="Bachelor or Engineering in Computer Science"
                   />
                 </div>
                 <div className="col-span-2">
                   <FormikInput
                     label="Where did you earn your degree/qualification? *"
-                    name={`${selectedEduName}.institution`}
+                    name={`${selectedEntityName}.institution`}
                     placeholder="University of Arizona, Tuscon"
                   />
                 </div>
                 <div className="col-span-2">
                   <FormikInput
                     label="Where was this institution located? *"
-                    name={`${selectedEduName}.location`}
+                    name={`${selectedEntityName}.location`}
                     placeholder="Tuscon, AZ"
                   />
                 </div>
                 <div className="col-span-2">
                   <FormikInput
                     label="When did you earn your degree/qualification?"
-                    name={`${selectedEduName}.year`}
+                    name={`${selectedEntityName}.year`}
                     placeholder="2023"
                   />
                 </div>
                 <div className="col-span-2">
                   <FormikInput
                     label="Did you minor in anything?"
-                    name={`${selectedEduName}.minor`}
+                    name={`${selectedEntityName}.minor`}
                     placeholder="Philosophy"
                   />
                 </div>
                 <div className="col-span-2">
                   <FormikInput
                     label="GPA"
-                    name={`${selectedEduName}.gpa`}
+                    name={`${selectedEntityName}.gpa`}
                     placeholder="3.9"
                   />
                 </div>
                 <div className="col-span-2">
                   <FormikTextArea
                     label="Additional Information"
-                    name={`${selectedEduName}.additionalInfo`}
+                    name={`${selectedEntityName}.additionalInfo`}
                     placeholder="Implemented static code analysis techniques to identify and rectify potential bugs, vulnerabilities, and style violations, ensuring adherence to industry best practices."
-                    helperText="Markdown supported"
+                    helperText={
+                      <DescriptionHelperText
+                        text={"Markdown supported"}
+                        name={`${selectedEntityName}.additionalInfo`}
+                      />
+                    }
                   />
                 </div>
                 <div className="col-span-2">
@@ -202,7 +205,7 @@ export default function EducationForm() {
                     label="Save Education"
                     type="submit"
                     //disabled=\{!formik\.isValid\}
-                    processing={formik.isSubmitting || isMutationPending}
+                    processing={formik.isSubmitting}
                     customClassNames="w-full"
                   />
                 </div>

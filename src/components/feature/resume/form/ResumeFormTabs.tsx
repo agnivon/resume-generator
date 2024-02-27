@@ -104,6 +104,13 @@ export default function ResumeFormTabs({}: {}) {
       loading: state.currentTab !== ResumeFormTab.SKILLS && isTabDisabled,
     },
     {
+      label: "Custom Sections",
+      current: state.currentTab === ResumeFormTab.CUSTOM_SECTIONS,
+      onClick: () => handleTabClicked(ResumeFormTab.CUSTOM_SECTIONS),
+      loading:
+        state.currentTab !== ResumeFormTab.CUSTOM_SECTIONS && isTabDisabled,
+    },
+    {
       label: "Summary",
       current: state.currentTab === ResumeFormTab.SUMMARY,
       onClick: () => handleTabClicked(ResumeFormTab.SUMMARY),

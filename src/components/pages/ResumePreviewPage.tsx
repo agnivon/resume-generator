@@ -2,19 +2,22 @@
 
 import { INITIAL_PREVIEW_SETTINGS } from "@/constants/template.constants";
 import { useResumePageContext } from "@/context/page/ResumePageContextProvider";
+import { ResumePageActions } from "@/reducers/ResumePageReducer";
 import { ResumePreviewSettings } from "@/types/template.types";
+import { classNames } from "@/utils";
+import { XMarkIcon } from "@heroicons/react/20/solid";
 import { Formik } from "formik";
+import { useRouter } from "next/navigation";
+import { DOMAttributes } from "react";
+import ResumePreviewDrawer from "../feature/resume/preview/ResumePreviewDrawer";
 import ResumePreviewSidebar from "../feature/resume/preview/ResumePreviewSidebar";
+import ResumeTemplateModal from "../feature/resume/preview/ResumeTemplateModal";
 import ResumeTemplate from "../feature/resume/template/ResumeTemplate";
 import MotionDiv from "../global/motion/MotionDiv";
-import { useRouter } from "next/navigation";
-import { XMarkIcon } from "@heroicons/react/20/solid";
-import { DOMAttributes } from "react";
-import { classNames } from "@/utils";
-import ResumeTemplateModal from "../feature/resume/preview/ResumeTemplateModal";
-import { ResumePageActions } from "@/reducers/ResumePageReducer";
-import ResumeTemplateDrawer from "../feature/resume/preview/ResumeTemplateDrawer";
-import ResumePreviewDrawer from "../feature/resume/preview/ResumePreviewDrawer";
+import { useAppSelector } from "@/hooks/redux/useAppSelector";
+import { previewSettingFormSelector } from "@/redux/slices/page/resumePreviewPageSlice";
+import { shallowEqual } from "react-redux";
+import { usePreviewSettingForm } from "@/hooks/resume/preview/usePreviewSettingForm";
 
 /* type ResumePreviewPageProps = {
   resumeId: string;
@@ -55,67 +58,54 @@ const PageComponent = () => {
   const router = useRouter();
 
   const { value, state, dispatch } = useResumePageContext();
-  const { resume, previewSettings } = value;
-  const previewFormValues: { previewSettings: ResumePreviewSettings } = {
-    previewSettings: previewSettings || INITIAL_PREVIEW_SETTINGS(),
-  };
+  const { resume } = value;
+
+  const { previewSettingsForm } = usePreviewSettingForm(resume.id);
 
   const handleBack = () => {
     router.back();
   };
 
   return (
-    <Formik
-      initialValues={previewFormValues}
-      onSubmit={() => undefined}
-      enableReinitialize={true}
-    >
-      {({ values }) => {
-        return (
-          <>
-            <ResumeTemplateModal
-              show={state.showResumeTemplateModal}
-              onClose={() =>
-                dispatch(ResumePageActions.setShowResumeTemplateModal(false))
-              }
+    <>
+      <ResumeTemplateModal
+        show={state.showResumeTemplateModal}
+        onClose={() =>
+          dispatch(ResumePageActions.setShowResumeTemplateModal(false))
+        }
+      />
+      <ResumePreviewDrawer
+        resume={resume}
+        show={state.showResumePreviewDrawer}
+        onClose={() =>
+          dispatch(ResumePageActions.setShowResumePreviewDrawer(false))
+        }
+      />
+      <MotionDiv
+        className="w-full h-full flex flex-grow print:block"
+        transition={{ duration: 0.2 }}
+      >
+        <ResumePreviewSidebar resume={resume} />
+        <div className="w-full xl:w-3/4 flex flex-col items-center p-10 pt-5 max-xl:pb-20 print:block print:p-0">
+          <CloseButton onClose={handleBack} />
+          {!state.showResumePreviewDrawer && (
+            <ResumePreviewDrawerButton
+              onClick={() => {
+                dispatch(ResumePageActions.setShowResumePreviewDrawer(true));
+              }}
             />
-            <ResumePreviewDrawer
-              resume={resume}
-              show={state.showResumePreviewDrawer}
-              onClose={() =>
-                dispatch(ResumePageActions.setShowResumePreviewDrawer(false))
-              }
-            />
-            <MotionDiv
-              className="w-full h-full flex flex-grow print:block"
-              transition={{ duration: 0.2 }}
-            >
-              <ResumePreviewSidebar resume={resume} />
-              <div className="w-full xl:w-4/5 flex flex-col items-center p-10 pt-5 max-xl:pb-20 print:block print:p-0">
-                <CloseButton onClose={handleBack} />
-                {!state.showResumePreviewDrawer && (
-                  <ResumePreviewDrawerButton
-                    onClick={() => {
-                      dispatch(
-                        ResumePageActions.setShowResumePreviewDrawer(true)
-                      );
-                    }}
-                  />
-                )}
-                <div className="text-2xl mb-5 text-center print:hidden font-semibold text-gray-500 dark:text-gray-400">
-                  {resume.name}
-                </div>
-                <ResumeTemplate
-                  resume={resume}
-                  responsive={true}
-                  {...values.previewSettings}
-                />
-              </div>
-            </MotionDiv>
-          </>
-        );
-      }}
-    </Formik>
+          )}
+          <div className="text-2xl mb-5 text-center print:hidden font-semibold text-gray-500 dark:text-gray-400">
+            {resume.name}
+          </div>
+          <ResumeTemplate
+            resume={resume}
+            responsive={true}
+            {...(previewSettingsForm as ResumePreviewSettings)}
+          />
+        </div>
+      </MotionDiv>
+    </>
   );
 };
 

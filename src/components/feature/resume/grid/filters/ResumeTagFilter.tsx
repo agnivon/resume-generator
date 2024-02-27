@@ -2,8 +2,10 @@ import Badge, { BadgeColor } from "@/components/global/Badge";
 import Button, { ButtonColor, ButtonSize } from "@/components/global/Button";
 import { TooltipCustomTheme } from "@/constants/flowbite.constants";
 import { useResumesPageContext } from "@/context/page/ResumesPageContextProvider";
+import { useAppDispatch } from "@/hooks/redux/useAppDispatch";
 import { useAppSelector } from "@/hooks/redux/useAppSelector";
 import { ResumesPageActions } from "@/reducers/ResumesPageReducer";
+import resumesPageSlice from "@/redux/slices/page/resumesPageSlice";
 import { resumeTagSelectors } from "@/redux/slices/resumeSlice";
 import { classNames } from "@/utils";
 import { ChevronUpDownIcon, XCircleIcon } from "@heroicons/react/20/solid";
@@ -11,26 +13,28 @@ import { Tooltip } from "flowbite-react";
 import { shallowEqual } from "react-redux";
 
 export default function ResumeTagFilter() {
-  const { state, dispatch } = useResumesPageContext();
+  const dispatch = useAppDispatch();
   const resumeTags = useAppSelector(
     (state) => resumeTagSelectors.selectAll(state.resume.tags),
     shallowEqual
   );
 
-  const tagFilterState = state.filter.tags;
+  const tagFilterState = useAppSelector(
+    (state) => state.page.resumesPage.filter.tags
+  );
   const filteredTagCount = tagFilterState.length;
   const tagsSelectedCount = filteredTagCount;
 
   const handleToggle = (id: string, selected: boolean) => {
     if (selected) {
-      dispatch(ResumesPageActions.addTagToFilter(id));
+      dispatch(resumesPageSlice.actions.addTagToFilter(id));
     } else {
-      dispatch(ResumesPageActions.removeTagFromFilter(id));
+      dispatch(resumesPageSlice.actions.removeTagFromFilter(id));
     }
   };
 
   const handleClear = () => {
-    dispatch(ResumesPageActions.setTagFilter([]));
+    dispatch(resumesPageSlice.actions.setTagFilter([]));
   };
 
   return (

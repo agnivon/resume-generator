@@ -61,7 +61,7 @@ const ResumeCardFooter = (props: ResumeCardProps) => {
         <div className="truncate">{resume.name}</div>
         <div onClick={(e) => e.stopPropagation()} className="h-6 w-6">
           <Dropdown
-            value={null}
+            value={""}
             onChange={handleOnChange}
             disabled={globalRunning}
             items={RESUME_ACTIONS_DROPDOWN_ITEMS}

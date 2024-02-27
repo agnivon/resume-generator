@@ -18,6 +18,7 @@ import {
   CertificationV2,
   ContactV2,
   CourseV2,
+  CustomSection,
   EducationV2,
   ExperienceV2,
   ProjectV2,
@@ -91,7 +92,7 @@ const Summary = ({ summary }: { summary: ResumeV2["summary"] }) => {
   } = useResumeTemplateContext();
 
   return (
-    <div>
+    <>
       {summary && (
         <>
           <div
@@ -105,12 +106,12 @@ const Summary = ({ summary }: { summary: ResumeV2["summary"] }) => {
             className="my-1"
             style={getFontStyle(fontSize, lineHeight, "sm")}
           >
-            <p className="">{summary}</p>
+            <Markdown>{summary}</Markdown>
           </div>
           {showDivider && <Divider />}
         </>
       )}
-    </div>
+    </>
   );
 };
 
@@ -122,7 +123,7 @@ const Experience = ({ experiences }: { experiences: ExperienceV2[] }) => {
   } = useResumeTemplateContext();
 
   return (
-    <div>
+    <>
       {experiences.length > 0 && (
         <>
           <div
@@ -171,7 +172,7 @@ const Experience = ({ experiences }: { experiences: ExperienceV2[] }) => {
           {showDivider && <Divider />}
         </>
       )}
-    </div>
+    </>
   );
 };
 
@@ -183,7 +184,7 @@ const Project = ({ projects }: { projects: ProjectV2[] }) => {
   } = useResumeTemplateContext();
 
   return (
-    <div>
+    <>
       {projects.length > 0 && (
         <>
           <div
@@ -233,7 +234,7 @@ const Project = ({ projects }: { projects: ProjectV2[] }) => {
           {showDivider && <Divider />}
         </>
       )}
-    </div>
+    </>
   );
 };
 
@@ -245,7 +246,7 @@ const Education = ({ education }: { education: EducationV2[] }) => {
   } = useResumeTemplateContext();
 
   return (
-    <div>
+    <>
       {education.length > 0 && (
         <>
           <div
@@ -297,7 +298,7 @@ const Education = ({ education }: { education: EducationV2[] }) => {
           {showDivider && <Divider />}
         </>
       )}
-    </div>
+    </>
   );
 };
 
@@ -313,7 +314,7 @@ const Certification = ({
   } = useResumeTemplateContext();
 
   return (
-    <div>
+    <>
       {certifications.length > 0 && (
         <>
           <div
@@ -358,7 +359,7 @@ const Certification = ({
           {showDivider && <Divider />}
         </>
       )}
-    </div>
+    </>
   );
 };
 
@@ -370,7 +371,7 @@ const Course = ({ courses }: { courses: CourseV2[] }) => {
   } = useResumeTemplateContext();
 
   return (
-    <div>
+    <>
       {courses.length > 0 && (
         <>
           <div
@@ -416,7 +417,7 @@ const Course = ({ courses }: { courses: CourseV2[] }) => {
           {showDivider && <Divider />}
         </>
       )}
-    </div>
+    </>
   );
 };
 
@@ -428,7 +429,7 @@ const Skills = ({ skills }: { skills: SkillV2[] }) => {
   } = useResumeTemplateContext();
 
   return (
-    <div>
+    <>
       {skills.length > 0 && (
         <div /*className="print-break-avoid"*/>
           <div
@@ -437,7 +438,7 @@ const Skills = ({ skills }: { skills: SkillV2[] }) => {
           >
             Skills
           </div>
-          <hr className="border border-black mb-2" />
+          <hr className="border-t-2 border-gray-700" />
           <div
             className="space-y-1"
             style={getFontStyle(fontSize, lineHeight, "sm")}
@@ -453,7 +454,48 @@ const Skills = ({ skills }: { skills: SkillV2[] }) => {
           {showDivider && <Divider />}
         </div>
       )}
-    </div>
+    </>
+  );
+};
+
+const CustomSections = ({
+  customSections,
+}: {
+  customSections: CustomSection[];
+}) => {
+  const {
+    fontSize = 1,
+    lineHeight = 1,
+    showDivider = true,
+  } = useResumeTemplateContext();
+
+  return (
+    <>
+      {customSections.length > 0 && (
+        <div /*className="print-break-avoid"*/>
+          {customSections.map((section) => {
+            return (
+              <>
+                <div
+                  className="font-semibold"
+                  style={getFontStyle(fontSize, lineHeight, "lg")}
+                >
+                  {section.name}
+                </div>
+                <hr className="border-t-2 border-gray-700" />
+                <div
+                  className="space-y-1"
+                  style={getFontStyle(fontSize, lineHeight, "sm")}
+                >
+                  <Markdown>{section.content}</Markdown>
+                </div>
+                {showDivider && <Divider />}
+              </>
+            );
+          })}
+        </div>
+      )}
+    </>
   );
 };
 
@@ -472,6 +514,7 @@ const StandardTemplate = React.forwardRef(
         <Certification certifications={filterHidden(resume.certifications)} />
         <Course courses={filterHidden(resume.courses)} />
         <Education education={filterHidden(resume.education)} />
+        <CustomSections customSections={filterHidden(resume.customSections)} />
       </ResumeTemplateContainer>
     );
   }
