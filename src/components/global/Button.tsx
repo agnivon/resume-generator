@@ -37,7 +37,7 @@ export enum ButtonVariant {
   /* GRADIENT_OUTLINE = "gradient-outline", */
 }
 
-export type ButtonProps = ComponentProps<"button"> & {
+export type ButtonProps = React.ComponentPropsWithoutRef<"button"> & {
   label?: React.ReactNode;
   type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
   color?: ButtonColor;
@@ -166,4 +166,4 @@ const Button = (props: ButtonProps) => {
   );
 };
 
-export default Button;
+export default React.memo(Button);

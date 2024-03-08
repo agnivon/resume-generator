@@ -1,6 +1,6 @@
 import prisma from "@/clients/prismaClient";
+import { GPTGenerationType } from "@/constants/generation.constants";
 import { getResumeSummaryPrompt } from "@/constants/prompt.constants";
-import { getUniqueCompleteResume } from "@/utils/prisma.utils";
 import {
   getNextAuthServerSession,
   isAuthenticated,
@@ -8,6 +8,7 @@ import {
 import { OpenAIStream, StreamingTextResponse } from "ai";
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
+import { SummaryGenerationPayload } from "./_validation";
 
 // Create an OpenAI API client (that's edge friendly!)
 const openai = new OpenAI({
@@ -34,7 +35,7 @@ export async function POST(
         return new NextResponse("Forbidden", { status: 401 });
 
       const { jobTitle, jobDescription, useExperiences, useSkills } =
-        await req.json();
+        SummaryGenerationPayload.validateSync(await req.json());
 
       const resume = await prisma.resumeV2.findUniqueOrThrow({
         where: { id: params.resumeId },
@@ -48,15 +49,30 @@ export async function POST(
         useSkills,
       });
 
+      //console.log(prompt);
+
       // Ask OpenAI for a streaming completion given the prompt
       const response = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         stream: true,
         temperature: 0.6,
-        messages: [{ role: "user", content: prompt }],
+        messages: [
+          { role: "system", content: "You are a resume expert" },
+          { role: "user", content: prompt },
+        ],
       });
       // Convert the response into a friendly text-stream
-      const stream = OpenAIStream(response);
+      const stream = OpenAIStream(response, {
+        onCompletion: async (completion) => {
+          await prisma.gPTGeneration.create({
+            data: {
+              resumeId: params.resumeId,
+              type: GPTGenerationType.SUMMARY,
+              content: completion,
+            },
+          });
+        },
+      });
       // Respond with the stream
       return new StreamingTextResponse(stream);
     } catch (err) {

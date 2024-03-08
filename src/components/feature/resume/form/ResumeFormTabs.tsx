@@ -8,22 +8,30 @@ import { ResumeFormValues } from "@/types/form.types";
 import { exclude } from "@/utils/object.utils";
 import { useFormikContext } from "formik";
 import _ from "lodash";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 import ConfirmationModal from "./modals/ConfirmationModal";
 
-export default function ResumeFormTabs({}: {}) {
-  const { value, state, dispatch } = useResumePageContext();
+export default function ResumeFormTabs({
+  currentTab = ResumeFormTab.CONTACT,
+}: {
+  currentTab?: ResumeFormTab;
+}) {
+  const { value } = useResumePageContext();
 
   const formik = useFormikContext<ResumeFormValues>();
 
   const router = useRouter();
 
+  const pathname = usePathname();
+
+  const searchParams = useSearchParams();
+
   const { globalRunning } = useIsGlobalQueryRunning();
 
   const [changeTab, setChangeTab] = React.useState<ResumeFormTab | null>(null);
 
-  //const isCurrentTabFinishUp = state.currentTab == ResumeFormTab.FINISH_UP;
+  //const isCurrentTabFinishUp = currentTab == ResumeFormTab.FINISH_UP;
 
   const isTabDisabled = globalRunning;
 
@@ -35,13 +43,15 @@ export default function ResumeFormTabs({}: {}) {
           resume: value.resume,
         },
       });
-      dispatch(ResumePageActions.setCurrentTab(tab));
+      const params = new URLSearchParams(Array.from(searchParams.entries()));
+      params.set("tab", tab);
+      router.push(`${pathname}?${params.toString()}`);
       setChangeTab(null);
     }
   };
 
   const handleTabClicked = (tab: ResumeFormTab) => {
-    if (state.currentTab !== tab) {
+    if (currentTab !== tab) {
       const currentData = formik.values.resume;
       const savedData = value.resume;
       if (
@@ -62,59 +72,57 @@ export default function ResumeFormTabs({}: {}) {
   const tabs = [
     {
       label: "Personal Info",
-      current: state.currentTab === ResumeFormTab.CONTACT,
+      current: currentTab === ResumeFormTab.CONTACT,
       onClick: () => handleTabClicked(ResumeFormTab.CONTACT),
-      loading: state.currentTab !== ResumeFormTab.CONTACT && isTabDisabled,
+      loading: currentTab !== ResumeFormTab.CONTACT && isTabDisabled,
     },
     {
       label: "Experience",
-      current: state.currentTab === ResumeFormTab.EXPERIENCE,
+      current: currentTab === ResumeFormTab.EXPERIENCE,
       onClick: () => handleTabClicked(ResumeFormTab.EXPERIENCE),
-      loading: state.currentTab !== ResumeFormTab.EXPERIENCE && isTabDisabled,
+      loading: currentTab !== ResumeFormTab.EXPERIENCE && isTabDisabled,
     },
     {
       label: "Projects",
-      current: state.currentTab === ResumeFormTab.PROJECT,
+      current: currentTab === ResumeFormTab.PROJECT,
       onClick: () => handleTabClicked(ResumeFormTab.PROJECT),
-      loading: state.currentTab !== ResumeFormTab.PROJECT && isTabDisabled,
+      loading: currentTab !== ResumeFormTab.PROJECT && isTabDisabled,
     },
     {
       label: "Education",
-      current: state.currentTab === ResumeFormTab.EDUCATION,
+      current: currentTab === ResumeFormTab.EDUCATION,
       onClick: () => handleTabClicked(ResumeFormTab.EDUCATION),
-      loading: state.currentTab !== ResumeFormTab.EDUCATION && isTabDisabled,
+      loading: currentTab !== ResumeFormTab.EDUCATION && isTabDisabled,
     },
     {
       label: "Certifications",
-      current: state.currentTab === ResumeFormTab.CERTIFICATIONS,
+      current: currentTab === ResumeFormTab.CERTIFICATIONS,
       onClick: () => handleTabClicked(ResumeFormTab.CERTIFICATIONS),
-      loading:
-        state.currentTab !== ResumeFormTab.CERTIFICATIONS && isTabDisabled,
+      loading: currentTab !== ResumeFormTab.CERTIFICATIONS && isTabDisabled,
     },
     {
       label: "Coursework",
-      current: state.currentTab === ResumeFormTab.COURSEWORK,
+      current: currentTab === ResumeFormTab.COURSEWORK,
       onClick: () => handleTabClicked(ResumeFormTab.COURSEWORK),
-      loading: state.currentTab !== ResumeFormTab.COURSEWORK && isTabDisabled,
+      loading: currentTab !== ResumeFormTab.COURSEWORK && isTabDisabled,
     },
     {
       label: "Skills",
-      current: state.currentTab === ResumeFormTab.SKILLS,
+      current: currentTab === ResumeFormTab.SKILLS,
       onClick: () => handleTabClicked(ResumeFormTab.SKILLS),
-      loading: state.currentTab !== ResumeFormTab.SKILLS && isTabDisabled,
+      loading: currentTab !== ResumeFormTab.SKILLS && isTabDisabled,
     },
     {
       label: "Custom Sections",
-      current: state.currentTab === ResumeFormTab.CUSTOM_SECTIONS,
+      current: currentTab === ResumeFormTab.CUSTOM_SECTIONS,
       onClick: () => handleTabClicked(ResumeFormTab.CUSTOM_SECTIONS),
-      loading:
-        state.currentTab !== ResumeFormTab.CUSTOM_SECTIONS && isTabDisabled,
+      loading: currentTab !== ResumeFormTab.CUSTOM_SECTIONS && isTabDisabled,
     },
     {
       label: "Summary",
-      current: state.currentTab === ResumeFormTab.SUMMARY,
+      current: currentTab === ResumeFormTab.SUMMARY,
       onClick: () => handleTabClicked(ResumeFormTab.SUMMARY),
-      loading: state.currentTab !== ResumeFormTab.SUMMARY && isTabDisabled,
+      loading: currentTab !== ResumeFormTab.SUMMARY && isTabDisabled,
     },
     {
       label: "Preview",

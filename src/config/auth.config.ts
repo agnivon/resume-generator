@@ -24,6 +24,7 @@ export const authOptions: NextAuthOptions = {
           response_type: "code",
         },
       },
+      allowDangerousEmailAccountLinking: true,
     }),
     GitHubProvider({
       clientId: process.env.GITHUB_ID as string,
@@ -35,10 +36,12 @@ export const authOptions: NextAuthOptions = {
       //     response_type: "code",
       //   },
       // },
+      allowDangerousEmailAccountLinking: true,
     }),
     FacebookProvider({
       clientId: process.env.FACEBOOK_ID as string,
       clientSecret: process.env.FACEBOOK_SECRET as string,
+      allowDangerousEmailAccountLinking: true,
     }),
     /* EmailProvider({
         server: {
@@ -54,29 +57,21 @@ export const authOptions: NextAuthOptions = {
     // ...add more providers here
   ],
   callbacks: {
-    /*  async signIn({ user }) {
-        if (user.email) {
-          return true;
-        } else {
-          return "/auth/error?error=Email not accessible";
-        }
-      }, */
     session: async ({ session, token }) => {
-      //console.log("token in session callback", token);
       if (session.user && token.sub) {
         session.user.id = token.sub;
       }
-      //console.log("session in session callback", session);
       return session;
     },
-    /* jwt: async ({ account, token }) => {
-        console.log("account in jwt callback", account);
-        if (account) {
-          token.userId = account.userId;
-        }
-        console.log("token in jwt callback", token);
-        return token;
-      }, */
+  },
+  events: {
+    createUser: async ({ user }) => {
+      await prisma.userMembership.create({
+        data: {
+          userId: user.id,
+        },
+      });
+    },
   },
   pages: {
     signIn: Routes.SIGNIN,

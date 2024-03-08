@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "check": "next lint && tsc --noemit",
+    "db-push": "prisma db push",
+    "db-generate": "prisma generate",
     "postinstall": "prisma generate"
   },
   "dependencies": {

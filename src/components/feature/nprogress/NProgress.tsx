@@ -5,7 +5,12 @@ import React from "react";
 import NProgress from "nprogress";
 
 export default function NProgressBar() {
-  const globalFetching = useIsFetching() > 0;
+  const globalFetching =
+    useIsFetching({
+      predicate: (query) => {
+        return !query.queryKey.includes("gpt-generations");
+      },
+    }) > 0;
 
   const globalMutating = useIsMutating() > 0;
 

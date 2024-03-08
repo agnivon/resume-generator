@@ -23,18 +23,16 @@ import CustomSectionsForm from "./CustomSectionsForm";
 
 type ResumeFormProps = {
   resume: ResumeV2;
+  currentTab?: ResumeFormTab;
   previewSettings: ResumePreviewSettings | null;
 };
 
 export default function ResumeForm(props: ResumeFormProps) {
-  const { resume } = props;
-  const { state } = useResumePageContext();
+  const { resume, currentTab = ResumeFormTab.CONTACT } = props;
 
   const updateResume = useUpdateResumeV2ById();
 
   const alert = useAlert();
-
-  const currentTab = state.currentTab;
 
   const resumeFormInitialValues: ResumeFormValues = {
     resume: resume,
@@ -76,7 +74,7 @@ export default function ResumeForm(props: ResumeFormProps) {
             formikLogger(formik, "Resume Form");
             return (
               <Form className="flex flex-col gap-y-8">
-                <ResumeFormTabs />
+                <ResumeFormTabs currentTab={currentTab} />
                 <RenderIf isTrue={currentTab === ResumeFormTab.CONTACT}>
                   <ContactForm />
                 </RenderIf>

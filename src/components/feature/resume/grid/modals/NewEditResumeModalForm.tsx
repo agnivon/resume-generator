@@ -14,6 +14,8 @@ import SelectTag from "../../tags/SelectTag";
 import { TooltipCustomTheme } from "@/constants/flowbite.constants";
 import { ResumeTag } from "@prisma/client";
 import { produce } from "immer";
+import FormikCharactersRemaining from "@/components/global/forms/formik/FormikCharactersRemaining";
+import { JOB_DESCRIPTION } from "@/constants/schema.constants";
 
 export default function NewEditResumeModalForm({
   type,
@@ -115,9 +117,10 @@ export default function NewEditResumeModalForm({
             label="Job Description"
             placeholder={SAMPLE_JOB_DESCRIPTION.job.description}
             textAreaClassNames="max-h-[20vh]"
-          />
+            helperText={<FormikCharactersRemaining name={"jobDescription"} limit={JOB_DESCRIPTION} />}
+            />
         </div>
-        <div className="cols-span-1 sm:col-span-2 mt-2">
+        <div className="cols-span-1 sm:col-span-2 mt-4">
           <Button
             label={type === "create" ? "Create new resume" : "Save Changes"}
             type="submit"

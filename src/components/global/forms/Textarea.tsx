@@ -1,9 +1,10 @@
 import { classNames } from "@/utils";
 import Label from "./Label";
 import SubText from "./SubText";
-import { ComponentProps } from "react";
+import { ComponentProps, ComponentPropsWithoutRef } from "react";
+import React from "react";
 
-export type TextareaProps = ComponentProps<"textarea"> & {
+export type TextareaProps = ComponentPropsWithoutRef<"textarea"> & {
   label?: string | undefined;
   size?: TextareaSize;
   helperText?: React.ReactNode;
@@ -19,7 +20,8 @@ export enum TextareaSize {
   LARGE = "large",
 }
 
-const BASE_CLASSES = "block w-full rounded-lg border shadow-sm dark:shadow-sm-light";
+const BASE_CLASSES =
+  "block w-full rounded-lg border shadow-sm dark:shadow-sm-light";
 
 const SIZE_CLASSES = {
   [TextareaSize.SMALL]: "sm:p-2 text-sm",
@@ -79,4 +81,4 @@ const Textarea = (props: TextareaProps) => {
   );
 };
 
-export default Textarea;
+export default React.memo(Textarea);

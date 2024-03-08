@@ -50,7 +50,7 @@ export default function ResumeGrid(props: ResumeGridProps) {
           </div>
         </div>
       ) : (
-        <div className="w-full h-full flex justify-center items-center">
+        <div className="flex flex-grow justify-center items-center">
           <NewResumeCard />
         </div>
       )}

@@ -9,6 +9,7 @@ export type Tab = {
   current?: boolean;
   Icon?: SVGIconComponentType;
   onClick?: DOMAttributes<HTMLDivElement>["onClick"];
+  customClassNames?: string;
 };
 
 type TabComponentProps = Tab;
@@ -28,7 +29,8 @@ export const TabLoadingIndicator = () => (
 );
 
 const TabComponent = (props: TabComponentProps) => {
-  const { label, current, disabled, loading, onClick, Icon } = props;
+  const { label, current, disabled, loading, onClick, Icon, customClassNames } =
+    props;
   return (
     <li className="mr-2">
       <div
@@ -38,7 +40,8 @@ const TabComponent = (props: TabComponentProps) => {
             ? DISABLED_CLASSES
             : current
             ? CURRENT_COLOR_CLASSES
-            : BASE_COLOR_CLASSES
+            : BASE_COLOR_CLASSES,
+          customClassNames
         )}
         onClick={onClick}
       >
@@ -60,10 +63,11 @@ const TabComponent = (props: TabComponentProps) => {
 type DefaultTabsProps = {
   tabs: Tab[];
   containerClassNames?: string;
+  tabClassNames?: string;
 };
 
 export default function DefaultTabs(props: DefaultTabsProps) {
-  const { tabs, containerClassNames } = props;
+  const { tabs, containerClassNames, tabClassNames } = props;
   return (
     <ul
       className={classNames(
@@ -72,7 +76,11 @@ export default function DefaultTabs(props: DefaultTabsProps) {
       )}
     >
       {tabs.map((tab, idx) => (
-        <TabComponent {...tab} key={`${tab.label}-${idx}`} />
+        <TabComponent
+          customClassNames={tabClassNames}
+          {...tab}
+          key={`${tab.label}-${idx}`}
+        />
       ))}
     </ul>
   );
