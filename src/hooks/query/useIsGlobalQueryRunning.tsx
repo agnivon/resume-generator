@@ -1,7 +1,12 @@
 import { useIsFetching, useIsMutating } from "@tanstack/react-query";
 
 export default function useIsGlobalQueryRunning() {
-  const globalFetching = useIsFetching() > 0;
+  const globalFetching =
+    useIsFetching({
+      predicate: (query) => {
+        return !query.queryKey.includes("gpt-generations");
+      },
+    }) > 0;
 
   const globalMutating = useIsMutating() > 0;
 

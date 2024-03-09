@@ -1,18 +1,11 @@
 "use client";
 
-import { useIsFetching, useIsMutating } from "@tanstack/react-query";
-import React from "react";
+import useIsGlobalQueryRunning from "@/hooks/query/useIsGlobalQueryRunning";
 import NProgress from "nprogress";
+import React from "react";
 
 export default function NProgressBar() {
-  const globalFetching =
-    useIsFetching({
-      predicate: (query) => {
-        return !query.queryKey.includes("gpt-generations");
-      },
-    }) > 0;
-
-  const globalMutating = useIsMutating() > 0;
+  const { globalRunning } = useIsGlobalQueryRunning();
 
   React.useEffect(() => {
     NProgress.configure({
@@ -21,7 +14,7 @@ export default function NProgressBar() {
   }, []);
 
   React.useEffect(() => {
-    if (globalFetching || globalMutating) {
+    if (globalRunning) {
       NProgress.start();
     } else {
       NProgress.done();
@@ -29,6 +22,6 @@ export default function NProgressBar() {
     return () => {
       NProgress.done();
     };
-  }, [globalFetching, globalMutating]);
+  }, [globalRunning]);
   return <></>;
 }
