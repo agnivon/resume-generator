@@ -115,8 +115,8 @@ function PageComponent() {
             dispatch(ResumesPageActions.setShowManageTagsDrawer(false))
           }
         />
-        <div className="w-full flex-grow">
-          <div className="h-full flex flex-col py-10 px-10">
+        <div className="w-full flex flex-col flex-grow">
+          <div className="h-full flex flex-col flex-grow py-10 px-10 relative">
             <ResumeGrid resumes={resumes as ResumeV2[]} />
           </div>
         </div>

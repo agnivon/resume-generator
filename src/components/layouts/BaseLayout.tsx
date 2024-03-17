@@ -4,6 +4,8 @@ import Script from "next/script";
 import NProgressBar from "../feature/nprogress/NProgress";
 import MotionDiv from "../global/motion/MotionDiv";
 import { classNames } from "@/utils";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +20,8 @@ const BaseLayout = async ({ children }: { children: React.ReactNode }) => {
             "w-full overflow-x-hidden bg-white dark:bg-gray-900 text-black dark:text-white"
           )}
         >
+          <Analytics />
+          <SpeedInsights />
           <AppProvider>
             <MotionDiv className="w-full print-initial">
               <NProgressBar />

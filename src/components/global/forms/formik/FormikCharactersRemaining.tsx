@@ -13,10 +13,10 @@ export default function FormikCharactersRemaining(
 ) {
   const { name, limit } = props;
   const [field] = useField({ name });
-  const overLimit = field.value.length > limit;
+  const overLimit = (field.value?.length || 0) > limit;
   return (
-    <div
-      className={classNames("text-sm", overLimit ? "text-red-500" : "")}
-    >{`${limit - field.value.length}/${limit} characters`}</div>
+    <div className={classNames("text-sm", overLimit ? "text-red-500" : "")}>{`${
+      limit - (field.value?.length || 0)
+    }/${limit} characters`}</div>
   );
 }

@@ -2,11 +2,16 @@ import {
   CompleteResume,
   Contact,
   Resume,
-  ResumeEntity
+  ResumeEntity,
 } from "@/types/resume.types";
 import { ResumeEntityArrayV2 } from "@/types/resume.v2.types";
 import { ResumeTagSchema } from "@/validation/schema/payload/resume.schema";
-import { ResumePreviewSettings, ResumeTag, ResumeV2 } from "@prisma/client";
+import {
+  GPTGeneration,
+  ResumePreviewSettings,
+  ResumeTag,
+  ResumeV2,
+} from "@prisma/client";
 import axios from "axios";
 import { InferType } from "yup";
 
@@ -154,4 +159,14 @@ export const saveResumeTag = (
 export const deleteResumeTag = (id: string): Promise<ResumeTag> =>
   axios
     .delete<ResumeTag>(`/api/resume/tags/${id}`)
+    .then((result) => result.data);
+
+export const getGPTGenerations = (
+  resumeId: ResumeV2["id"],
+  type: GPTGeneration["type"]
+): Promise<GPTGeneration[]> =>
+  axios
+    .get<GPTGeneration[]>(
+      `/api/resume/${resumeId}/gpt-generations?type=${type}`
+    )
     .then((result) => result.data);

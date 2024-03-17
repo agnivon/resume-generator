@@ -7,7 +7,6 @@ export const TooltipCustomTheme = {
       dark: "bg-gray-900 dark:bg-gray-800",
       light: "bg-white",
       auto: "bg-white dark:bg-gray-800",
-
     },
     placement: "-4px",
   },

@@ -14,7 +14,7 @@ export const getResumeSummaryPrompt = ({
   useSkills: boolean;
 }) => {
   let prompt =
-    "Write a professional summary that includes metrics and total years of experience, and keep it shorter than or equal to 5 sentences.\n";
+    "Write a professional summary that includes metrics and total years of experience, and keep it shorter than or equal to 5 sentences. The required information is given below: \n\n";
   if (jobTitle) prompt += `Job Title: ${jobTitle}\n`;
   if (jobDescription) prompt += `Job Description: ${jobDescription}\n`;
   if (useExperiences)

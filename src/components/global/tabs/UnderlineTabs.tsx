@@ -15,7 +15,8 @@ const BASE_COLOR_CLASSES =
   "hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300";
 
 const TabComponent = (props: TabComponentProps) => {
-  const { label, current, disabled, loading, onClick, Icon } = props;
+  const { label, current, disabled, loading, onClick, Icon, customClassNames } =
+    props;
   return (
     <li className="mr-2">
       <div
@@ -25,7 +26,8 @@ const TabComponent = (props: TabComponentProps) => {
             ? DISABLED_CLASSES
             : current
             ? CURRENT_COLOR_CLASSES
-            : BASE_COLOR_CLASSES
+            : BASE_COLOR_CLASSES,
+          customClassNames
         )}
         onClick={onClick}
       >
@@ -47,20 +49,25 @@ const TabComponent = (props: TabComponentProps) => {
 type UnderlineTabsProps = {
   tabs: Tab[];
   containerClassNames?: string;
+  tabClassNames?: string;
 };
 
 export default function UnderlineTabs(props: UnderlineTabsProps) {
-  const { tabs, containerClassNames } = props;
+  const { tabs, containerClassNames, tabClassNames } = props;
   return (
     <div
       className={classNames(
-        "text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700",
+        "text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-600",
         containerClassNames
       )}
     >
       <ul className="flex flex-wrap -mb-px">
         {tabs.map((tab, idx) => (
-          <TabComponent {...tab} key={`${tab.label}-${idx}`} />
+          <TabComponent
+            customClassNames={tabClassNames}
+            {...tab}
+            key={`${tab.label}-${idx}`}
+          />
         ))}
       </ul>
     </div>

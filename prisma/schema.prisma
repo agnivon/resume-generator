@@ -248,6 +248,7 @@ model ResumeV2 {
   customSections  CustomSection[]
   tags            String[]               @default([])
   previewSettings ResumePreviewSettings?
+  GPTGeneration   GPTGeneration[]
 
   @@map("resumes-v2")
 }
@@ -342,4 +343,15 @@ model ResumeTag {
 
   @@unique([userId, name])
   @@map("resume-tags")
+}
+
+model GPTGeneration {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  ResumeV2  ResumeV2 @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  resumeId  String   @db.ObjectId
+  type      String
+  content   String
+  createdAt DateTime @default(now())
+
+  @@map("gpt-generations")
 }
