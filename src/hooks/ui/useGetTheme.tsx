@@ -2,9 +2,7 @@ import { Theme } from "@/types";
 import React from "react";
 
 export default function useGetTheme(): [Theme, (theme: Theme) => void] {
-  const theme: Theme = document.documentElement.classList.contains("dark")
-    ? "dark"
-    : "light";
+  const [theme, setTheme] = React.useState<Theme>("light");
 
   React.useLayoutEffect(() => {
     const prefersDark = window.matchMedia(
@@ -12,17 +10,18 @@ export default function useGetTheme(): [Theme, (theme: Theme) => void] {
     ).matches;
 
     if (prefersDark) {
-      setTheme("dark");
+      actualSetTheme("dark");
     }
   }, []);
 
-  const setTheme = (theme: Theme) => {
+  const actualSetTheme = (theme: Theme) => {
     if (theme === "dark") {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
     }
+    setTheme(theme);
   };
 
-  return [theme, setTheme];
+  return [theme, actualSetTheme];
 }
