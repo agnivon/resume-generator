@@ -19,10 +19,8 @@ const openai = new OpenAI({
 export const runtime =
   process.env.NODE_ENV === "production" ? "edge" : undefined;
 
-export async function POST(
-  req: Request,
-  { params }: { params: { resumeId: string } }
-) {
+export async function POST(req: Request, props: { params: Promise<{ resumeId: string }> }) {
+  const params = await props.params;
   const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {

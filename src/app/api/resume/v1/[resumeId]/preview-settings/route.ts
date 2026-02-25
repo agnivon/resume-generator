@@ -2,10 +2,8 @@ import prisma from "@/clients/prismaClient";
 import { getNextAuthServerSession, isAuthenticated } from "@/utils/session.utils";
 import { NextResponse } from "next/server";
 
-export async function GET(
-  _request: Request,
-  { params }: { params: { resumeId: string } }
-) {
+export async function GET(_request: Request, props: { params: Promise<{ resumeId: string }> }) {
+  const params = await props.params;
   const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {
@@ -18,10 +16,8 @@ export async function GET(
   }
 }
 
-export async function PUT(
-  request: Request,
-  { params }: { params: { resumeId: string } }
-) {
+export async function PUT(request: Request, props: { params: Promise<{ resumeId: string }> }) {
+  const params = await props.params;
   const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {

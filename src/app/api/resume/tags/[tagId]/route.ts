@@ -9,10 +9,8 @@ import { ResumeTag } from "@prisma/client";
 import { ObjectId } from "mongodb";
 import { NextResponse } from "next/server";
 
-export async function PATCH(
-  request: Request,
-  { params }: { params: { tagId: string } }
-) {
+export async function PATCH(request: Request, props: { params: Promise<{ tagId: string }> }) {
+  const params = await props.params;
   const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {
@@ -36,10 +34,8 @@ export async function PATCH(
   }
 }
 
-export async function DELETE(
-  request: Request,
-  { params }: { params: { tagId: string } }
-) {
+export async function DELETE(request: Request, props: { params: Promise<{ tagId: string }> }) {
+  const params = await props.params;
   const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {

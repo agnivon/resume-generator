@@ -1,4 +1,5 @@
-"use client";
+"use client";;
+import { use } from "react";
 
 import ErrorMessage from "@/components/global/ErrorMessage";
 import LoadingMessage from "@/components/global/LoadingMessage";
@@ -8,13 +9,18 @@ import useGetResumePageData from "@/hooks/resume/data/page/useGetResumePageData"
 import { ResumePreviewSettings } from "@/types/template.types";
 import { ResumeV2 } from "@prisma/client";
 
-export default function ResumePageWrapper({
-  params,
-  children,
-}: {
-  params: { resumeId: string };
-  children: React.ReactNode;
-}) {
+export default function ResumePageWrapper(
+  props: {
+    params: Promise<{ resumeId: string }>;
+    children: React.ReactNode;
+  }
+) {
+  const params = use(props.params);
+
+  const {
+    children
+  } = props;
+
   const { resumeQuery, previewSettingsQuery, resume, previewSettings } =
     useGetResumePageData(params.resumeId);
   return (

@@ -7,10 +7,8 @@ import { NextRequest, NextResponse } from "next/server";
 import * as Yup from "yup";
 
 
-export async function GET(
-  _request: Request,
-  { params }: { params: { resumeId: string } }
-) {
+export async function GET(_request: Request, props: { params: Promise<{ resumeId: string }> }) {
+  const params = await props.params;
   const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {
