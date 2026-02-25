@@ -15,8 +15,8 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// Set the runtime to edge for best performance
-export const runtime = "edge";
+// Set the runtime to nodejs for prisma support
+export const runtime = "nodejs";
 
 export async function POST(req: Request, props: { params: Promise<{ resumeId: string }> }) {
   const params = await props.params;
