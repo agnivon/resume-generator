@@ -9,9 +9,11 @@ type ResumeTipsCardProps = {
 
 export default function ResumeTipsCard({ tips }: ResumeTipsCardProps) {
   const [show, setShow] = React.useState<boolean>(true);
-  const [currentTip, setCurrentTip] = React.useState<number>(
-    Math.floor(Math.random() * tips.length)
-  );
+  const [currentTip, setCurrentTip] = React.useState<number>(0);
+
+  React.useEffect(() => {
+    setCurrentTip(Math.floor(Math.random() * tips.length));
+  }, [tips.length]);
 
   /* const maxCharacters = tips.reduce((p, c) => {
     return Math.max(p, c.heading.length + c.content.length);

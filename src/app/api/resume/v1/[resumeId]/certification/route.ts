@@ -27,8 +27,9 @@ export async function GET(_request: Request, props: { params: Promise<{ resumeId
 
 export async function PUT(
   request: Request,
-  { params }: { params: { resumeId: string } }
+  props: { params: Promise<{ resumeId: string }> }
 ) {
+  const params = await props.params;
   const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {
@@ -42,14 +43,14 @@ export async function PUT(
         certifications.map((ent) =>
           !ent.id
             ? prisma["certification"].create({
-                data: exclude(ent, ["id"]),
-              })
+              data: exclude(ent, ["id"]),
+            })
             : prisma["certification"].update({
-                where: {
-                  id: ent.id,
-                },
-                data: exclude(ent, ["id"]),
-              })
+              where: {
+                id: ent.id,
+              },
+              data: exclude(ent, ["id"]),
+            })
         )
       );
 
@@ -64,8 +65,9 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { resumeId: string } }
+  props: { params: Promise<{ resumeId: string }> }
 ) {
+  const params = await props.params;
   const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {

@@ -16,8 +16,7 @@ const openai = new OpenAI({
 });
 
 // Set the runtime to edge for best performance
-export const runtime =
-  process.env.NODE_ENV === "production" ? "edge" : undefined;
+export const runtime = "edge";
 
 export async function POST(req: Request, props: { params: Promise<{ resumeId: string }> }) {
   const params = await props.params;
@@ -60,7 +59,7 @@ export async function POST(req: Request, props: { params: Promise<{ resumeId: st
         ],
       });
       // Convert the response into a friendly text-stream
-      const stream = OpenAIStream(response, {
+      const stream = OpenAIStream(response as any, {
         onCompletion: async (completion) => {
           await prisma.gPTGeneration.create({
             data: {

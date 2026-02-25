@@ -42,7 +42,6 @@ const Select = (props: SelectProps) => {
   const {
     label,
     size = SelectSize.BASE,
-    placeholder,
     helperText,
     errorText,
     options,
@@ -70,7 +69,6 @@ const Select = (props: SelectProps) => {
             inputClassNames
           )}
           value={value}
-          placeholder={placeholder}
           required={required}
           disabled={disabled}
           onChange={onChange}

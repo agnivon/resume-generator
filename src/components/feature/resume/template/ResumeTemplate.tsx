@@ -34,7 +34,7 @@ export default React.memo(
 
     return (
       <ResumeTemplateContextProvider value={props}>
-        <ResumeTemplateComponent {...props} ref={ref} />
+        {React.createElement(ResumeTemplateComponent, { ...props, ref })}
       </ResumeTemplateContextProvider>
     );
   })
