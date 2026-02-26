@@ -69,7 +69,7 @@ export default function Dropdown<T extends DropdownItem>(
 
   const [show, setShow] = React.useState<boolean>(false);
   const [positionClass, setPositionClass] = React.useState<string>("top-2");
-  const dropdownRef = React.useRef<HTMLDivElement | null>();
+  const dropdownRef = React.useRef<HTMLDivElement | null>(undefined);
   const dropdownOutsideClickRef = useDetectClickOutside({
     onTriggered: () => setShow(false),
   });

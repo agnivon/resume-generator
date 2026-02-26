@@ -5,10 +5,8 @@ import { getNextAuthServerSession, isAuthenticated } from "@/utils/session.utils
 import { ResumeSchema } from "@/validation/schema/payload/resume.schema";
 import { NextResponse } from "next/server";
 
-export async function PATCH(
-  request: Request,
-  { params }: { params: { resumeId: string } }
-) {
+export async function PATCH(request: Request, props: { params: Promise<{ resumeId: string }> }) {
+  const params = await props.params;
   const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {

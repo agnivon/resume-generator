@@ -15,14 +15,11 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// Set the runtime to edge for best performance
-export const runtime =
-  process.env.NODE_ENV === "production" ? "edge" : undefined;
+// Set the runtime to nodejs for prisma support
+export const runtime = "nodejs";
 
-export async function POST(
-  req: Request,
-  { params }: { params: { resumeId: string } }
-) {
+export async function POST(req: Request, props: { params: Promise<{ resumeId: string }> }) {
+  const params = await props.params;
   const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {
@@ -62,7 +59,7 @@ export async function POST(
         ],
       });
       // Convert the response into a friendly text-stream
-      const stream = OpenAIStream(response, {
+      const stream = OpenAIStream(response as any, {
         onCompletion: async (completion) => {
           await prisma.gPTGeneration.create({
             data: {

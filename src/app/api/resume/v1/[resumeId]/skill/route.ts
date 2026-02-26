@@ -8,10 +8,8 @@ import * as Yup from "yup";
 
 const prisma = new PrismaClient();
 
-export async function GET(
-  _request: Request,
-  { params }: { params: { resumeId: string } }
-) {
+export async function GET(_request: Request, props: { params: Promise<{ resumeId: string }> }) {
+  const params = await props.params;
   const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {
@@ -26,8 +24,9 @@ export async function GET(
 
 export async function PUT(
   request: Request,
-  { params }: { params: { resumeId: string } }
+  props: { params: Promise<{ resumeId: string }> }
 ) {
+  const params = await props.params;
   const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {
@@ -41,14 +40,14 @@ export async function PUT(
         skills.map((ent) =>
           !ent.id
             ? prisma["skill"].create({
-                data: exclude(ent, ["id"]),
-              })
+              data: exclude(ent, ["id"]),
+            })
             : prisma["skill"].update({
-                where: {
-                  id: ent.id,
-                },
-                data: exclude(ent, ["id"]),
-              })
+              where: {
+                id: ent.id,
+              },
+              data: exclude(ent, ["id"]),
+            })
         )
       );
 
@@ -63,8 +62,9 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { resumeId: string } }
+  props: { params: Promise<{ resumeId: string }> }
 ) {
+  const params = await props.params;
   const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {

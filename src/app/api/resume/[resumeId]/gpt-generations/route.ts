@@ -6,10 +6,8 @@ import * as Yup from "yup";
 
 const TypeSchema = Yup.string().oneOf(Object.values(GPTGenerationType));
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { resumeId: string } }
-) {
+export async function GET(request: NextRequest, props: { params: Promise<{ resumeId: string }> }) {
+  const params = await props.params;
   try {
     const typeParam = request.nextUrl.searchParams.get("type");
     const isTypeValid = Yup.string()

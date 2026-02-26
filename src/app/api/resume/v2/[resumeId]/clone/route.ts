@@ -9,10 +9,8 @@ import { NewResumeV2Schema } from "@/validation/schema/payload/resume.v2.schema"
 import { ResumeV2 } from "@prisma/client";
 import { NextResponse } from "next/server";
 
-export async function POST(
-  request: Request,
-  { params }: { params: { resumeId: string } }
-) {
+export async function POST(request: Request, props: { params: Promise<{ resumeId: string }> }) {
+  const params = await props.params;
   const session = await getNextAuthServerSession();
 
   if (isAuthenticated(session)) {
