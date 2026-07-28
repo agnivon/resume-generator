@@ -23,57 +23,46 @@ import { RootState } from "../store";
 import { ResumeTag, ResumeV2 } from "@prisma/client";
 
 const resumeAdapter = createEntityAdapter<Resume>({
-  selectId: (resume) => resume.id,
   sortComparer: (a, b) => a.createdOn - b.createdOn,
 });
 
 const resumeV2Adapter = createEntityAdapter<ResumeV2>({
-  selectId: (resume) => resume.id,
   sortComparer: (a, b) =>
     new Date(a.createdAt).valueOf() - new Date(b.createdAt).valueOf(),
 });
 
-const contactAdapter = createEntityAdapter<Contact>({
-  selectId: (contact) => contact.id,
-});
+const contactAdapter = createEntityAdapter<Contact>();
 
 const experienceAdapter = createEntityAdapter<Experience>({
-  selectId: (experience) => experience.id,
   sortComparer: (a, b) => a.displayOrder - b.displayOrder,
 });
 
 const projectAdapter = createEntityAdapter<Project>({
-  selectId: (project) => project.id,
   sortComparer: (a, b) => a.displayOrder - b.displayOrder,
 });
 
 const educationAdapter = createEntityAdapter<Education>({
-  selectId: (education) => education.id,
   sortComparer: (a, b) => a.displayOrder - b.displayOrder,
 });
 
 const certificationAdapter = createEntityAdapter<Certification>({
-  selectId: (certification) => certification.id,
   sortComparer: (a, b) => a.displayOrder - b.displayOrder,
 });
 
 const courseAdapter = createEntityAdapter<Course>({
-  selectId: (course) => course.id,
   sortComparer: (a, b) => a.displayOrder - b.displayOrder,
 });
 
 const skillAdapter = createEntityAdapter<Skill>({
-  selectId: (skill) => skill.id,
   sortComparer: (a, b) => a.displayOrder - b.displayOrder,
 });
 
 const resumeTagsAdapter = createEntityAdapter<ResumeTag>({
-  selectId: (tag) => tag.id,
   sortComparer: (a, b) =>
     new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf(),
 });
 
-const previewSettingsAdapter = createEntityAdapter<ResumePreviewSettings>({
+const previewSettingsAdapter = createEntityAdapter<ResumePreviewSettings, string>({
   selectId: (settings) => settings.resumeId,
 });
 
