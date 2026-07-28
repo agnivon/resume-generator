@@ -1,6 +1,10 @@
+import { getSiteUrl } from "@/utils/url.utils";
 import { Metadata } from "next";
 
+const siteUrl = getSiteUrl();
+
 export const metadataConfig: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Resume Generator",
   description:
     "Unlock your career potential with Resume Generator. Employ expert, field-tested resume templates that adhere to the precise 'resume rules' that companies require. Try it today for free—it's simple to use and takes only a few minutes!",
@@ -17,21 +21,20 @@ export const metadataConfig: Metadata = {
   authors: [
     {
       name: "Agnivo Neogi",
-      url: "https://www.agnivon.com",
     },
   ],
   creator: "Agnivo Neogi",
   openGraph: {
     title: "Resume Generator",
     description: "Generate resumes online",
-    url: "https://rg.agnivon.com",
+    url: siteUrl,
     siteName: "Resume Generator",
     images: [
       {
         alt: "Resume Generator",
         height: 3000,
         width: 3000,
-        url: "https://rg.agnivon.com/images/resume-generator.png",
+        url: "/images/resume-generator.png",
       },
     ],
     type: "website",
@@ -46,13 +49,13 @@ export const metadataConfig: Metadata = {
         alt: "Resume Generator",
         height: 3000,
         width: 3000,
-        url: "https://rg.agnivon.com/images/resume-generator.png",
+        url: "/images/resume-generator.png",
       },
     ],
     creator: "Agnivo Neogi",
   },
   icons: {
-    icon: "https://rg.agnivon.com/favicon.ico",
-    shortcut: "https://rg.agnivon.com/favicon.ico",
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
   },
 };
