@@ -700,10 +700,10 @@
   dependencies:
     tslib "^1.7.0"
 
-"@progress/kendo-drawing@^1.18.0":
-  version "1.24.0"
-  resolved "https://registry.yarnpkg.com/@progress/kendo-drawing/-/kendo-drawing-1.24.0.tgz#ffc3a53fd8a15a432ee08607c002a812326ce807"
-  integrity sha512-2WsTTKWKTvYDnS9wkmmXUwpLZEKFMAZFXftcLtTqJCpeKXgURgPi+kySa72xHjp40Za3lLi/lFeADK5i4ope/g==
+"@progress/kendo-drawing@^1.25.3":
+  version "1.25.3"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-drawing/-/kendo-drawing-1.25.3.tgz#bfe51458a99644b0ca412f5c9a00632f2a955ebd"
+  integrity sha512-d75fBth0js82J/5kJ9M8jL5qAxtMc+EDfrDYyMKHl+VyqjVXzBGoDCJpgqMYRKq82JwjYfR8UfMRezel/y6RUA==
   dependencies:
     "@progress/kendo-common" "^1.0.1"
     "@progress/pako-esm" "^1.0.1"
