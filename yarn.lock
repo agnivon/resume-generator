@@ -20,10 +20,10 @@
     preact "10.11.3"
     preact-render-to-string "5.2.3"
 
-"@auth/core@0.41.2":
-  version "0.41.2"
-  resolved "https://registry.yarnpkg.com/@auth/core/-/core-0.41.2.tgz#c03f14426bcd6e06c1ba4f767e46914a23f4d376"
-  integrity sha512-Hx5MNBxN2fJTbJKGUKAA0wca43D0Akl3TvufY54Gn8lop7F+34vU1zA1pn0vQfIoVuLIrpfc2nkyjwIaPJMW7w==
+"@auth/core@0.41.3":
+  version "0.41.3"
+  resolved "https://registry.yarnpkg.com/@auth/core/-/core-0.41.3.tgz#9c03e881feb589d3e807b764c050b32e350fce51"
+  integrity sha512-sJ3JMHHkXMD3aOjopv7mOBTO1Ocw4b0fAEXJBz6k7YHLpYQI6C40jCUPc5fNvUKxXRXNE1/sRISA15UrwWJBTw==
   dependencies:
     "@panva/hkdf" "^1.2.1"
     jose "^6.0.6"
@@ -38,12 +38,12 @@
   dependencies:
     "@auth/core" "0.29.0"
 
-"@auth/prisma-adapter@^2.11.2":
-  version "2.11.2"
-  resolved "https://registry.yarnpkg.com/@auth/prisma-adapter/-/prisma-adapter-2.11.2.tgz#ca452c612b76089e021c3e49d8dd6730549f06b9"
-  integrity sha512-GyNEUNtrPgDPs0M4xX6F5i7jTsCKwU6BXV9zutctcoo6K1Ud+juckrmQS11uyNgeWsw6sliextHbU/e+8lsizQ==
+"@auth/prisma-adapter@^2.11.3":
+  version "2.11.3"
+  resolved "https://registry.yarnpkg.com/@auth/prisma-adapter/-/prisma-adapter-2.11.3.tgz#226db642c29cc951a5cffe0fd26adcd9f0d1a51c"
+  integrity sha512-jZbpVAO6PTc9zNtdTWc0RLWG8qap4iMc54/3oWaWbuKdj92wHxzPrs3HivWB2mB9975GPW0l3YM/wFUWiUlTlg==
   dependencies:
-    "@auth/core" "0.41.2"
+    "@auth/core" "0.41.3"
 
 "@babel/code-frame@^7.28.6", "@babel/code-frame@^7.29.0":
   version "7.29.0"
